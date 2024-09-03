@@ -116,12 +116,13 @@ export const LoginInput = styled.input`
     }
 `
 
-export const ForgotPassword = styled.p`
+export const ForgotPassword = styled.a`
       font-size: 16px;
       font-family: 'Poppins', sans-serif;
       text-align: right;
       align-self: flex-end;
       color: #1F41BB;
+      text-decoration: none;
 `
 
 export const LoginButton = styled.button`

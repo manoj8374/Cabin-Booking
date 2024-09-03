@@ -20,7 +20,7 @@ const Login = () => {
                     <LoginInputContainer>
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
                         <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=>setPassword(e.target.value)}/>
-                        <ForgotPassword>Forgot Password?</ForgotPassword>
+                        <ForgotPassword href = "/forgot-password">Forgot Password?</ForgotPassword>
                         <LoginButton type = "submit" onClick = {submitLogin}>Login</LoginButton>
                         <CreateNewAccount href = "/create-account">Create new account</CreateNewAccount>
                     </LoginInputContainer>
