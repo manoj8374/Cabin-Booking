@@ -1,16 +1,17 @@
 import styled from 'styled-components'
 
 export const LoginContainer = styled.div`
-    height: 95vh;
-    width: 100vw;
+    min-height: 100vh;
     background-color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
     @media (min-width: 768px) {
         background-color: #CFD6D9;
-        height: 100vh;
+        min-height: 100vh;
     }
 `
 
@@ -19,8 +20,12 @@ export const LoginSubContainer = styled.div`
     background-color: white;
     display: flex;
     flex-direction: column; 
-    padding-top: 56px;
-    padding-bottom: 56px;
+    overflow: auto;
+
+    @media (min-width: 768px){
+        padding-top: 48px;
+        padding-bottom: 48px;
+    }
 
     @media (min-width: 768px) and (max-width: 1024px) {
         width: 80%;
@@ -46,11 +51,7 @@ export const LoginContentsContainer = styled.div`
     align-items: center;
     justify-content: center;
     align-self: center;
-    gap: 48px;
-    @media (min-width: 768px) {
-        padding-top: 32px;
-        padding-bottom: 32px;
-    }
+    gap: 24px;
 `
 
 export const LoginHeadingContents = styled.div`
@@ -60,22 +61,25 @@ export const LoginHeadingContents = styled.div`
     justify-content: center;
     gap: 24px;
     width: 90%
+    @media (max-width: 568px) {
+        width: 100%;
+    }
 `
 
 export const LoginHeading = styled.h1`
     color: #1F41BB;
-    font-size: 36px;
+    font-size: 32px;
     font-family: 'Poppins', sans-serif;
     font-weight: semi-bold;
     @media (min-width: 768px) {
-        font-size: 40px;
+        font-size: 36px;
     }
 `
 
 export const LoginDescription = styled.p`
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
-    font-weight: 600;
+    font-weight: 550;
     text-align: center;
     @media (min-width: 768px) {
         font-size: 24px;
@@ -91,7 +95,7 @@ export const LoginInputContainer = styled.form`
     gap: 24px;
 
     @media (min-width: 768px) {
-        width: 70%;
+        width: 80%;
     }
 `
 
