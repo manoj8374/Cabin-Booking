@@ -23,8 +23,8 @@ export const LoginSubContainer = styled.div`
     overflow: auto;
 
     @media (min-width: 768px){
-        padding-top: 48px;
-        padding-bottom: 48px;
+        padding-top: 64px;
+        padding-bottom: 64px;
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
@@ -82,7 +82,7 @@ export const LoginDescription = styled.p`
     font-weight: 550;
     text-align: center;
     @media (min-width: 768px) {
-        font-size: 24px;
+        font-size: 20px;
     }
 `
 
