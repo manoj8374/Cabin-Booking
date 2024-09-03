@@ -6,7 +6,14 @@ export const ForgotPasswordContainer = styled.div`
     padding-top: 40px;
     padding-bottom: 40px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    
+    @media (min-width: 768px) {
+        background-color: #CFD6D9;
+        justify-content: center;
+        position: relative;
+    }
 `
 
 export const ForgotPasswordSubContainer = styled.div`
@@ -16,6 +23,46 @@ export const ForgotPasswordSubContainer = styled.div`
     flex-direction: column;
     gap: 16px;
     width: 90%;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: 768px) and (max-width: 1024px) {
+        width: 60%;
+        padding: 50px;
+        border-radius: 40px;
+    }
+
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        width: 50%;
+        padding: 50px;
+        border-radius: 40px;
+    }
+
+    @media (min-width: 1440px) {
+        width: 35%;
+        padding: 50px;
+        border-radius: 40px;
+        padding-top: 64px;
+        padding-bottom: 64px;
+    }
+`
+
+export const ForgotPasswordInsideContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    @media (min-width: 768px) and (max-width: 1024px) {
+        width: 90%;
+        gap: 48px;
+    }
+
+    @media (min-width: 1024px) {
+        width: 80%;
+        gap: 40px;
+    }
+
+
 `
 
 export const ArrowContainer = styled.div`
@@ -26,26 +73,58 @@ export const ArrowContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 6px;
+
+    @media (min-width: 768px) {
+        display: none;
+    }
 `
 
 export const ForgotPasswordHeadingContents = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    @media (min-width: 768px) {
+        align-items: center;
+        gap: 24px;
+    }
 `
 
 export const ForgotPasswordHeading = styled.h1`
     font-size: 20px;
     font-family: 'Poppins', sans-serif;
+
+    @media (min-width: 768px) {
+        font-size: 32px;
+        color: #1F41BB;
+        text-align: center;
+    }
 `
 
 export const ForgotPasswordDescription = styled.p`
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
     color: #989898;
+
+    @media (min-width: 768px) {
+        font-size: 18px;
+        text-align: center;
+        color: black;
+        font-weight: 600;
+    }
 `
 
 export const ForgotPasswordInputContainer = styled.form`
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+        gap: 24px;
+    }
+`
+
+export const ForgotPasswordInputDiv = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -86,6 +165,20 @@ export const ForgotPasswordInput = styled.input`
         font-size: 16px;
         font-weight: 550;
     }
+
+    @media (min-width: 768px) {
+        font-size: 18px;
+        border: none;
+        background-color: #F1F4FF;
+        outline: #1F41BB;
+        &:focus {
+            border: 1.8px solid #1F41BB; 
+          }
+        
+          &::placeholder {
+            font-weight: normal;
+        }
+    }
 `
 
 export const ForgotPasswordButton = styled.button`
@@ -98,4 +191,22 @@ export const ForgotPasswordButton = styled.button`
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
+`
+
+export const ArrowContainerLargeDevices = styled.div`
+    display: none;
+    @media (min-width: 768px) {
+        display: block;
+        background-color: #ECECEC;
+        width: fit-content;
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 6px;
+        position: absolute;
+        top: 8%;
+        left: 5%;
+        cursor: pointer;
+    }
 `
