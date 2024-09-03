@@ -1,18 +1,23 @@
+import { Link } from "react-router-dom";
 import { IoIosArrowBack} from "react-icons/io";
 import { FaEyeSlash } from "react-icons/fa";
-import {ForgotPasswordContainer, ForgotPasswordSubContainer, ArrowContainer, ForgotPasswordHeadingContents, ForgotPasswordHeading, ForgotPasswordDescription, ForgotPasswordInputContainer, ForgotPasswordInput, ForgotPasswordLabel, PasswordWrapper, EyeIconContainer, ForgotPasswordButton, ForgotPasswordInsideContainer, ForgotPasswordInputDiv, ArrowContainerLargeDevices} from './forgotPasswordStyled'
+import {ForgotPasswordContainer, ForgotPasswordSubContainer, ArrowContainer, ForgotPasswordHeadingContents, ForgotPasswordHeading, ForgotPasswordDescription, ForgotPasswordInputContainer, ForgotPasswordInput, ForgotPasswordLabel, PasswordWrapper, EyeIconContainer, ForgotPasswordButton, ForgotPasswordInsideContainer, ForgotPasswordInputDiv, ArrowContainerLargeDevices, StyledLink} from './forgotPasswordStyled'
 
 const ForgotPasswordComponent = () => {
     let a;
     return (
         <ForgotPasswordContainer>
             <ArrowContainerLargeDevices>
-                <IoIosArrowBack size={28}/>
+                <StyledLink to = "/update-profile">
+                    <IoIosArrowBack size={28}/>
+                </StyledLink>
             </ArrowContainerLargeDevices>
             <ForgotPasswordSubContainer>
                 <ForgotPasswordInsideContainer>
                 <ArrowContainer>
-                    <IoIosArrowBack size={24}/>
+                    <StyledLink to = "/update-profile">
+                        <IoIosArrowBack size={24}/>
+                    </StyledLink>
                 </ArrowContainer>
                 <ForgotPasswordHeadingContents>
                     <ForgotPasswordHeading>

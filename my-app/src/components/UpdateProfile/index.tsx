@@ -1,12 +1,20 @@
-import {UpdateProfileContainer, UpdateProfileSubContainer, UpdateProfileImageContainer, UpdateProfileHeading, UpdateProfileForm, UpdateProfileInput, UpdateProfileButton, UpdateProfileArrowContainer} from './UpdateProfileStyled'
+import {UpdateProfileContainer, UpdateProfileSubContainer, UpdateProfileImageContainer, UpdateProfileHeading, UpdateProfileForm, UpdateProfileInput, UpdateProfileButton, UpdateProfileArrowContainer, StyledLink, ArrowContainerLargeDevices} from './UpdateProfileStyled'
 import { FaArrowLeft } from "react-icons/fa";
+import { IoIosArrowBack} from "react-icons/io";
 
 const UpdateProfile = () => {
     return (
         <UpdateProfileContainer>
+            <ArrowContainerLargeDevices>
+                <StyledLink to = "/login">
+                    <IoIosArrowBack size={24}/>
+                </StyledLink>
+            </ArrowContainerLargeDevices>
             <UpdateProfileSubContainer>
                 <UpdateProfileArrowContainer>
-                    <FaArrowLeft strokeWidth={0} size={20}/>
+                    <StyledLink to = "/login">
+                        <FaArrowLeft strokeWidth={0} size={20}/>
+                    </StyledLink>
                 </UpdateProfileArrowContainer>
                 <UpdateProfileImageContainer>
                     M

@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 export const ForgotPasswordContainer = styled.div`
     background-color: white;
@@ -209,4 +210,9 @@ export const ArrowContainerLargeDevices = styled.div`
         left: 5%;
         cursor: pointer;
     }
+`
+
+export const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
 `
