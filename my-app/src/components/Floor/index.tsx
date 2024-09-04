@@ -77,6 +77,17 @@ const details: MainFloorInterface[] = [
             "description": "Sufficient for 215 people (EW)",
           }
         ]
+      },
+      {
+        "floor": "Ground Floor",
+        "cabins": [
+          {
+            "cabin_id": "1",
+            "name": "Conference Room",
+            "cabin_type": "Conference Room",
+            "description": "Sufficient for 25 people",
+          }
+        ]
       }
   ]
 

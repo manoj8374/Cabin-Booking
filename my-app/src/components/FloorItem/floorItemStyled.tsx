@@ -22,7 +22,7 @@ export const FloorItemSubContainer = styled.div`
 export const FloorHeading = styled.p`
     font-size: 20px;
     font-family: 'Poppins', sans-serif;
-    font-weight: bold;
+    font-weight: 600;
 `
 
 export const FloorButtonsContainer = styled.div`
