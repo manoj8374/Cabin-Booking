@@ -51,7 +51,7 @@ const Home = ()=>{
                 </MobilePopUpHeadingContainer>
                 <MobilePopUpButtonsContainer>
                     <MobilePopUpButtonSubContainer>
-                        <MobilePopUpButton onClick={()=>setMyProfileIsActive(!myProfileIsActive)}>
+                        <MobilePopUpButton onClick={()=>{setMyProfileIsActive(!myProfileIsActive); setMyBookingsActive(false)}}>
                             <MobilePopUpOption>My Profile</MobilePopUpOption>
                             <ArrowDownMyProfile isprofileactive = {myProfileIsActive} size={24} onClick={()=>{setMyProfileIsActive(!myProfileIsActive); setMyBookingsActive(false)}}/>
                         </MobilePopUpButton> 
@@ -83,7 +83,7 @@ const Home = ()=>{
                         }
                     </MobilePopUpButtonSubContainer>      
                     <MobilePopUpButtonSubContainer>
-                        <MobilePopUpButton onClick={()=>setMyBookingsActive(!myBookingsIsActive)}>
+                        <MobilePopUpButton onClick={()=>{setMyBookingsActive(!myBookingsIsActive); setMyProfileIsActive(false)}}>
                             <MobilePopUpOption>My Bookings</MobilePopUpOption>
                             <ArrowDownMyBookings isbookingsactive = {myBookingsIsActive} size={24} onClick={()=> {setMyBookingsActive(!myBookingsIsActive); setMyProfileIsActive(false)}}/>
                         </MobilePopUpButton> 
