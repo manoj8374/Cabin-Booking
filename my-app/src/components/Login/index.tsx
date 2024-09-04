@@ -1,12 +1,16 @@
 import {useState} from 'react'
+import { useNavigate } from 'react-router-dom'
 import { LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./loginStyled"
 
 const Login = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
 
+    const navigate = useNavigate()
+
     const submitLogin = (e: any)=>{
         e.preventDefault()
+        navigate('/')
     }
 
     return (
