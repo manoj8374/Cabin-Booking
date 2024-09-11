@@ -1,6 +1,7 @@
 //get start and end date from global state. get cabin id from props and get time slots from api
 import {useEffect, useState} from 'react'
-import {TimeSlotsContainer, ButtonTimeSlot} from './timeSlotsStyled'
+import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton} from './timeSlotsStyled'
+import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 
 interface TimeSlotsProps{
     cabinId: string
@@ -292,10 +293,12 @@ const sampleTimeSlotsData: TimeSlotsInterface[] = [
   ]
 
 const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
-    console.log(cabinId, "pichihih iasdfi")
     const [timeSlots, setTimeSlots] = useState<TimeSlotsObj[]>()
+    const [showAllSlots, setShowAllSlots] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
+    const [selectedSlots, setSelectedSlots] = useState<string[]>([])
+
     useEffect(()=>{
-        console.log("qwerty")
         const fetchCabinDetails = async ()=>{
             //instead of a promise make an api call here
             const getTimeSlots = new Promise((resolve, reject)=>{
@@ -323,13 +326,42 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
         }
 
         fetchCabinDetails()
+
+        const handleResize = () => {
+          setIsMobile(window.innerWidth <= 768);
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+
     },[cabinId])
+
+    const handleToggleSelect = (timeString: string)=>{
+      if(selectedSlots.includes(timeString)){
+        setSelectedSlots(selectedSlots.filter((time)=> time !== timeString))
+      }else{
+        setSelectedSlots([...selectedSlots, timeString])
+      }
+    }
 
     return (
         <TimeSlotsContainer>
-            {timeSlots?.map((timeSlot)=>(
-                <ButtonTimeSlot isavailable = {timeSlot.availability}>{timeSlot.time_string}</ButtonTimeSlot>
-            ))}    
+            <TimeSlotsSubContainer>
+              {timeSlots?.slice(0, showAllSlots || !isMobile ? timeSlots?.length : 4).map((timeSlot)=>(
+
+                  <ButtonTimeSlotComponent key = {timeSlot.time_string} handleToggleSelect={handleToggleSelect} timeSlot = {timeSlot} isSelected={selectedSlots.includes(timeSlot.time_string)}/>
+              ))} 
+              {/* isavailable = {timeSlot.availability} */}
+            </TimeSlotsSubContainer>            
+            {isMobile ? <MobileViewMoreContainer>
+              <p onClick={()=>setShowAllSlots(!showAllSlots)}>{showAllSlots ? "Show less" : "Show more"}</p>
+              {selectedSlots.length > 0 && <SubmitTimeSlotsButton>Submit</SubmitTimeSlotsButton>}
+            </MobileViewMoreContainer>: null}
+            
         </TimeSlotsContainer>
     )
 }
