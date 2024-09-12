@@ -20,7 +20,7 @@ export const HomeContainerHeader = styled.div`
 `
 
 export const HomeSubContainer = styled.div`
-    width: 90%;
+    width: 95%;
     min-height: 90vh;
     background-color: white;
     display: flex;
@@ -28,6 +28,10 @@ export const HomeSubContainer = styled.div`
     align-self: center;
     padding-top: 24px;
     padding-bottom: 24px;
+
+    @media (min-width: 768px){
+        width: 80%;
+    }
 `
 
 export const SelectDateHeading = styled.h1`

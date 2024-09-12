@@ -5,6 +5,10 @@ export const TimeSlotsContainer = styled.ul`
     display: flex;
     gap: 12px;
     flex-direction: column;
+
+    @media (min-width: 768px) {
+        flex-direction: row;
+    }
 `
 
 interface ButtonTimeSlotContext {
@@ -22,6 +26,15 @@ export const ButtonTimeSlot = styled.button<ButtonTimeSlotContext>`
     color: ${({isavailable, selected})=> selected ? "#FFFFFF" : isavailable ? "#4ABD5D" : "#E72323"};
     font-size: 14px;
     background-color: ${({selected})=> selected ? "#4ABD5D" : "transparent"};
+
+    @media (max-width: 385px) {
+        flex-basis: 30%;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 20px;
+        padding: 10px;
+    }
 `
 
 export const TimeSlotsSubContainer = styled.div`
@@ -33,6 +46,18 @@ export const TimeSlotsSubContainer = styled.div`
     @media (max-width: 420px) {
         gap: 10px;
     }
+
+    @media (min-width: 768px) {
+        width: 70%;
+    }
+
+    @media (min-width: 1024px) {
+        width: 60%;
+    }
+
+    @media (min-width: 1440px) {
+        width: 50%;
+    }
 `
 
 export const MobileViewMoreContainer = styled.div`
@@ -41,7 +66,6 @@ export const MobileViewMoreContainer = styled.div`
     align-items: center;
     font-size: 14px;
     color: #1F41BB;
-    cursor: pointer;
     margin-top: 12px;
     margin-bottom: 12px;
     gap: 40px;
@@ -56,4 +80,23 @@ export const SubmitTimeSlotsButton = styled.button`
     cursor: pointer;
     font-size: 14px;
     align-self: flex-end;
+`
+
+export const LaptopDeviceSubmitContainer = styled.div`
+    display: flex;
+    justify-content: flex-end;
+    flex-grow: 1;
+    align-self: flex-end;
+`
+
+export const LaptopDeviceSubmitButton = styled.button`
+    background-color: #1F41BB;
+    color: #FFFFFF;
+    border-radius: 4px;
+    padding: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    width: 120px;
+    padding: 12px;
 `

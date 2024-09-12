@@ -1,6 +1,6 @@
 //get start and end date from global state. get cabin id from props and get time slots from api
 import {useEffect, useState} from 'react'
-import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton} from './timeSlotsStyled'
+import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 
 interface TimeSlotsProps{
@@ -297,6 +297,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     const [showAllSlots, setShowAllSlots] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
     const [selectedSlots, setSelectedSlots] = useState<string[]>([])
+    const [numberOfSlots, setNumberOfSlots] = useState(4)
 
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
@@ -329,6 +330,11 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
 
         const handleResize = () => {
           setIsMobile(window.innerWidth <= 768);
+          if(window.innerWidth <= 385){
+            setNumberOfSlots(3)
+          }else{
+            setNumberOfSlots(4)
+          }
         };
 
         handleResize();
@@ -349,20 +355,24 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     }
 
     return (
+      <>
         <TimeSlotsContainer>
             <TimeSlotsSubContainer>
-              {timeSlots?.slice(0, showAllSlots || !isMobile ? timeSlots?.length : 4).map((timeSlot)=>(
+              {timeSlots?.slice(0, showAllSlots || !isMobile ? timeSlots?.length : numberOfSlots).map((timeSlot)=>(
 
                   <ButtonTimeSlotComponent key = {timeSlot.time_string} handleToggleSelect={handleToggleSelect} timeSlot = {timeSlot} isSelected={selectedSlots.includes(timeSlot.time_string)}/>
               ))} 
-              {/* isavailable = {timeSlot.availability} */}
             </TimeSlotsSubContainer>            
             {isMobile ? <MobileViewMoreContainer>
               <p onClick={()=>setShowAllSlots(!showAllSlots)}>{showAllSlots ? "Show less" : "Show more"}</p>
-              {selectedSlots.length > 0 && <SubmitTimeSlotsButton>Submit</SubmitTimeSlotsButton>}
+              {selectedSlots.length > 0 && <SubmitTimeSlotsButton>Confirm</SubmitTimeSlotsButton>}
             </MobileViewMoreContainer>: null}
             
+            
         </TimeSlotsContainer>
+        {!isMobile && selectedSlots.length >= 0 && <LaptopDeviceSubmitContainer>
+          <LaptopDeviceSubmitButton>Confirm</LaptopDeviceSubmitButton>
+        </LaptopDeviceSubmitContainer>}</>
     )
 }
 

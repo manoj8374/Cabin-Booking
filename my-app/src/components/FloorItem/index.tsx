@@ -25,7 +25,6 @@ const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
     const changeDescriptionAndIndex = (value: string, index: number, cabinId: string)=>{
         setCabinDescription(value)
         setActiveIndex(index)
-        console.log(cabinId, "hello world")
         setSelectedCabinId(cabinId)
     }
 
