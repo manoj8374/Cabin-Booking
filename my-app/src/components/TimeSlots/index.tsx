@@ -346,7 +346,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
 
     },[cabinId])
 
-    const handleToggleSelect = (timeString: string)=>{
+    const handleToggleSelect = (timeString: string, availability: boolean)=>{
       if(selectedSlots.includes(timeString)){
         setSelectedSlots(selectedSlots.filter((time)=> time !== timeString))
       }else{
