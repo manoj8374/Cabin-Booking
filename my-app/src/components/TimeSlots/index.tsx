@@ -2,6 +2,7 @@
 import {useEffect, useState} from 'react'
 import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
+import WhoBookedTheSlot from '../WhoBookedTheSlot'
 
 interface TimeSlotsProps{
     cabinId: string
@@ -347,10 +348,15 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     },[cabinId])
 
     const handleToggleSelect = (timeString: string, availability: boolean)=>{
-      if(selectedSlots.includes(timeString)){
+      if(selectedSlots.includes(timeString) && availability === true){
         setSelectedSlots(selectedSlots.filter((time)=> time !== timeString))
       }else{
-        setSelectedSlots([...selectedSlots, timeString])
+          if(!selectedSlots.includes(timeString) && availability === true){
+            setSelectedSlots([...selectedSlots, timeString])
+          }else{
+            //open a popup and show the details of the person who booked the slot
+            <WhoBookedTheSlot/>
+          }
       }
     }
 

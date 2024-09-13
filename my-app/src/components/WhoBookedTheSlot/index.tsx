@@ -1,6 +1,8 @@
+import {WhoBookedTheSlotContainer} from './whoBookedStyled'
+
 const WhoBookedTheSlot = ()=>{
     return(
-        <h1>WhoBookedTheSlot</h1>
+        <WhoBookedTheSlotContainer>WhoBookedTheSlot</WhoBookedTheSlotContainer>
     )
 }
 

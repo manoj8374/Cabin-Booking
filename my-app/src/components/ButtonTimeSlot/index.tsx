@@ -14,7 +14,7 @@ interface TimeSlotProps{
 
 const ButtonTimeSlotComponent: React.FC<TimeSlotProps> = ({timeSlot, isSelected, handleToggleSelect})=>{
     return(
-        <ButtonTimeSlot disabled = {!timeSlot.availability} onClick = {()=> handleToggleSelect(timeSlot.time_string, timeSlot.availability)} isavailable = {timeSlot.availability} selected = {isSelected}>{timeSlot.time_string}</ButtonTimeSlot>
+        <ButtonTimeSlot onClick = {()=> handleToggleSelect(timeSlot.time_string, timeSlot.availability)} isavailable = {timeSlot.availability} selected = {isSelected}>{timeSlot.time_string}</ButtonTimeSlot>
     )
 }
 
