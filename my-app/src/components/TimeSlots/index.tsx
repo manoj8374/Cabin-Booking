@@ -1,8 +1,12 @@
 //get start and end date from global state. get cabin id from props and get time slots from api
 import {useEffect, useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+import { setWhoBooked } from '../../Redux/whobookedslice'
 import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 import WhoBookedTheSlot from '../WhoBookedTheSlot'
+import {RootState, AppDispatch} from '../../Redux/store'
+
 
 interface TimeSlotsProps{
     cabinId: string
@@ -300,6 +304,9 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     const [selectedSlots, setSelectedSlots] = useState<string[]>([])
     const [numberOfSlots, setNumberOfSlots] = useState(4)
 
+    const bookedButtonClicked = useSelector((state: RootState) => state.whobooked.isClicked)
+    const dispatch = useDispatch<AppDispatch>()
+
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
             //instead of a promise make an api call here
@@ -354,8 +361,13 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
           if(!selectedSlots.includes(timeString) && availability === true){
             setSelectedSlots([...selectedSlots, timeString])
           }else{
+            dispatch(setWhoBooked({
+              isClicked: true,
+              timeSlot: timeString,
+              cabinId
+            }))
             //open a popup and show the details of the person who booked the slot
-            <WhoBookedTheSlot/>
+            // <WhoBookedTheSlot/>
           }
       }
     }
