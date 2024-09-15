@@ -2,6 +2,7 @@
 import {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
 import { setWhoBooked } from '../../Redux/whobookedslice'
+import {ConfirmSlotPopUp} from '../../Redux/confirmslotsslice'
 import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 import WhoBookedTheSlot from '../WhoBookedTheSlot'
@@ -372,6 +373,11 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
       }
     }
 
+    const confirmSlots = ()=>{
+      dispatch(ConfirmSlotPopUp({isClicked: true, slots: selectedSlots}))
+      console.log(selectedSlots)
+    }
+
     return (
       <>
         <TimeSlotsContainer>
@@ -383,7 +389,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
             </TimeSlotsSubContainer>            
             {isMobile ? <MobileViewMoreContainer>
               <p onClick={()=>setShowAllSlots(!showAllSlots)}>{showAllSlots ? "Show less" : "Show more"}</p>
-              {selectedSlots.length > 0 && <SubmitTimeSlotsButton>Confirm</SubmitTimeSlotsButton>}
+              {selectedSlots.length > 0 && <SubmitTimeSlotsButton onClick={confirmSlots}>Confirm</SubmitTimeSlotsButton>}
             </MobileViewMoreContainer>: null}
             
             

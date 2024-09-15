@@ -1,4 +1,4 @@
-import {WhoBookedTheSlotContainer, WhoBookedTheSlotSubContainer, WhoBookedTheSlotFormMainContainer, WhoBookedTheSlotHeadingContainer, WhoBookedTheSlotFormContainer, WhoBookedTheSlotInputFieldContainer, WhoBookedTheSlotInputField, LabelElement, BookedContainer, BookedContainerHeading, CloseButton} from './whoBookedStyled'
+import {WhoBookedTheSlotContainer,HeadingElement, WhoBookedTheSlotSubContainer, RxCross2Element,DateParaElement, WhoBookedTheSlotFormMainContainer, WhoBookedTheSlotHeadingContainer, WhoBookedTheSlotFormContainer, WhoBookedTheSlotInputFieldContainer, WhoBookedTheSlotInputField, LabelElement, BookedContainer, BookedContainerHeading, CloseButton} from './whoBookedStyled'
 import { useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
 import {setPopUpClosed} from '../../Redux/whobookedslice'
@@ -26,8 +26,8 @@ const WhoBookedTheSlot = ()=>{
                 <WhoBookedTheSlotSubContainer>
                     <WhoBookedTheSlotFormMainContainer>
                         <WhoBookedTheSlotHeadingContainer>
-                            <p>Ground Floor Conference Room</p>
-                            <RxCross2 onClick = {closePopUp}/>
+                            <HeadingElement>Ground Floor Conference Room</HeadingElement>
+                            <RxCross2Element onClick = {closePopUp} />
                         </WhoBookedTheSlotHeadingContainer>
                         <WhoBookedTheSlotFormContainer>
                             <WhoBookedTheSlotInputFieldContainer>
@@ -50,7 +50,7 @@ const WhoBookedTheSlot = ()=>{
                                 <BookedContainerHeading>
                                     Booked from
                                 </BookedContainerHeading>
-                                <p>Date - 05/08/2024   to   06/08/2024</p>
+                                <DateParaElement>Date - 05/08/2024   to   06/08/2024</DateParaElement>
                             </BookedContainer>
                             <CloseButton onClick = {closePopUp} >
                                 Close

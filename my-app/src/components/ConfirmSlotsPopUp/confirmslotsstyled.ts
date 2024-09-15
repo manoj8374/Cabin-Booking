@@ -1,6 +1,26 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 import {RxCross2} from "react-icons/rx";
 
+export const SelectedTimeSlotsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+`
+
+export const ConfirmTimeSlotsContainer = styled.div`
+    display: flex;  
+    gap: 8px;
+    flex-wrap: wrap;
+`
+
+export const SlotItem = styled.p`
+    border: 1px solid #999999;
+    padding: 8px;
+    border-radius: 4px;
+    color: #4ABD5D;
+    font-size: 14px;
+    text-align: center;
+`
 export const WhoBookedTheSlotContainer = styled.div`
    position: fixed;
    top: 0;
@@ -9,21 +29,40 @@ export const WhoBookedTheSlotContainer = styled.div`
    background: rgba(0, 0, 0, 0.3);
    z-index: 10000;
    min-height: 100vh;
-   padding-top: 24px;
    backdrop-filter: blur(5px);
-   overflow: hidden;
    display: flex;
    justify-content: center;
-
+   padding-top: 32px;
 `
+
+export const PurposeContainer = styled.textarea`
+    width: 100%;
+    background-color: ${(props)=> props.disabled ? "#EBE8E8" : "white"};
+    border-radius: 4px;
+    border: #D0D5DD 2px solid;
+    padding: 8px;
+    padding-top: 8px;
+    padding-bottom: 18px;
+    outline: none;
+    font-size: 16px;
+    color: black;
+    rows: 500;
+    cols: 10;
+
+    @media screen and (min-width: 1024px) {
+    font-size: 18px;
+    }
+`
+
+
 export const WhoBookedTheSlotSubContainer = styled.div`
    background-color: #F1F4FF;
    width: 90%;
-   margin: auto;
+   margin-bottom: auto;
    padding-bottom: 24px;
    padding-top: 8px;
    border-radius: 8px;
-   align-self: center;
+   overflow-y: scroll;
 
    @media screen and (min-width: 768px) {
       width: 60%;
@@ -71,10 +110,10 @@ export const WhoBookedTheSlotInputFieldContainer = styled.div`
 export const WhoBookedTheSlotInputField = styled.input`
    width: 100%;
    height: 30px;
-   background-color: #EBE8E8;
+   background-color: ${(props)=> props.disabled ? "#EBE8E8" : "white"};
    border-radius: 4px;
    border: #D0D5DD 2px solid;
-   padding: 16px;
+   padding: 8px;
    padding-top: 18px;
    padding-bottom: 18px;
    outline: none;
@@ -174,4 +213,56 @@ export const RxCross2Element = styled(RxCross2)`
    @media screen and (min-width: 1024px) {
       font-size: 22px;
    }
+`
+
+export const ButtonsContainer = styled.div`
+   display: flex;
+   gap: 24px;
+   align-self: center;
+`
+
+export const BookButton = styled.button`
+    background-color: #1F41BB;
+    border: none;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: white;
+    margin-top: 24px;
+    width: 90px;
+    border-radius: 4px;
+    padding: 4px;
+    margin-top: 10px;
+    align-self: center;
+    cursor: pointer;
+
+    @media screen and (min-width: 1024px) {
+    font-size: 18px;
+    padding: 8px;
+    width: 120px;
+
+    }
+`
+
+export const CancelButton = styled.button`
+    background-color: #F0F0F0;
+    border: 1px solid black;
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #494949;
+    margin-top: 24px;
+    width: 90px;
+    border-radius: 4px;
+    padding: 4px;
+    margin-top: 10px;
+    align-self: center;
+    cursor: pointer;
+
+    @media screen and (min-width: 1024px) {
+    font-size: 18px;
+    padding: 8px;
+    width: 120px;
+
+    }
 `

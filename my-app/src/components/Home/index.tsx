@@ -1,7 +1,6 @@
 import {useState, useEffect, ReactNode} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux'
-import { setWhoBooked } from '../../Redux/whobookedslice'
 import {RootState, AppDispatch} from '../../Redux/store'
 import {HomeContainer, HomeContainerHeader, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, ArrowDown, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer} from './homeStyled'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
@@ -9,6 +8,8 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import Cabin from '../Floor';
 import WhoBookedTheSlot from '../WhoBookedTheSlot';
+import confirmslotsslice from '../../Redux/confirmslotsslice';
+import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp';
 
 
 const Home = ()=>{
@@ -17,6 +18,7 @@ const Home = ()=>{
     const [myBookingsIsActive, setMyBookingsActive] = useState(false)
 
     const bookedSlotPopUp = useSelector((state: RootState) => state.whobooked.isClicked)
+    const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
 
     const navigate = useNavigate()
 
@@ -144,6 +146,7 @@ const Home = ()=>{
             </HomeSubContainer>
             {isPopupVisible && renderMobilePopup()}
             {bookedSlotPopUp && <WhoBookedTheSlot/>}
+            {confirmSlotPopUp && <ConfirmSlotPopUpComponent/>}
         </HomeContainer>
     )
 }
