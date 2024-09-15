@@ -395,7 +395,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
             
         </TimeSlotsContainer>
         {!isMobile && selectedSlots.length >= 0 && <LaptopDeviceSubmitContainer>
-          <LaptopDeviceSubmitButton>Confirm</LaptopDeviceSubmitButton>
+          <LaptopDeviceSubmitButton onClick={confirmSlots}>Confirm</LaptopDeviceSubmitButton>
         </LaptopDeviceSubmitContainer>}</>
     )
 }

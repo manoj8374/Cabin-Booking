@@ -20,6 +20,10 @@ export const SlotItem = styled.p`
     color: #4ABD5D;
     font-size: 14px;
     text-align: center;
+
+    @media screen and (min-width: 1024px) {
+        font-size: 18px;
+    }
 `
 export const WhoBookedTheSlotContainer = styled.div`
    position: fixed;
