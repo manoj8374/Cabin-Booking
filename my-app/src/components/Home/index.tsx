@@ -10,6 +10,7 @@ import Cabin from '../Floor';
 import WhoBookedTheSlot from '../WhoBookedTheSlot';
 import confirmslotsslice from '../../Redux/confirmslotsslice';
 import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp';
+import ResultScreen from '../SuccessAndFailure';
 
 
 const Home = ()=>{
@@ -147,6 +148,7 @@ const Home = ()=>{
             {isPopupVisible && renderMobilePopup()}
             {bookedSlotPopUp && <WhoBookedTheSlot/>}
             {confirmSlotPopUp && <ConfirmSlotPopUpComponent/>}
+            {<ResultScreen/>}
         </HomeContainer>
     )
 }
