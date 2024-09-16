@@ -77,7 +77,6 @@ export const SubmitTimeSlotsButton = styled.button`
     border-radius: 4px;
     padding: 8px;
     border: none;
-    cursor: pointer;
     font-size: 14px;
     align-self: flex-end;
 `

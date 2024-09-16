@@ -36,7 +36,7 @@ export const WhoBookedTheSlotContainer = styled.div`
    backdrop-filter: blur(1px);
    display: flex;
    justify-content: center;
-   padding-top: 32px;
+   padding-top: 24px;
 `
 
 export const PurposeContainer = styled.textarea`
@@ -46,7 +46,6 @@ export const PurposeContainer = styled.textarea`
     border: #D0D5DD 2px solid;
     padding: 8px;
     padding-top: 8px;
-    padding-bottom: 18px;
     outline: none;
     font-size: 16px;
     color: black;
@@ -66,7 +65,7 @@ export const WhoBookedTheSlotSubContainer = styled.div`
    padding-bottom: 24px;
    padding-top: 8px;
    border-radius: 8px;
-   overflow-y: scroll;
+   overflow-y: auto;
 
    @media screen and (min-width: 768px) {
       width: 60%;
@@ -173,9 +172,9 @@ export const CloseButton = styled.button`
    font-weight: 500;
    color: white;
    margin-top: 24px;
-   width: 90px;
+   width: 1200px;
    border-radius: 4px;
-   padding: 4px;
+   padding: 8px;
    margin-top: 10px;
    align-self: center;
    cursor: pointer;
@@ -233,9 +232,9 @@ export const BookButton = styled.button`
     font-weight: 500;
     color: white;
     margin-top: 24px;
-    width: 90px;
+    width: 120px;
     border-radius: 4px;
-    padding: 4px;
+    padding: 8px;
     margin-top: 10px;
     align-self: center;
     cursor: pointer;
@@ -256,9 +255,9 @@ export const CancelButton = styled.button`
     font-weight: 600;
     color: #494949;
     margin-top: 24px;
-    width: 90px;
+    width: 120px;
     border-radius: 4px;
-    padding: 4px;
+    padding: 8px;
     margin-top: 10px;
     align-self: center;
     cursor: pointer;
