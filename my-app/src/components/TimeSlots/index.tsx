@@ -7,6 +7,8 @@ import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMor
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 import WhoBookedTheSlot from '../WhoBookedTheSlot'
 import {RootState, AppDispatch} from '../../Redux/store'
+import ResultScreen from '../SuccessAndFailure'
+import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp'
 
 
 interface TimeSlotsProps{
@@ -305,6 +307,9 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     const [selectedSlots, setSelectedSlots] = useState<string[]>([])
     const [numberOfSlots, setNumberOfSlots] = useState(4)
 
+    const errorPopUp = useSelector((state: RootState) => state.confirmSlots.error)
+    const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
+    
     const bookedButtonClicked = useSelector((state: RootState) => state.whobooked.isClicked)
     const dispatch = useDispatch<AppDispatch>()
 
@@ -315,7 +320,6 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
                 setTimeout(()=>{
                     resolve("TimeSlots")
                     const filteredData = sampleTimeSlotsData.filter((data)=> data.cabin_id === cabinId)
-                    console.log(filteredData, "filtered data", cabinId)
                     if(filteredData.length === 0){
                         setTimeSlots([])
                     }else{
@@ -374,18 +378,23 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     }
 
     const confirmSlots = ()=>{
+      console.log(selectedSlots, "selected slots")
       dispatch(ConfirmSlotPopUp({isClicked: true, slots: selectedSlots}))
-      console.log(selectedSlots)
+    }
+
+    const selectedSlotsUpdate = ()=>{
+      setSelectedSlots([])
     }
 
     return (
       <>
         <TimeSlotsContainer>
             <TimeSlotsSubContainer>
-              {timeSlots?.slice(0, showAllSlots || !isMobile ? timeSlots?.length : numberOfSlots).map((timeSlot)=>(
-
-                  <ButtonTimeSlotComponent key = {timeSlot.time_string} handleToggleSelect={handleToggleSelect} timeSlot = {timeSlot} isSelected={selectedSlots.includes(timeSlot.time_string)}/>
-              ))} 
+              {timeSlots?.slice(0, showAllSlots || !isMobile ? timeSlots?.length : numberOfSlots).map((timeSlot)=>{
+                  return (
+                    <ButtonTimeSlotComponent key = {timeSlot.time_string} handleToggleSelect={handleToggleSelect} timeSlot = {timeSlot} isSelected={selectedSlots.includes(timeSlot.time_string)}/>
+                  )
+              })} 
             </TimeSlotsSubContainer>            
             {isMobile ? <MobileViewMoreContainer>
               <p onClick={()=>setShowAllSlots(!showAllSlots)}>{showAllSlots ? "Show less" : "Show more"}</p>
@@ -396,7 +405,11 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
         </TimeSlotsContainer>
         {!isMobile && selectedSlots.length >= 0 && <LaptopDeviceSubmitContainer>
           <LaptopDeviceSubmitButton onClick={confirmSlots}>Confirm</LaptopDeviceSubmitButton>
-        </LaptopDeviceSubmitContainer>}</>
+        </LaptopDeviceSubmitContainer>}
+        {confirmSlotPopUp && <ConfirmSlotPopUpComponent selectedSlotsUpdate = {selectedSlotsUpdate}/>}
+        {errorPopUp === undefined ? null : errorPopUp === true ? <ResultScreen error = {true}/> : <ResultScreen error = {false}/>}
+        </>
+        //display the result popup here
     )
 }
 

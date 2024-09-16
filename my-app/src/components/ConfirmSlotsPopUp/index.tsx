@@ -2,12 +2,15 @@ import {WhoBookedTheSlotContainer,HeadingElement, WhoBookedTheSlotSubContainer, 
 import {SelectedTimeSlotsContainer, ButtonsContainer, ConfirmTimeSlotsContainer, SlotItem, BookButton, CancelButton, PurposeContainer} from './confirmslotsstyled'
 import { useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
-import {ConfirmSlotPopUp} from '../../Redux/confirmslotsslice'
+import {ConfirmSlotPopUp, setError} from '../../Redux/confirmslotsslice'
 import { useEffect, useState } from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 
+interface ConfirmSlotPopUpProps{
+    selectedSlotsUpdate: ()=> void
+}
 
-const ConfirmSlotPopUpComponent = ()=>{
+const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlotsUpdate})=>{
     const dispatch = useDispatch<AppDispatch>()
     const slots = useSelector((state: RootState) => state.confirmSlots.slots)
 
@@ -16,6 +19,13 @@ const ConfirmSlotPopUpComponent = ()=>{
     const closePopUp = ()=>{
         dispatch(ConfirmSlotPopUp({isClicked: false}))
         // document.body.style.overflow = 'hidden';
+    }
+
+    const confirm = (e: any)=>{
+        e.preventDefault()
+        dispatch(setError({error: false}))
+        dispatch(ConfirmSlotPopUp({isClicked: false, slots: []}))
+        selectedSlotsUpdate()
     }
 
     useEffect(()=>{
@@ -67,7 +77,7 @@ const ConfirmSlotPopUpComponent = ()=>{
                                 <CancelButton onClick = {closePopUp} >
                                     Cancel
                                 </CancelButton>
-                                <BookButton>Confirm</BookButton>
+                                <BookButton onClick = {confirm}>Confirm</BookButton>
                             </ButtonsContainer>
                         </WhoBookedTheSlotFormContainer>
                     </WhoBookedTheSlotFormMainContainer>

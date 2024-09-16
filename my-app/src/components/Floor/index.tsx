@@ -78,17 +78,17 @@ const details: MainFloorInterface[] = [
           }
         ]
       },
-      {
-        "floor": "Ground Floor",
-        "cabins": [
-          {
-            "cabin_id": "1",
-            "name": "Conference Room",
-            "cabin_type": "Conference Room",
-            "description": "Sufficient for 25 people",
-          }
-        ]
-      }
+      // {
+      //   "floor": "Fifth Floor",
+      //   "cabins": [
+      //     {
+      //       "cabin_id": "1",
+      //       "name": "Conference Room",
+      //       "cabin_type": "Conference Room",
+      //       "description": "Sufficient for 25 people",
+      //     }
+      //   ]
+      // }
   ]
 
 const Cabin = ()=>{

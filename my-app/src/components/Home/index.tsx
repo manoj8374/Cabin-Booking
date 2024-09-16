@@ -2,7 +2,7 @@ import {useState, useEffect, ReactNode} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
-import {HomeContainer, HomeContainerHeader, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, ArrowDown, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer} from './homeStyled'
+import {HomeContainer, HomeContainerHeader, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, ArrowDown, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer} from './homeStyled'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
@@ -11,15 +11,19 @@ import WhoBookedTheSlot from '../WhoBookedTheSlot';
 import confirmslotsslice from '../../Redux/confirmslotsslice';
 import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp';
 import ResultScreen from '../SuccessAndFailure';
+import NavBar from '../NavBar';
+import DatePickerComponent from '../DatePicker';
 
 
 const Home = ()=>{
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isNavBarVisible, setIsNavBarVisible] = useState(true);
     const [myProfileIsActive, setMyProfileIsActive] = useState(false)
     const [myBookingsIsActive, setMyBookingsActive] = useState(false)
 
-    const bookedSlotPopUp = useSelector((state: RootState) => state.whobooked.isClicked)
+    const whoBookedSlotPopUp = useSelector((state: RootState) => state.whobooked.isClicked)
     const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
+    const errorPopUp = useSelector((state: RootState) => state.confirmSlots.error)
 
     const navigate = useNavigate()
 
@@ -134,21 +138,28 @@ const Home = ()=>{
         )
     }
 
+    const toggleNavBar = ()=>{
+        console.log("clicked")
+        setIsNavBarVisible(!isNavBarVisible)
+
+    }
+
     return (
         <HomeContainer>
             <HomeContainerHeader>
                 <SelectDateHeading>Select Date</SelectDateHeading>   
-                <RxHamburgerMenu size={24} onClick={togglePopup}/>
+                <LaptopNavBar size = {32} onClick={()=> toggleNavBar()}/>
+                <MobileNavBarIcon size = {24} onClick={togglePopup}/>
             </HomeContainerHeader>
             <HomeSubContainer>
                 {/* Date Picker Component Here */}
                 {/* // Cabin Component Here */}
+                <DatePickerComponent/>
                 <Cabin/>
             </HomeSubContainer>
             {isPopupVisible && renderMobilePopup()}
-            {bookedSlotPopUp && <WhoBookedTheSlot/>}
-            {confirmSlotPopUp && <ConfirmSlotPopUpComponent/>}
-            {<ResultScreen/>}
+            {/* {isNavBarVisible && <NavBar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar}/> } */}
+            {whoBookedSlotPopUp && <WhoBookedTheSlot/>}
         </HomeContainer>
     )
 }

@@ -5,4 +5,5 @@ export const FloorContainer = styled.ul`
     flex-direction: column;
     gap: 40px;
     padding: 0px;
+    
 `

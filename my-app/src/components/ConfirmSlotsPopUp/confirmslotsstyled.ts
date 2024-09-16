@@ -30,10 +30,10 @@ export const WhoBookedTheSlotContainer = styled.div`
    top: 0;
    left: 0;
    width: 100%;
-   background: rgba(0, 0, 0, 0.3);
+   background: rgba(0, 0, 0, 0.1);
    z-index: 10000;
    min-height: 100vh;
-   backdrop-filter: blur(5px);
+   backdrop-filter: blur(1px);
    display: flex;
    justify-content: center;
    padding-top: 32px;

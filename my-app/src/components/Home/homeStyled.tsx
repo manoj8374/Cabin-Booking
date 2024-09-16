@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
+import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 
 export const HomeContainer = styled.div`
     min-height: 100vh;
@@ -17,6 +18,10 @@ export const HomeContainerHeader = styled.div`
     align-self: center;
     padding-top: 24px;
     align-items: center;
+
+    @media (min-width: 768px){
+        width: 95%;
+    }
 `
 
 export const HomeSubContainer = styled.div`
@@ -28,6 +33,9 @@ export const HomeSubContainer = styled.div`
     align-self: center;
     padding-top: 24px;
     padding-bottom: 24px;
+    gap: 24px;
+
+    
 
     @media (min-width: 768px){
         width: 80%;
@@ -39,6 +47,28 @@ export const SelectDateHeading = styled.h1`
     color: #1F41BB;
     font-weight: bolder;
     font-size: 28px;
+
+    @media (min-width: 768px){
+        font-size: 32px;
+        order: 1;
+        flex-grow: 0.5;
+    }
+`
+
+export const LaptopNavBar = styled(RxHamburgerMenu)`
+    display: none;
+    @media (min-width: 768px){
+        display: flex;
+        cursor: pointer;
+    }
+`
+
+export const MobileNavBarIcon = styled(RxHamburgerMenu)`
+    display: flex;
+    cursor: pointer;
+    @media (min-width: 768px){
+        display: none;
+    }
 `
 
 export const MobilePopUp = styled.div<{ispopupvisible: boolean}>`
