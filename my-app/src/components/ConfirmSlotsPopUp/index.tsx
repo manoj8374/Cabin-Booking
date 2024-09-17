@@ -5,6 +5,7 @@ import {RootState, AppDispatch} from '../../Redux/store'
 import {ConfirmSlotPopUp, setError} from '../../Redux/confirmslotsslice'
 import { useEffect, useState } from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
+import { useDateAndTime } from '../../Constants';
 
 interface ConfirmSlotPopUpProps{
     selectedSlotsUpdate: ()=> void
@@ -13,6 +14,7 @@ interface ConfirmSlotPopUpProps{
 const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlotsUpdate})=>{
     const dispatch = useDispatch<AppDispatch>()
     const slots = useSelector((state: RootState) => state.confirmSlots.slots)
+    const {startdate, endDate, updateStartDate, updateEndDate} = useDateAndTime();
 
     const [timeSlots, setTimeSlots] = useState<string[]>([])
 
@@ -61,7 +63,7 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlo
                                 <BookedContainerHeading>
                                     Selected Date
                                 </BookedContainerHeading>
-                                <DateParaElement>Date - 05/08/2024   to   06/08/2024</DateParaElement>
+                                <DateParaElement>Date - 05/08/2024   to  {endDate}</DateParaElement>
                             </BookedContainer>
                             <SelectedTimeSlotsContainer>
                                 <BookedContainerHeading>

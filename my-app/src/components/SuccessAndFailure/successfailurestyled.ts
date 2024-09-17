@@ -16,8 +16,8 @@ export const MainContainer = styled.div`
     align-items: center;
 
     @media (min-width: 768px) {
-        background: rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(15px);
+        background: rgba(0, 0, 0, 0.2);
+        backdrop-filter: blur(3px);
     }
 `
 
