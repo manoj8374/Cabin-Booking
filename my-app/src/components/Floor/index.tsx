@@ -1,8 +1,11 @@
 import {useState, useEffect } from 'react'
-import {FloorContainer} from './cabinStyled'
+import {FloorContainer, SpinnerContainer} from './cabinStyled'
 import FloorItem from '../FloorItem'
-import {url} from '../../Constants'
+import {url} from '../../Utils'
 import Cookies from 'js-cookie'
+import ClipLoader from "react-spinners/ClipLoader";
+import { setCabinIds } from '../../Redux/CabinSlice'
+import {useCabinData} from '../../Utils'
 
 interface CabinInterface {
     cabin_id: string,
@@ -95,10 +98,11 @@ const details: MainFloorInterface[] = [
 
 const Cabin = ()=>{
     const [cabinDetails, setCabinDetails] = useState<MainFloorInterface[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const {updateSelectedSlots} = useCabinData()
 
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
-            //instead of a promise make an api call here
             const response = await fetch(`${url}/get/cabin_details/v1`,{
                 method: 'GET',
                 headers: {
@@ -109,6 +113,15 @@ const Cabin = ()=>{
             
             if(response.ok){
                 setCabinDetails(data)
+                const cabinIds = data.map((floor: MainFloorInterface)=>{
+                  const cabinIdsSub = floor.cabins.map((cabin)=>{
+                      return cabin.cabin_id
+                  })
+                  return cabinIdsSub
+                    
+                })
+                const ids = cabinIds.flat()
+                updateSelectedSlots(ids)
             }
         }
 
@@ -116,9 +129,8 @@ const Cabin = ()=>{
     },[])
 
     return (
-        <FloorContainer>
-          {cabinDetails.length === 0 ? <h1>Loading...</h1>: cabinDetails.map((floor)=>{
-            console.log(floor.cabins, "FLoor details")
+        <FloorContainer isloading = {isLoading}>
+          {cabinDetails.length === 0 ? <SpinnerContainer><ClipLoader color={"#1F41BB"} loading={true} size={50} /></SpinnerContainer>: cabinDetails.map((floor)=>{
                 return (
                     <FloorItem key = {floor.floor_name} floor = {floor.floor_name} cabins = {floor.cabins}/>
                 )

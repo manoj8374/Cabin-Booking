@@ -1,9 +1,21 @@
 import styled from 'styled-components'
 
-export const FloorContainer = styled.ul`
+interface FloorContainerProps {
+    isloading: boolean
+}
+
+export const FloorContainer = styled.ul<FloorContainerProps>`
     display: flex;
     flex-direction: column;
+    // height: ${(props)=> props.isloading ? "500px" : "auto"};
     gap: 40px;
     padding: 0px;
     
+`
+
+export const SpinnerContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 `

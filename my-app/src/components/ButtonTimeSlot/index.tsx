@@ -1,8 +1,6 @@
 import {ButtonTimeSlot} from '../TimeSlots/timeSlotsStyled'
 
 interface TimeSlotsObj{
-    start_date: string,
-    end_date: string,
     availability: boolean,
     time_string: string
 }

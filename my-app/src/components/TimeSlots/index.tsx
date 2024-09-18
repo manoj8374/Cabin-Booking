@@ -9,6 +9,8 @@ import WhoBookedTheSlot from '../WhoBookedTheSlot'
 import {RootState, AppDispatch} from '../../Redux/store'
 import ResultScreen from '../SuccessAndFailure'
 import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp'
+import { url, accessToken, useCabinData} from '../../Utils'
+import Cookies from 'js-cookie'
 
 
 interface TimeSlotsProps{
@@ -16,8 +18,7 @@ interface TimeSlotsProps{
 }
 
 interface TimeSlotsArr{
-    start_date: string,
-    end_date: string,
+    slot: string
     availability: boolean
 }
 
@@ -27,278 +28,276 @@ interface TimeSlotsInterface{
 }
 
 interface TimeSlotsObj{
-    start_date: string,
-    end_date: string,
-    availability: boolean,
-    time_string: string
+    time_string: string,
+    availability: boolean
 }
 
-const sampleTimeSlotsData: TimeSlotsInterface[] = [
-    {
-      "cabin_id": "3ba2eefc-22f5-4f9e-992c-be85ac158c27",
-      "time_slots": [
-        {
-          "start_date": "2024-09-04T00:30:00.664Z",
-          "end_date": "2024-09-04T06:00:00.664Z",
-          "availability": false
-        }
-        ,{
-            "start_date": "2024-09-04T01:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
-          ,{
-            "start_date": "2024-09-04T02:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-            "start_date": "2024-09-04T03:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-            "start_date": "2024-09-04T04:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
-          ,{
-            "start_date": "2024-09-04T05:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
-          ,{
-            "start_date": "2024-09-04T06:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
-          ,{
-            "start_date": "2024-09-04T07:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-            "start_date": "2024-09-04T08:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
-          ,{
-            "start_date": "2024-09-04T09:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
-          ,{
-            "start_date": "2024-09-04T10:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-            "start_date": "2024-09-04T11:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": true
-          }
+// const sampleTimeSlotsData: TimeSlotsInterface[] = [
+//     {
+//       "cabin_id": "3ba2eefc-22f5-4f9e-992c-be85ac158c27",
+//       "time_slots": [
+//         {
+//           "start_date": "2024-09-04T00:30:00.664Z",
+//           "end_date": "2024-09-04T06:00:00.664Z",
+//           "availability": false
+//         }
+//         ,{
+//             "start_date": "2024-09-04T01:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
+//           ,{
+//             "start_date": "2024-09-04T02:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//             "start_date": "2024-09-04T03:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//             "start_date": "2024-09-04T04:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
+//           ,{
+//             "start_date": "2024-09-04T05:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
+//           ,{
+//             "start_date": "2024-09-04T06:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
+//           ,{
+//             "start_date": "2024-09-04T07:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//             "start_date": "2024-09-04T08:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
+//           ,{
+//             "start_date": "2024-09-04T09:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
+//           ,{
+//             "start_date": "2024-09-04T10:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//             "start_date": "2024-09-04T11:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": true
+//           }
         
-      ]
-    },
-    {
-        "cabin_id": "da009835-759d-40f6-a673-bd8781601a7b",
-        "time_slots": [
-          {
-            "start_date": "2024-09-04T00:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-              "start_date": "2024-09-04T01:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T02:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T03:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T04:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T05:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T06:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T07:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T08:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T09:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T10:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T11:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
+//       ]
+//     },
+//     {
+//         "cabin_id": "da009835-759d-40f6-a673-bd8781601a7b",
+//         "time_slots": [
+//           {
+//             "start_date": "2024-09-04T00:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//               "start_date": "2024-09-04T01:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T02:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T03:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T04:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T05:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T06:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T07:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T08:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T09:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T10:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T11:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
           
-        ]
-      },
-      {
-        "cabin_id": "5600633e-2a2c-4689-9c9e-9742de6e1687",
-        "time_slots": [
-          {
-            "start_date": "2024-09-04T00:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-              "start_date": "2024-09-04T01:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T02:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T03:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T04:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T05:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T06:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T07:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T08:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T09:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T10:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T11:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
+//         ]
+//       },
+//       {
+//         "cabin_id": "5600633e-2a2c-4689-9c9e-9742de6e1687",
+//         "time_slots": [
+//           {
+//             "start_date": "2024-09-04T00:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//               "start_date": "2024-09-04T01:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T02:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T03:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T04:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T05:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T06:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T07:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T08:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T09:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T10:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T11:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
           
-        ]
-      },
-      {
-        "cabin_id": "e357a976-10eb-4c4b-b089-a238109a8679",
-        "time_slots": [
-          {
-            "start_date": "2024-09-04T00:30:00.664Z",
-            "end_date": "2024-09-04T06:00:00.664Z",
-            "availability": false
-          }
-          ,{
-              "start_date": "2024-09-04T01:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T02:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T03:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T04:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T05:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T06:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T07:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T08:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T09:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
-            ,{
-              "start_date": "2024-09-04T10:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": false
-            }
-            ,{
-              "start_date": "2024-09-04T11:30:00.664Z",
-              "end_date": "2024-09-04T06:00:00.664Z",
-              "availability": true
-            }
+//         ]
+//       },
+//       {
+//         "cabin_id": "e357a976-10eb-4c4b-b089-a238109a8679",
+//         "time_slots": [
+//           {
+//             "start_date": "2024-09-04T00:30:00.664Z",
+//             "end_date": "2024-09-04T06:00:00.664Z",
+//             "availability": false
+//           }
+//           ,{
+//               "start_date": "2024-09-04T01:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T02:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T03:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T04:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T05:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T06:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T07:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T08:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T09:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
+//             ,{
+//               "start_date": "2024-09-04T10:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": false
+//             }
+//             ,{
+//               "start_date": "2024-09-04T11:30:00.664Z",
+//               "end_date": "2024-09-04T06:00:00.664Z",
+//               "availability": true
+//             }
           
-        ]
-      }
-  ]
+//         ]
+//       }
+//   ]
 
 const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     const [timeSlots, setTimeSlots] = useState<TimeSlotsObj[]>()
@@ -307,36 +306,64 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     const [selectedSlots, setSelectedSlots] = useState<string[]>([])
     const [numberOfSlots, setNumberOfSlots] = useState(4)
 
+    const {allTheCabinIds, startdate, endDate} = useCabinData()
+
     const errorPopUp = useSelector((state: RootState) => state.confirmSlots.error)
     const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
     
     const bookedButtonClicked = useSelector((state: RootState) => state.whobooked.isClicked)
     const dispatch = useDispatch<AppDispatch>()
 
-    useEffect(()=>{
-        const fetchCabinDetails = async ()=>{
-            //instead of a promise make an api call here
-            const getTimeSlots = new Promise((resolve, reject)=>{
-                setTimeout(()=>{
-                    resolve("TimeSlots")
-                    const filteredData = sampleTimeSlotsData.filter((data)=> data.cabin_id === cabinId)
-                    if(filteredData.length === 0){
-                        setTimeSlots([])
-                    }else{
-                        const updatedData = filteredData[0].time_slots.map((data)=>{
-                            const date = new Date(data.start_date)
-                            const timeString = date.toLocaleTimeString('en-US', {
-                                hour: '2-digit',
-                                minute: '2-digit',
-                              });
-                            return {...data, time_string: timeString}
-                        })
-                        setTimeSlots(updatedData)
-                    }
-                }, 1)
-            })
+    const convertTo12HourFormat = (timeString: string)=>{
+        let hours: string = timeString.split(':')[0]
+        const period = parseInt(hours) >= 12 ? 'PM' : 'AM'
+        let hourTime = parseInt(hours) % 12 || 12
+        let a = `${hourTime < 10 ? '0' : ''}${hourTime}:${timeString.split(':')[1]} ${period}`
+        return a
+    }
 
-            await getTimeSlots
+    useEffect(()=>{
+        
+        const fetchCabinDetails = async ()=>{
+            try{
+              const bodyData = {
+                "cabin_ids": allTheCabinIds,
+                "start_date": startdate,
+                "end_date": endDate
+              }
+
+              const options = {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${Cookies.get("access_token")}`
+                },
+                body: JSON.stringify(bodyData)
+              }
+              const response = await fetch(`${url}/get/cabin_slots/v1`, options)
+              const data = await response.json()
+
+              
+              setSelectedSlots([])
+
+              if(response.status === 200){
+                const filteredData = data.filter((data: TimeSlotsInterface)=> data.cabin_id === cabinId)
+                if(filteredData.length === 0){
+                  setTimeSlots([])
+                }else{
+                  const updatedData = filteredData[0].time_slots.map((data: TimeSlotsArr)=>{
+                      const timeString = convertTo12HourFormat(data.slot)
+                      return {availability: data.availability, time_string: timeString}
+                  })
+                  setTimeSlots(updatedData)
+                }
+                
+              }else{
+                console.log("Error")
+              }
+            }catch(e){
+              console.log(e)
+            }
         }
 
         fetchCabinDetails()
@@ -357,7 +384,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
           window.removeEventListener('resize', handleResize);
         };
 
-    },[cabinId])
+    },[cabinId, allTheCabinIds, startdate, endDate])
 
     const handleToggleSelect = (timeString: string, availability: boolean)=>{
       if(selectedSlots.includes(timeString) && availability === true){

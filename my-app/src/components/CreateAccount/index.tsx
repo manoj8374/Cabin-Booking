@@ -1,7 +1,8 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import {ErrorMsg, LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./createAccountStyled"
 import Cookies from 'js-cookie'
-import {url} from '../../Constants'
+import {url} from '../../Utils'
+import { useNavigate } from 'react-router-dom'
 
 const CreateAccount = () => {
     const [email, setEmail] = useState<string>('')
@@ -11,7 +12,9 @@ const CreateAccount = () => {
     const [contactNumber, setContactNumber] = useState<string>('')
     const [username, setUserName] = useState<string>('')
     const [error, setError] = useState<string>('')
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
 
+    const navigate = useNavigate()
     const submitSignUp = async (e: any)=>{
         e.preventDefault()
         if(email === '' || password === '' || fullName === '' || teamName === '' || contactNumber === ''){
@@ -38,11 +41,11 @@ const CreateAccount = () => {
             try{
                 const response: Response = await fetch(`${url}/user_account/signup/v1`, options)
                 const data = await response.json()
-                console.log(data)
                 if (response.status === 200) {
                 setError('')
                 Cookies.set('token', data.access_token)
                 Cookies.set('refresh_token', data.refresh_token)
+                navigate('/')
             }else{
                 setError(data.error_message)
             }
@@ -50,6 +53,18 @@ const CreateAccount = () => {
                 console.log(error)
             }
         }
+    }
+
+    useEffect(()=>{
+        if(Cookies.get('access_token')){
+            navigate("/")
+        }else{
+            setIsLoggedIn(false)
+        }
+    }, [])
+
+    if(isLoggedIn){
+        return null
     }
 
     return (

@@ -1,13 +1,14 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
-import { url } from '../../Constants'
+import { url } from '../../Utils'
 import {ErrorMessage,LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./loginStyled"
 
 const Login = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [error, setError] = useState<string>('')
+    const [loggedIn, setLoggedIn] = useState(true)
 
     const navigate = useNavigate()
 
@@ -46,6 +47,20 @@ const Login = () => {
             }
         }
         // 
+    }
+
+    useEffect(()=>{
+        if(Cookies.get('access_token')){
+            setLoggedIn(true)
+            navigate('/')
+        }else{
+            setLoggedIn(false)
+        }
+    }, [navigate])
+
+
+    if(loggedIn){
+        return null
     }
 
     return (

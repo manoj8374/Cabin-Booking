@@ -4,13 +4,7 @@ import DatePickerElement from '../DatePickerElement'
 import DatePickerElementFrom from '../DatePickerElement/from'
 
 const DatePickerComponent = ()=>{
-    const datePickerRef = useRef<any>(null); // Ref to access DatePicker instance
 
-  const handleDivClick = () => {
-    if (datePickerRef.current) {
-      datePickerRef.current.setOpen(true); // Open the calendar on div click
-    }
-    };
 
     return(
         <DatePickerContainer>
@@ -21,11 +15,11 @@ const DatePickerComponent = ()=>{
                         <HeadingElement>
                             From
                         </HeadingElement>
-                        <DatePickerElementFrom ref={datePickerRef} openCalendar={() => datePickerRef.current?.setOpen(true)}/>
+                        <DatePickerElementFrom/>
                     </DateContentsContainer>
                 </DateFromContainer>
                 <HyphenIcon/>
-                <DateFromContainer onClick={handleDivClick}>
+                <DateFromContainer>
                     <DateContentsContainer>
                         <HeadingElement>
                             To
@@ -33,7 +27,7 @@ const DatePickerComponent = ()=>{
                         {/* <DateElement>
                         5 Aug Mon, 2024
                         </DateElement> */}
-                        <DatePickerElement ref={datePickerRef} openCalendar={() => datePickerRef.current?.setOpen(true)}/>
+                        <DatePickerElement />
                     </DateContentsContainer>
                 </DateFromContainer>
             </DatePickerSubContainer>

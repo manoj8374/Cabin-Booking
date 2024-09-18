@@ -18,7 +18,6 @@ interface FloorProps {
 
 //extract all the buttons here from the data
 const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
-    console.log(cabins[0], "Hello")
     const [cabinDescription, setCabinDescription] = useState<string>(cabins[0].description)
     const [activeIndex, setActiveIndex] = useState<number>(0)
     const [selectedCabinId, setSelectedCabinId] = useState<string>(cabins[0].cabin_id)

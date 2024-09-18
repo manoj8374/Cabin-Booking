@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute';
 import Login from './components/Login';
 import CreateAccount from './components/CreateAccount'
 import ForgotPasswordComponent from './components/ForgotPassword'
@@ -11,9 +12,15 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path = "/create-account" element = {<CreateAccount />} />
-      <Route path = "/forgot-password" element = {<ForgotPasswordComponent />} />
-      <Route path = "/update-profile" element = {<UpdateProfile />} />
-      <Route path = "/" element = {<Home/>}/>
+      <Route path = "/forgot-password" element = {<ProtectedRoute>
+        <ForgotPasswordComponent/>
+      </ProtectedRoute>} />
+      <Route path = "/update-profile" element = {<ProtectedRoute>
+        <UpdateProfile/>
+      </ProtectedRoute>} />
+      <Route path = "/" element = {<ProtectedRoute>
+        <Home/>
+      </ProtectedRoute>}/>
     </Routes> 
   );
 }

@@ -5,14 +5,9 @@ import {DateElement} from '../DatePicker/DatePickerStyled'
 import "./custom-datepicker.css";
 import { format } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
-import {useDateAndTime} from '../../Constants/index'
+import {useCabinData} from '../../Utils/index'
 
-interface StyledInputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-interface MyDatePickerProps {
-    openCalendar: () => void;
-    ref: React.RefObject<any>;
-  }
 
 const StyledInput = styled.p`
   border: none;
@@ -107,29 +102,24 @@ const StyledDatePickerWrapper = styled.div`
   }
 `;
 
-const DatePickerElement: React.FC<MyDatePickerProps> = ({ openCalendar }) => {
+const DatePickerElement = () => {
   const [startDate, setStartDate] = useState(new Date());
   const datePickerRef = useRef<DatePicker>(null);
 
-  const {startdate, endDate, updateStartDate, updateEndDate} = useDateAndTime();
+  const {updateEndDate} = useCabinData();
 
   const formatCustomDate = (date: Date | null) => {
     return date ? format(date, 'd MMM EEE, yyyy') : 'Select a date';
   };
 
-  const changeDate = (date: Date | null)=>{
-    if (date !== null) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      const formattedDate = `${day}/${month}/${year}`;
 
-      setStartDate(date);
-      updateEndDate(formattedDate);
-      //2024-09-02 //yyyy-mm-dd
+    const changeDate = (date: Date | null)=>{
+      if (date !== null) {
+        setStartDate(date)
+        updateEndDate(format(date, 'yyyy-MM-dd'))
+      }
     }
-  }
-
+  
   return (
     <StyledDatePickerWrapper>
         <DatePicker ref={datePickerRef} selected={startDate} onChange={changeDate} customInput={<StyledInput onClick={() => datePickerRef.current?.setOpen(true)}>{formatCustomDate(startDate)}</StyledInput>} dateFormat="d MMM EEE, yyyy"  />
