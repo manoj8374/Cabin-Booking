@@ -5,7 +5,7 @@ import TimeSlots from '../TimeSlots'
 
 interface CabinInterface {
     cabin_id: string,
-    name: string,
+    cabin_name: string,
     cabin_type: string,
     description: string
 }
@@ -18,6 +18,7 @@ interface FloorProps {
 
 //extract all the buttons here from the data
 const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
+    console.log(cabins[0], "Hello")
     const [cabinDescription, setCabinDescription] = useState<string>(cabins[0].description)
     const [activeIndex, setActiveIndex] = useState<number>(0)
     const [selectedCabinId, setSelectedCabinId] = useState<string>(cabins[0].cabin_id)
@@ -33,7 +34,7 @@ const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
             <FloorItemSubContainer>
                 <FloorHeading>{floor}</FloorHeading>
                 <FloorButtonsContainer>
-                    {cabins.map((eachCabin, index)=>{
+                    {cabins?.map((eachCabin, index)=>{
                         return(
                             <ButtonItem key = {eachCabin.cabin_id} cabinDetails = {eachCabin} changeDescriptionAndIndex = {changeDescriptionAndIndex} activeIndex = {activeIndex} currentIndex = {index}/>
                         )

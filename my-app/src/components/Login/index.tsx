@@ -1,16 +1,51 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./loginStyled"
+import Cookies from 'js-cookie'
+import { url } from '../../Constants'
+import {ErrorMessage,LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./loginStyled"
 
 const Login = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
+    const [error, setError] = useState<string>('')
 
     const navigate = useNavigate()
 
-    const submitLogin = (e: any)=>{
+    const submitLogin = async(e: any)=>{
         e.preventDefault()
-        navigate('/')
+        if(email === "" || password === ""){
+            setError("Please enter email and password")
+        }else{
+            try{
+                const data = {
+                    email: email,
+                    password: password
+                }
+
+                console.log(data)
+
+                const response = await fetch(`${url}/user_account/login/v1/`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+
+                const responseJson = await response.json()
+                if(response.status === 200){
+                    Cookies.set('access_token', responseJson.access_token)
+                    Cookies.set('refresh', responseJson.refresh_token)
+                    navigate('/')
+                }else{
+                    console.log(responseJson)
+                    setError(responseJson.error_message)
+                }
+            }catch(e){
+                console.log(e)
+            }
+        }
+        // 
     }
 
     return (
@@ -25,6 +60,7 @@ const Login = () => {
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
                         <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=>setPassword(e.target.value)}/>
                         <ForgotPassword href = "/forgot-password">Forgot Password?</ForgotPassword>
+                        {error && <ErrorMessage>{error}</ErrorMessage>}
                         <LoginButton type = "submit" onClick = {submitLogin}>Login</LoginButton>
                         <CreateNewAccount href = "/create-account">Create new account</CreateNewAccount>
                     </LoginInputContainer>

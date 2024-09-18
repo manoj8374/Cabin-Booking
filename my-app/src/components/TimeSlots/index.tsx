@@ -35,7 +35,7 @@ interface TimeSlotsObj{
 
 const sampleTimeSlotsData: TimeSlotsInterface[] = [
     {
-      "cabin_id": "1",
+      "cabin_id": "3ba2eefc-22f5-4f9e-992c-be85ac158c27",
       "time_slots": [
         {
           "start_date": "2024-09-04T00:30:00.664Z",
@@ -101,7 +101,7 @@ const sampleTimeSlotsData: TimeSlotsInterface[] = [
       ]
     },
     {
-        "cabin_id": "2",
+        "cabin_id": "da009835-759d-40f6-a673-bd8781601a7b",
         "time_slots": [
           {
             "start_date": "2024-09-04T00:30:00.664Z",
@@ -167,7 +167,7 @@ const sampleTimeSlotsData: TimeSlotsInterface[] = [
         ]
       },
       {
-        "cabin_id": "3",
+        "cabin_id": "5600633e-2a2c-4689-9c9e-9742de6e1687",
         "time_slots": [
           {
             "start_date": "2024-09-04T00:30:00.664Z",
@@ -233,7 +233,7 @@ const sampleTimeSlotsData: TimeSlotsInterface[] = [
         ]
       },
       {
-        "cabin_id": "4",
+        "cabin_id": "e357a976-10eb-4c4b-b089-a238109a8679",
         "time_slots": [
           {
             "start_date": "2024-09-04T00:30:00.664Z",

@@ -51,7 +51,7 @@ export const LoginContentsContainer = styled.div`
     align-items: center;
     justify-content: center;
     align-self: center;
-    gap: 24px;
+    gap: 16px;
 `
 
 export const LoginHeadingContents = styled.div`
@@ -148,4 +148,10 @@ export const CreateNewAccount = styled.a`
     color: #494949;
     align-self: center;
     text-decoration: none;
+`
+
+export const ErrorMsg = styled.p`
+    color: red;
+    text-align: right;
+    width: 80%;
 `

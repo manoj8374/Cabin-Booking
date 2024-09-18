@@ -19,3 +19,5 @@ export const useDateAndTime = ()=>{
 
     return {startdate, endDate, updateStartDate, updateEndDate}
 }
+
+export const url = 'http://10.10.40.3:8000'

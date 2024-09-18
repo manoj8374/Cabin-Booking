@@ -1,78 +1,80 @@
 import {useState, useEffect } from 'react'
 import {FloorContainer} from './cabinStyled'
 import FloorItem from '../FloorItem'
+import {url} from '../../Constants'
+import Cookies from 'js-cookie'
 
 interface CabinInterface {
     cabin_id: string,
-    name: string,
+    cabin_name: string,
     cabin_type: string,
     description: string
 }
 
 interface MainFloorInterface {
-    floor: string,
+    floor_name: string,
     cabins: CabinInterface[]
 }
 
 const details: MainFloorInterface[] = [
     {
-      "floor": "Ground Floor",
+      "floor_name": "Ground Floor",
       "cabins": [
         {
           "cabin_id": "1",
-          "name": "Conference Room",
+          "cabin_name": "Conference Room",
           "cabin_type": "Conference Room",
           "description": "Sufficient for 25 people",
         }
       ]
     },
     {
-        "floor": "First Floor",
+        "floor_name": "First Floor",
         "cabins": [
           {
             "cabin_id": "2",
-            "name": "Conference Room",
+            "cabin_name": "Conference Room",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 25 people",
           }
         ]
       },
       {
-        "floor": "Fourth Floor",
+        "floor_name": "Fourth Floor",
         "cabins": [
           {
             "cabin_id": "3",
-            "name": "Conference Room",
+            "cabin_name": "Conference Room",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 87 people (EW)",
           },
           {
             "cabin_id": "4",
-            "name": "Call Pod 3a",
+            "cabin_name": "Call Pod 3a",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 54 people (EW)",
           },
           {
             "cabin_id": "5",
-            "name": "Call Pod 3b",
+            "cabin_name": "Call Pod 3b",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 1 people (EW)",
           },
           {
             "cabin_id": "6",
-            "name": "Call Pod 3c",
+            "cabin_name": "Call Pod 3c",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 250 people (EW)",
           },
           {
             "cabin_id": "7",
-            "name": "Call Pod 3d",
+            "cabin_name": "Call Pod 3d",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 215 people (EW)",
           },
           {
             "cabin_id": "8",
-            "name": "Call Pod 3e",
+            "cabin_name": "Call Pod 3e",
             "cabin_type": "Conference Room",
             "description": "Sufficient for 215 people (EW)",
           }
@@ -92,19 +94,22 @@ const details: MainFloorInterface[] = [
   ]
 
 const Cabin = ()=>{
-    const [cabinDetails, setCabinDetails] = useState<MainFloorInterface[] | null>()
+    const [cabinDetails, setCabinDetails] = useState<MainFloorInterface[]>([])
 
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
             //instead of a promise make an api call here
-            const promise = new Promise((resolve, reject)=>{
-                setTimeout(()=>{
-                    resolve("Cabin Details")
-                    setCabinDetails(details)
-                }, 1000)
+            const response = await fetch(`${url}/get/cabin_details/v1`,{
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${Cookies.get('access_token')}`
+                },
             })
-
-            await promise
+            const data = await response.json()
+            
+            if(response.ok){
+                setCabinDetails(data)
+            }
         }
 
         fetchCabinDetails()
@@ -112,9 +117,10 @@ const Cabin = ()=>{
 
     return (
         <FloorContainer>
-            {cabinDetails?.map((floor)=>{
+          {cabinDetails.length === 0 ? <h1>Loading...</h1>: cabinDetails.map((floor)=>{
+            console.log(floor.cabins, "FLoor details")
                 return (
-                    <FloorItem key = {floor.floor} floor = {floor.floor} cabins = {floor.cabins}/>
+                    <FloorItem key = {floor.floor_name} floor = {floor.floor_name} cabins = {floor.cabins}/>
                 )
             })}
         </FloorContainer>

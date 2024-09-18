@@ -1,5 +1,7 @@
 import {useState} from 'react'
-import { LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./createAccountStyled"
+import {ErrorMsg, LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./createAccountStyled"
+import Cookies from 'js-cookie'
+import {url} from '../../Constants'
 
 const CreateAccount = () => {
     const [email, setEmail] = useState<string>('')
@@ -7,9 +9,47 @@ const CreateAccount = () => {
     const [fullName, setFullName] = useState<string>('')
     const [teamName, setTeamName] = useState<string>('')
     const [contactNumber, setContactNumber] = useState<string>('')
+    const [username, setUserName] = useState<string>('')
+    const [error, setError] = useState<string>('')
 
-    const submitLogin = (e: any)=>{
+    const submitSignUp = async (e: any)=>{
         e.preventDefault()
+        if(email === '' || password === '' || fullName === '' || teamName === '' || contactNumber === ''){
+            setError("Please fill all the fields")
+        }else{
+            //make an api call here
+            const data = {
+                email: email,
+                password: password,
+                username: username,
+                first_name: fullName.split(' ')[0],
+                last_name: fullName.split(' ')[1],
+                team_name: teamName,
+                contact_number: contactNumber
+            }
+            const options = {
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
+            console.log(data)
+            try{
+                const response: Response = await fetch(`${url}/user_account/signup/v1`, options)
+                const data = await response.json()
+                console.log(data)
+                if (response.status === 200) {
+                setError('')
+                Cookies.set('token', data.access_token)
+                Cookies.set('refresh_token', data.refresh_token)
+            }else{
+                setError(data.error_message)
+            }
+            }catch(error){
+                console.log(error)
+            }
+        }
     }
 
     return (
@@ -22,11 +62,13 @@ const CreateAccount = () => {
                     </LoginHeadingContents>
                     <LoginInputContainer>
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
+                        <LoginInput placeholder="Username" type = "text" required = {true} value = {username} onChange = {(e)=>setUserName(e.target.value)}/>
                         <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=>setPassword(e.target.value)}/>
                         <LoginInput placeholder="Full Name" type = "text" required = {true} value = {fullName} onChange = {(e)=>setFullName(e.target.value)}/>
                         <LoginInput placeholder="Team Name" type = "text" required = {true} value = {teamName} onChange = {(e)=>setTeamName(e.target.value)}/>
                         <LoginInput placeholder="Contact Number" type = "text" required = {true} value = {contactNumber} onChange = {(e)=>setContactNumber(e.target.value)}/>
-                        <LoginButton type = "submit" onClick = {submitLogin}>Sign Up</LoginButton>
+                        {error.length > 0 && <ErrorMsg>{error}</ErrorMsg>}
+                        <LoginButton type = "submit" onClick = {submitSignUp}>Sign Up</LoginButton>
                         <CreateNewAccount href = "/login">Already Have an account</CreateNewAccount>
                     </LoginInputContainer>
                 </LoginContentsContainer>

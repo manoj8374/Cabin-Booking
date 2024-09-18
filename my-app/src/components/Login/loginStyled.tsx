@@ -146,3 +146,7 @@ export const CreateNewAccount = styled.a`
     align-self: center;
     text-decoration: none;
 `
+
+export const ErrorMessage = styled.p`
+    color: red;
+`
