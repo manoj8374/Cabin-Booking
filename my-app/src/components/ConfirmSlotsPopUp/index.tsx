@@ -35,8 +35,8 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlo
     }, [])
     return(
         <>
-            <WhoBookedTheSlotContainer>
-                <WhoBookedTheSlotSubContainer>
+            <WhoBookedTheSlotContainer onClick = {closePopUp}>
+                <WhoBookedTheSlotSubContainer onClick = {(e)=>{e.stopPropagation()}}>
                     <WhoBookedTheSlotFormMainContainer>
                         <WhoBookedTheSlotHeadingContainer>
                             <HeadingElement>Ground Floor Conference Room</HeadingElement>

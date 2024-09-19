@@ -37,6 +37,7 @@ export const WhoBookedTheSlotContainer = styled.div`
    display: flex;
    justify-content: center;
    padding-top: 24px;
+
 `
 
 export const PurposeContainer = styled.textarea`
@@ -66,9 +67,11 @@ export const WhoBookedTheSlotSubContainer = styled.div`
    padding-top: 8px;
    border-radius: 8px;
    overflow-y: auto;
+   height: 650px;
 
    @media screen and (min-width: 768px) {
       width: 60%;
+      height: 700px;
    }
 
    @media screen and (min-width: 1024px) {

@@ -6,7 +6,7 @@ export const MainContainer = styled.div`
     top: 0;
     left: 0;
     width: 100%;
-    background: white;
+    background: rgba(0, 0, 0, 0.1);
     z-index: 10000;
     min-height: 100vh;
     overflow: hidden;
@@ -17,7 +17,7 @@ export const MainContainer = styled.div`
 
     @media (min-width: 768px) {
         background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(3px);
+        backdrop-filter: blur(1px);
     }
 `
 

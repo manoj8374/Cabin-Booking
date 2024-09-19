@@ -1,4 +1,4 @@
-import {useState, useEffect, ReactNode} from 'react';
+import {useState, useEffect, ReactNode, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
@@ -17,9 +17,11 @@ import DatePickerComponent from '../DatePicker';
 
 const Home = ()=>{
     const [isPopupVisible, setIsPopupVisible] = useState(false);
-    const [isNavBarVisible, setIsNavBarVisible] = useState(true);
+    const [isNavBarVisible, setIsNavBarVisible] = useState(false);
     const [myProfileIsActive, setMyProfileIsActive] = useState(false)
     const [myBookingsIsActive, setMyBookingsActive] = useState(false)
+
+    const laptopNavRef = useRef<HTMLDivElement | null>(null);
 
     const whoBookedSlotPopUp = useSelector((state: RootState) => state.whobooked.isClicked)
     const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
@@ -138,27 +140,25 @@ const Home = ()=>{
         )
     }
 
-    const toggleNavBar = ()=>{
-        console.log("clicked")
-        setIsNavBarVisible(!isNavBarVisible)
-
+    const toggleNavBar = (value: boolean)=>{
+        setIsNavBarVisible(value)
     }
 
     return (
         <HomeContainer>
             <HomeContainerHeader>
                 <SelectDateHeading>Select Date</SelectDateHeading>   
-                <LaptopNavBar size = {32} onClick={()=> toggleNavBar()}/>
+                <div ref = {laptopNavRef}>
+                    <LaptopNavBar size = {32} onClick={()=> toggleNavBar(true)}/>
+                </div>
                 <MobileNavBarIcon size = {24} onClick={togglePopup}/>
             </HomeContainerHeader>
             <HomeSubContainer>
-                {/* Date Picker Component Here */}
-                {/* // Cabin Component Here */}
                 <DatePickerComponent/>
                 <Cabin/>
             </HomeSubContainer>
             {isPopupVisible && renderMobilePopup()}
-            {/* {isNavBarVisible && <NavBar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar}/> } */}
+            <NavBar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar} laptopNavRef = {laptopNavRef}/> 
             {whoBookedSlotPopUp && <WhoBookedTheSlot/>}
         </HomeContainer>
     )

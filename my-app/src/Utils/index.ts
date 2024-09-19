@@ -28,6 +28,6 @@ export const useCabinData = ()=>{
     return {startdate, endDate, updateStartDate, updateEndDate, updateSelectedSlots, allTheCabinIds}
 }
 
-export const url = 'http://192.168.1.21:8000'
+export const url = 'http://10.18.106.194:8000'
 
 export const accessToken = Cookies.get('access_token')
