@@ -42,8 +42,7 @@ const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
                 <CabinDescription>
                     {cabinDescription}
                 </CabinDescription>
-                <TimeSlots cabinId = {selectedCabinId}/>
-                {/* //render the time slots here */}
+                <TimeSlots cabinId = {selectedCabinId} floor = {floor}/>
             </FloorItemSubContainer>
         </FloorItemContainer>
     )

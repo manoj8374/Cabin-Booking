@@ -4,12 +4,14 @@ import { createSlice } from "@reduxjs/toolkit";
 interface confirmSlotsState {
     isClicked: boolean,
     slots: string[],
-    error?: boolean
+    error?: boolean,
+    cabinId: string
 }
 
 const initialState: confirmSlotsState = {
     isClicked: false,
     slots: [],
+    cabinId: "",
 }
 
 
@@ -19,7 +21,9 @@ const confirmSlotsSlice = createSlice({
     reducers: {
         ConfirmSlotPopUp: (state, action) => {
             state.isClicked = action.payload.isClicked;
-            state.slots = action.payload.slots
+            state.slots = action.payload.slots;
+            state.cabinId = action.payload.cabinId
+
         },
 
         setError: (state, action) => {

@@ -103,26 +103,33 @@ const Cabin = ()=>{
 
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
+          try{
             const response = await fetch(`${url}/get/cabin_details/v1`,{
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${Cookies.get('access_token')}`
-                },
-            })
-            const data = await response.json()
-            
-            if(response.ok){
-                setCabinDetails(data)
-                const cabinIds = data.map((floor: MainFloorInterface)=>{
-                  const cabinIdsSub = floor.cabins.map((cabin)=>{
-                      return cabin.cabin_id
-                  })
-                  return cabinIdsSub
-                    
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${Cookies.get('access_token')}`,
+                  "ngrok-skip-browser-warning": "69420",
+              },
+          })
+          const data = await response.json()
+          
+          if(response.ok){
+              setCabinDetails(data)
+              console.log(data)
+              const cabinIds = data.map((floor: MainFloorInterface)=>{
+                const cabinIdsSub = floor.cabins.map((cabin)=>{
+                    return cabin.cabin_id
                 })
-                const ids = cabinIds.flat()
-                updateSelectedSlots(ids)
-            }
+                return cabinIdsSub
+                  
+              })
+              const ids = cabinIds.flat()
+              updateSelectedSlots(ids)
+          }
+          }catch(e){
+            console.log(e)
+          }
         }
 
         fetchCabinDetails()

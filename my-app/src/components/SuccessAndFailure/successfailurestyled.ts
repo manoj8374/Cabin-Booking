@@ -60,14 +60,18 @@ export const ResultContentsContainer = styled.div`
     gap: 24px;
 `
 
-export const ResultCenterImage = styled.div`
+interface ResultCenterImageProps {
+    result: boolean
+}
+
+export const ResultCenterImage = styled.div<ResultCenterImageProps>`
     width: 170px;
     height: 170px;
     padding: 10px;
     border-radius: 100%;
-    background-color: #13C39C;
-    {background-color: #13C39C;}
-    border: 3px solid #25FFAE;
+    background-color: ${props => props.result ? '#13C39C' : '#F14A4A'};
+
+    border: 3px solid ${props => props.result ? '#13C39C' : '#F14A4A'};
     display: flex;
     justify-content: center;
     align-items: center;

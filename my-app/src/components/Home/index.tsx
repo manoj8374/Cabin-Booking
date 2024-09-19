@@ -13,6 +13,7 @@ import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp';
 import ResultScreen from '../SuccessAndFailure';
 import NavBar from '../NavBar';
 import DatePickerComponent from '../DatePicker';
+import { fetchUserProfile } from '../../Redux/userSlice';
 
 
 const Home = ()=>{
@@ -24,12 +25,12 @@ const Home = ()=>{
     const laptopNavRef = useRef<HTMLDivElement | null>(null);
 
     const whoBookedSlotPopUp = useSelector((state: RootState) => state.whobooked.isClicked)
-    const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
-    const errorPopUp = useSelector((state: RootState) => state.confirmSlots.error)
 
     const navigate = useNavigate()
+    const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
+        dispatch(fetchUserProfile())
         if (isPopupVisible) {
             document.body.style.overflow = 'hidden';
         } else {

@@ -5,33 +5,83 @@ import {RootState, AppDispatch} from '../../Redux/store'
 import {ConfirmSlotPopUp, setError} from '../../Redux/confirmslotsslice'
 import { useEffect, useState } from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
-import { useCabinData } from '../../Utils';
+import { url, useCabinData } from '../../Utils';
+import Cookies from 'js-cookie'
 
 interface ConfirmSlotPopUpProps{
-    selectedSlotsUpdate: ()=> void
+    selectedSlotsUpdate: ()=> void,
+    cabinId: string,
+    selectedSlots: string[],
+    toogleConfirmSlotPopUp: ()=> void,
+    slotsBookedFunction: ()=> void,
+    resultPopUp: (result: boolean)=> void,
+    floor: string
 }
 
-const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlotsUpdate})=>{
+const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, selectedSlotsUpdate, toogleConfirmSlotPopUp, slotsBookedFunction, resultPopUp, selectedSlots, cabinId})=>{
     const dispatch = useDispatch<AppDispatch>()
-    const slots = useSelector((state: RootState) => state.confirmSlots.slots)
-    const {startdate, endDate, updateStartDate, updateEndDate} = useCabinData();
-
-    const [timeSlots, setTimeSlots] = useState<string[]>([])
+    const {startdate, endDate} = useCabinData();
+    const [purpose, setPurpose] = useState('')
+    const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState) => state.user)
 
     const closePopUp = ()=>{
-        dispatch(ConfirmSlotPopUp({isClicked: false}))
-        // document.body.style.overflow = 'hidden';
+        toogleConfirmSlotPopUp()
     }
 
-    const confirm = (e: any)=>{
-        e.preventDefault()
+    const convertTimeSlots = (timeStr: string)=>{
+        const [time, modifier] = timeStr.split(' ');
+        let [hours, minutes] = time.split(':');
+
+        if (modifier === 'PM' && hours !== '12') {
+            let a = parseInt(hours, 10) + 12;
+            hours = a.toString();
+        }
+        if (modifier === 'AM' && hours === '12') {
+            hours = '00';
+        }
+    
+        return `${hours}:${minutes}`;
+    }
+
+    const confirm = async(e: any)=>{
         dispatch(setError({error: false}))
-        dispatch(ConfirmSlotPopUp({isClicked: false, slots: []}))
-        selectedSlotsUpdate()
+        const timeSlotsWithTime = selectedSlots.map((timeSlot)=>{
+            return convertTimeSlots(timeSlot)
+        })
+
+        try{
+            const bodyData = {
+                purpose: purpose,
+                cabin_id: cabinId,
+                start_date: startdate,
+                end_date: endDate,
+                time_slots: timeSlotsWithTime
+            }
+    
+            const response = await fetch(`${url}/confirm_slots/v1`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Cookies.get('access_token')}`
+                },
+                body: JSON.stringify(bodyData)
+            })
+            const data = await response.json()
+            if(response.status === 200){
+                slotsBookedFunction()
+                resultPopUp(true)
+            }else{
+                resultPopUp(false)
+            }
+            selectedSlotsUpdate()
+            toogleConfirmSlotPopUp()
+        }catch(e){
+            console.log(e)
+        }
     }
 
     useEffect(()=>{
-        setTimeSlots(slots)
+        console.log(selectedSlots, cabinId)
     }, [])
     return(
         <>
@@ -39,38 +89,38 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlo
                 <WhoBookedTheSlotSubContainer onClick = {(e)=>{e.stopPropagation()}}>
                     <WhoBookedTheSlotFormMainContainer>
                         <WhoBookedTheSlotHeadingContainer>
-                            <HeadingElement>Ground Floor Conference Room</HeadingElement>
+                            <HeadingElement>{floor}</HeadingElement>
                             <RxCross2Element onClick = {closePopUp} />
                         </WhoBookedTheSlotHeadingContainer>
                         <WhoBookedTheSlotFormContainer>
                             <WhoBookedTheSlotInputFieldContainer>
-                                <LabelElement>Booked by</LabelElement>
-                                <WhoBookedTheSlotInputField disabled value = "Venu Gopal"/>
+                                <LabelElement>Name</LabelElement>
+                                <WhoBookedTheSlotInputField disabled value = {`${first_name} ${last_name}`}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Team</LabelElement>
-                                <WhoBookedTheSlotInputField disabled value = "NIAT"/>
+                                <WhoBookedTheSlotInputField disabled value = {team_name}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Contact Number</LabelElement>
-                                <WhoBookedTheSlotInputField value = "9876543210"/>
+                                <WhoBookedTheSlotInputField disabled value = {contact_number}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Purpose</LabelElement>
-                                <PurposeContainer rows={5} cols={10} placeholder='Enter Purpose'/>
+                                <PurposeContainer required rows={5} cols={10} placeholder='Enter Purpose' onChange={(e)=> setPurpose(e.target.value)}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <BookedContainer>
                                 <BookedContainerHeading>
                                     Selected Date
                                 </BookedContainerHeading>
-                                <DateParaElement>Date - 05/08/2024   to  {endDate}</DateParaElement>
+                                <DateParaElement>Date - {startdate}   to  {endDate}</DateParaElement>
                             </BookedContainer>
                             <SelectedTimeSlotsContainer>
                                 <BookedContainerHeading>
                                     Selected Time slots
                                 </BookedContainerHeading>
                                 <ConfirmTimeSlotsContainer>
-                                    {timeSlots.map((slot)=>{
+                                    {selectedSlots.map((slot)=>{
                                         return <SlotItem>{slot}</SlotItem>
                                     })}
                                 </ConfirmTimeSlotsContainer>
@@ -79,7 +129,7 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({selectedSlo
                                 <CancelButton onClick = {closePopUp} >
                                     Cancel
                                 </CancelButton>
-                                <BookButton onClick = {confirm}>Confirm</BookButton>
+                                <BookButton onClick = {confirm} type = 'button'>Confirm</BookButton>
                             </ButtonsContainer>
                         </WhoBookedTheSlotFormContainer>
                     </WhoBookedTheSlotFormMainContainer>

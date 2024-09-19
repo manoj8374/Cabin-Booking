@@ -14,7 +14,8 @@ import Cookies from 'js-cookie'
 
 
 interface TimeSlotsProps{
-    cabinId: string
+    cabinId: string,
+    floor: string
 }
 
 interface TimeSlotsArr{
@@ -299,19 +300,17 @@ interface TimeSlotsObj{
 //       }
 //   ]
 
-const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
+const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
     const [timeSlots, setTimeSlots] = useState<TimeSlotsObj[]>()
     const [showAllSlots, setShowAllSlots] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
     const [selectedSlots, setSelectedSlots] = useState<string[]>([])
     const [numberOfSlots, setNumberOfSlots] = useState(4)
-
     const {allTheCabinIds, startdate, endDate} = useCabinData()
+    const [confirmSlotPopUp, setConfirmSlotPopUp] = useState(false)
+    const [slotBooked, setSlotBooked] = useState(false)
+    const [ResultPopUp, setResultPopUp] = useState<boolean | null>(null)
 
-    const errorPopUp = useSelector((state: RootState) => state.confirmSlots.error)
-    const confirmSlotPopUp = useSelector((state: RootState) => state.confirmSlots.isClicked)
-    
-    const bookedButtonClicked = useSelector((state: RootState) => state.whobooked.isClicked)
     const dispatch = useDispatch<AppDispatch>()
 
     const convertTo12HourFormat = (timeString: string)=>{
@@ -323,11 +322,10 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
     }
 
     useEffect(()=>{
-        
         const fetchCabinDetails = async ()=>{
             try{
               const bodyData = {
-                "cabin_ids": allTheCabinIds,
+                "cabin_ids": [cabinId],
                 "start_date": startdate,
                 "end_date": endDate
               }
@@ -384,7 +382,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
           window.removeEventListener('resize', handleResize);
         };
 
-    },[cabinId, allTheCabinIds, startdate, endDate])
+    },[cabinId, allTheCabinIds, startdate, endDate, slotBooked])
 
     const handleToggleSelect = (timeString: string, availability: boolean)=>{
       if(selectedSlots.includes(timeString) && availability === true){
@@ -398,20 +396,23 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
               timeSlot: timeString,
               cabinId
             }))
-            //open a popup and show the details of the person who booked the slot
-            // <WhoBookedTheSlot/>
           }
       }
     }
 
+    const toogleConfirmSlotPopUp = ()=>{
+      setConfirmSlotPopUp(!confirmSlotPopUp)
+    }
+
     const confirmSlots = ()=>{
-      console.log(selectedSlots, "selected slots")
-      dispatch(ConfirmSlotPopUp({isClicked: true, slots: selectedSlots}))
+      toogleConfirmSlotPopUp()
     }
 
     const selectedSlotsUpdate = ()=>{
       setSelectedSlots([])
     }
+
+
 
     return (
       <>
@@ -427,16 +428,13 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId})=>{
               <p onClick={()=>setShowAllSlots(!showAllSlots)}>{showAllSlots ? "Show less" : "Show more"}</p>
               {selectedSlots.length > 0 && <SubmitTimeSlotsButton onClick={confirmSlots}>Confirm</SubmitTimeSlotsButton>}
             </MobileViewMoreContainer>: null}
-            
-            
         </TimeSlotsContainer>
         {!isMobile && selectedSlots.length >= 0 && <LaptopDeviceSubmitContainer>
           <LaptopDeviceSubmitButton onClick={confirmSlots}>Confirm</LaptopDeviceSubmitButton>
         </LaptopDeviceSubmitContainer>}
-        {confirmSlotPopUp && <ConfirmSlotPopUpComponent selectedSlotsUpdate = {selectedSlotsUpdate}/>}
-        {errorPopUp === undefined ? null : errorPopUp === true ? <ResultScreen error = {true}/> : <ResultScreen error = {false}/>}
+        {confirmSlotPopUp && <ConfirmSlotPopUpComponent floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
+        {ResultPopUp === null ? null : <ResultScreen changeErrorToUndefined = {()=> setResultPopUp(null)} result = {ResultPopUp}/>}
         </>
-        //display the result popup here
     )
 }
 
