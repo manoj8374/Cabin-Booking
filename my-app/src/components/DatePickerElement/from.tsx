@@ -104,7 +104,7 @@ const DatePickerElementFrom = () => {
   const [startDate, setStartDate] = useState(new Date());
   const datePickerRef = useRef<DatePicker>(null);
 
-  const {updateStartDate} = useCabinData()
+  const {updateStartDate, endDate} = useCabinData()
 
   const formatCustomDate = (date: Date | null) => {
     return date ? format(date, 'd MMM EEE, yyyy') : 'Select a date';
@@ -112,8 +112,13 @@ const DatePickerElementFrom = () => {
 
   const updateDate = (date: Date | null)=>{
     if (date !== null) {
-      setStartDate(date)
-      updateStartDate(format(date, 'yyyy-MM-dd'))
+      const endDateObj = formatCustomDate(new Date(endDate))
+      const currentDateObj = formatCustomDate(new Date())
+ 
+      if((formatCustomDate(date) <= endDateObj) && (formatCustomDate(date) >= currentDateObj)){
+        setStartDate(date)
+        updateStartDate(format(date, 'yyyy-MM-dd'))
+      }
     }
   }
 

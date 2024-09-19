@@ -114,6 +114,7 @@ const DatePickerElement = () => {
 
 
     const changeDate = (date: Date | null)=>{
+      
       if (date !== null) {
         setStartDate(date)
         updateEndDate(format(date, 'yyyy-MM-dd'))
