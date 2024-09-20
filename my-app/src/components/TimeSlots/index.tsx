@@ -309,7 +309,9 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
     const {allTheCabinIds, startdate, endDate} = useCabinData()
     const [confirmSlotPopUp, setConfirmSlotPopUp] = useState(false)
     const [slotBooked, setSlotBooked] = useState(false)
+    const [whoBookedTheSlot, setWhoBookedTheSlot] = useState(false)
     const [ResultPopUp, setResultPopUp] = useState<boolean | null>(null)
+    const [bookedTimeString, setBookedTimeString] = useState('')
 
     const dispatch = useDispatch<AppDispatch>()
 
@@ -320,6 +322,25 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
         let a = `${hourTime < 10 ? '0' : ''}${hourTime}:${timeString.split(':')[1]} ${period}`
         return a
     }
+
+    function convertTo24HourFormat(time: string) {
+        const [timePart, modifier] = time.split(' ');
+        let [hours, minutes] = timePart.split(':');
+        console.log(hours, minutes)
+        let a = parseInt(hours, 10);
+        let b = parseInt(minutes, 10);
+
+        if (modifier === 'PM' && a < 12) {
+            a += 12;
+        } else if (modifier === 'AM' && a === 12) {
+            a = 0;
+        }
+
+      const formattedHours = String(a).padStart(2, '0');
+      const formattedMinutes = String(b).padStart(2, '0');
+  
+      return `${formattedHours}:${formattedMinutes}`;
+  }
 
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
@@ -391,11 +412,10 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
           if(!selectedSlots.includes(timeString) && availability === true){
             setSelectedSlots([...selectedSlots, timeString])
           }else{
-            dispatch(setWhoBooked({
-              isClicked: true,
-              timeSlot: timeString,
-              cabinId
-            }))
+            setWhoBookedTheSlot(!whoBookedTheSlot)
+            const a = convertTo24HourFormat(timeString)
+            console.log(a)
+            setBookedTimeString(a)
           }
       }
     }
@@ -420,7 +440,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
             <TimeSlotsSubContainer>
               {timeSlots?.slice(0, showAllSlots || !isMobile ? timeSlots?.length : numberOfSlots).map((timeSlot)=>{
                   return (
-                    <ButtonTimeSlotComponent key = {timeSlot.time_string} handleToggleSelect={handleToggleSelect} timeSlot = {timeSlot} isSelected={selectedSlots.includes(timeSlot.time_string)}/>
+                    <ButtonTimeSlotComponent key = {timeSlot.time_string}  handleToggleSelect={handleToggleSelect} timeSlot = {timeSlot} isSelected={selectedSlots.includes(timeSlot.time_string)}/>
                   )
               })} 
             </TimeSlotsSubContainer>            
@@ -434,6 +454,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
         </LaptopDeviceSubmitContainer>}
         {confirmSlotPopUp && <ConfirmSlotPopUpComponent floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
         {ResultPopUp === null ? null : <ResultScreen changeErrorToUndefined = {()=> setResultPopUp(null)} result = {ResultPopUp}/>}
+        {whoBookedTheSlot && <WhoBookedTheSlot cabinId = {cabinId} timeSlot = {bookedTimeString} closePopUp = {()=> setWhoBookedTheSlot(false)}/>}
         </>
     )
 }

@@ -7,7 +7,7 @@ export const UpdateProfileContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    padding-bottom: 48px;
     @media (min-width: 768px) {
         background-color: #CFD6D9;
         justify-content: center;

@@ -19,9 +19,7 @@ const Home = ()=>{
     const [myBookingsIsActive, setMyBookingsActive] = useState(false)
 
     const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState) => state.user)
-
     const laptopNavRef = useRef<HTMLDivElement | null>(null);
-
     const whoBookedSlotPopUp = useSelector((state: RootState) => state.whobooked.isClicked)
 
     const navigate = useNavigate()
@@ -158,7 +156,6 @@ const Home = ()=>{
             </HomeSubContainer>
             {isPopupVisible && renderMobilePopup()}
             <NavBar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar} laptopNavRef = {laptopNavRef}/> 
-            {whoBookedSlotPopUp && <WhoBookedTheSlot/>}
         </HomeContainer>
     )
 }

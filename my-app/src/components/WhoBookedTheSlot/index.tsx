@@ -2,22 +2,79 @@ import {WhoBookedTheSlotContainer,HeadingElement, WhoBookedTheSlotSubContainer, 
 import { useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
 import {setPopUpClosed} from '../../Redux/whobookedslice'
-import { useEffect } from 'react'
+import { useEffect, useState} from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
+import { url, useCabinData} from '../../Utils'
+import Cookies from 'js-cookie'
+import { get } from 'http'
+import { set } from 'date-fns'
 
 
-const WhoBookedTheSlot = ()=>{
-    const cabinId = useSelector((state: RootState) => state.whobooked.cabinId)
-    const timeSlot = useSelector((state: RootState) => state.whobooked.timeSlot)
-    const isClicked = useSelector((state: RootState) => state.whobooked.isClicked)
+interface WhoBookedTheSlots {
+    closePopUp: ()=> void,
+    cabinId: string,
+    timeSlot: string
+}
+
+const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, cabinId})=>{
+
     const dispatch = useDispatch<AppDispatch>()
+    let {startdate, endDate} = useCabinData();
 
-    const closePopUp = ()=>{
-        dispatch(setPopUpClosed({isClicked: false}))
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('') 
+    const [email, setEmail] = useState('')
+    const [contactNumber, setContactNumber] = useState('')
+    const [teamName, setTeamName] = useState('')
+
+    const closePopUpWindow = ()=>{
+        closePopUp()
         // document.body.style.overflow = 'hidden';
     }
 
     useEffect(()=>{
+        const getDetails = async ()=>{
+            setFirstName("")
+            setLastName("")
+            setEmail("")
+            setContactNumber("")
+            setTeamName("")
+            try{
+                let endTimeSlot = `${String(parseInt(timeSlot.split(":")[0]) + 1).padStart(2, '0')}:00`
+                if(endTimeSlot == "24:00"){
+                    endTimeSlot = "00:00"
+                    const initialDate = new Date(endDate).getDate() + 1
+                    const month = String(new Date(endDate).getMonth() + 1) .length == 1 ? "0" + String(new Date(endDate).getMonth() + 1) : String(new Date(endDate).getMonth() + 1)
+                    endDate = new Date(endDate).getFullYear() + "-" + month  + "-" + initialDate
+                }
+                console.log(startdate, timeSlot)
+                console.log(endDate, endTimeSlot)
+                const response = await fetch(`${url}/user/booked_slots/v1`,{
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${Cookies.get('access_token')}`
+                    },
+                    body: JSON.stringify({
+                        cabin_id: "b6d04ab7-8c7e-4b29-8a56-71d53779e257",
+                        start_date_time: `${startdate} ${timeSlot}`,
+                        end_date_time: `${endDate} ${endTimeSlot}`
+                    })
+                })
+                const data = await response.json()
+                if(response.status === 200){
+                    setFirstName(data.first_name)
+                    setLastName(data.last_name)
+                    setEmail(data.email)
+                    setContactNumber(data.contact_number)
+                    setTeamName(data.team_name)
+                }
+            }catch(e){
+                console.log(e)
+            }
+        }
+
+        getDetails()
         // document.body.style.overflow = 'hidden';
     }, [])
     return(
@@ -32,27 +89,21 @@ const WhoBookedTheSlot = ()=>{
                         <WhoBookedTheSlotFormContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Booked by</LabelElement>
-                                <WhoBookedTheSlotInputField disabled value = "Venu Gopal"/>
+                                <WhoBookedTheSlotInputField disabled value = {`${firstName} ${lastName}`}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Team</LabelElement>
-                                <WhoBookedTheSlotInputField disabled value = "NIAT"/>
+                                <WhoBookedTheSlotInputField disabled value = {`${teamName}`}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Email</LabelElement>
-                                <WhoBookedTheSlotInputField disabled value = "manoj@nxtwave.com"/>
+                                <WhoBookedTheSlotInputField disabled value = {`${email}`}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Contact Number</LabelElement>
-                                <WhoBookedTheSlotInputField disabled value = "9876543210"/>
+                                <WhoBookedTheSlotInputField disabled value = {`${contactNumber}`}/>
                             </WhoBookedTheSlotInputFieldContainer>
-                            <BookedContainer>
-                                <BookedContainerHeading>
-                                    Booked from
-                                </BookedContainerHeading>
-                                <DateParaElement>Date - 05/08/2024   to   06/08/2024</DateParaElement>
-                            </BookedContainer>
-                            <CloseButton onClick = {closePopUp} >
+                            <CloseButton onClick = {closePopUpWindow} >
                                 Close
                             </CloseButton>
                         </WhoBookedTheSlotFormContainer>

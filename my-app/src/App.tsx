@@ -12,9 +12,8 @@ function App() {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path = "/create-account" element = {<CreateAccount />} />
-      <Route path = "/forgot-password" element = {<ProtectedRoute>
-        <ForgotPasswordComponent/>
-      </ProtectedRoute>} />
+      <Route path = "/forgot-password" element = {
+        <ForgotPasswordComponent/>} />
       <Route path = "/update-profile" element = {<ProtectedRoute>
         <UpdateProfile/>
       </ProtectedRoute>} />

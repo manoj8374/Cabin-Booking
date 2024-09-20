@@ -24,14 +24,11 @@ const initialState: IntialState =  {
 const getUserDetails = async()=>{
     try{
         const response = await fetch(`${url}/user/profile/v1`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${Cookies.get('access_token')}`
-            },
-            body: JSON.stringify({
-                "user_id": "e4ec99dc-85e0-4b0b-9710-2d5eaefefc3b"
-            })
+            }
         })
 
         const data = await response.json()

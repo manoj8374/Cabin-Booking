@@ -216,3 +216,15 @@ export const StyledLink = styled(Link)`
     text-decoration: none;
     color: black;
 `
+
+interface ErrorMessage{
+    error: boolean
+}
+
+export const ErrorMessage = styled.p<ErrorMessage>`
+    color: ${({error}) => error ? 'red' : 'green'};
+    font-size: 14px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    padding-left: 8px;
+`

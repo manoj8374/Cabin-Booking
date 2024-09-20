@@ -30,8 +30,8 @@ const Cabin = ()=>{
               method: 'GET',
               headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${Cookies.get('access_token')}`,
-                  "ngrok-skip-browser-warning": "69420",
+                  'Authorization': `Bearer ${Cookies.get('access_token')}`
+                //   "ngrok-skip-browser-warning": "69420",
               },
           })
           const data = await response.json()

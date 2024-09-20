@@ -71,6 +71,7 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
                 slotsBookedFunction()
                 resultPopUp(true)
             }else{
+                slotsBookedFunction()
                 resultPopUp(false)
             }
             selectedSlotsUpdate()
