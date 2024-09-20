@@ -20,8 +20,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({result, changeErrorToUndefin
     return(
         <MainContainer>
             <ResultSubContainer>
-                <CrossBar>
-                    <RxCross2 onClick = {closePopUp} size={50} color={'black'} strokeWidth={0}/>
+                <CrossBar onClick = {closePopUp}>
+                    <RxCross2 size={50} color={'black'} strokeWidth={0}/>
                 </CrossBar>
                 <ResultContentsContainer>
                     <ResultCenterImage result = {result} >
