@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {UpdateProfileContainer, UpdateProfileSubContainer, UpdateProfileImageContainer, UpdateProfileHeading, UpdateProfileForm, UpdateProfileInput, UpdateProfileButton, UpdateProfileArrowContainer, StyledLink, ArrowContainerLargeDevices} from './UpdateProfileStyled'
 import { FaArrowLeft } from "react-icons/fa";
 import { IoIosArrowBack} from "react-icons/io";
 import { useSelector } from 'react-redux';
-import { RootState } from '../../Redux/store';
+import { AppDispatch, RootState } from '../../Redux/store';
 import { url } from '../../Utils';
 import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import {fetchUserProfile} from '../../Redux/userSlice'
+import { set } from 'react-datepicker/dist/date_utils';
+import { setError } from '../../Redux/confirmslotsslice';
 
 const UpdateProfile = () => {
     const {first_name, last_name} = useSelector((state: RootState) => state.user)
@@ -15,7 +20,14 @@ const UpdateProfile = () => {
     const [teamName, setTeamName] = useState("")
     const [contactNumber, setContactNumber] = useState("")
 
+    const [errorMsg, setErrorMsg] = useState<string>("")
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch<AppDispatch>()
+
     useEffect(()=>{
+        dispatch(fetchUserProfile())
     }, [])
 
     const submitForm = async(e: any) => {
@@ -29,23 +41,28 @@ const UpdateProfile = () => {
                 },
                 body: JSON.stringify({
                     username: username,
-                    first_name: firstName,
-                    last_name: lastName,
+                    firstname: firstName,
+                    lastname: lastName,
                     team_name: teamName,
                     contact_number: contactNumber
                 })
             })
 
-            console.log({
-                username: username,
-                first_name: firstName,
-                last_name: lastName,
-                team_name: teamName,
-                contact_number: contactNumber
-            })
-
             const data = await response.json()
-            console.log(data)
+
+            if(response.status === 200){
+                dispatch(fetchUserProfile())
+                setUsername("")
+                setFirstName("")
+                setLastName("")
+                setTeamName("")
+                setContactNumber("")
+                setErrorMsg("Profile Updated Successfully")
+                setTimeout(() => {
+                    navigate('/')
+                }, 1000)
+            }
+
         }catch(e){
 
         }
@@ -65,10 +82,10 @@ const UpdateProfile = () => {
                     </StyledLink>
                 </UpdateProfileArrowContainer>
                 <UpdateProfileImageContainer>
-                    M
+                    {first_name.charAt(0).toUpperCase()}
                 </UpdateProfileImageContainer>
                 <UpdateProfileHeading>
-                    Manoj Vakiti
+                    {first_name} {last_name}
                 </UpdateProfileHeading>
                 <UpdateProfileForm>
                     <UpdateProfileInput type = "text" placeholder = "Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
@@ -76,6 +93,7 @@ const UpdateProfile = () => {
                     <UpdateProfileInput type = "text" placeholder = "Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "Team Name" value = {teamName} onChange={(e) => setTeamName(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "Contact number" value = {contactNumber} onChange={(e) => setContactNumber(e.target.value)}/>
+                    {errorMsg && <p>{errorMsg}</p>}
                     <UpdateProfileButton onClick={submitForm}>Update Profile</UpdateProfileButton>
                 </UpdateProfileForm>
             </UpdateProfileSubContainer>
