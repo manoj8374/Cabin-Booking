@@ -37,13 +37,12 @@ const CreateAccount = () => {
                 },
                 body: JSON.stringify(data)
             }
-            console.log(data)
             try{
                 const response: Response = await fetch(`${url}/user_account/signup/v1`, options)
                 const data = await response.json()
                 if (response.status === 200) {
                 setError('')
-                Cookies.set('token', data.access_token)
+                Cookies.set('access_token', data.access_token)
                 Cookies.set('refresh_token', data.refresh_token)
                 navigate('/')
             }else{

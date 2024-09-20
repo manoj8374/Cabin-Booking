@@ -2,15 +2,11 @@ import {useState, useEffect, ReactNode, useRef} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
-import {HomeContainer, HomeContainerHeader, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, ArrowDown, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer} from './homeStyled'
-import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
-import { IoIosArrowDown } from "react-icons/io";
+import {HomeContainer, HomeContainerHeader, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer} from './homeStyled'
+import {RxCross2 } from "react-icons/rx";
 import { FaArrowRight } from "react-icons/fa";
 import Cabin from '../Floor';
 import WhoBookedTheSlot from '../WhoBookedTheSlot';
-import confirmslotsslice from '../../Redux/confirmslotsslice';
-import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp';
-import ResultScreen from '../SuccessAndFailure';
 import NavBar from '../NavBar';
 import DatePickerComponent from '../DatePicker';
 import { fetchUserProfile } from '../../Redux/userSlice';
@@ -21,6 +17,8 @@ const Home = ()=>{
     const [isNavBarVisible, setIsNavBarVisible] = useState(false);
     const [myProfileIsActive, setMyProfileIsActive] = useState(false)
     const [myBookingsIsActive, setMyBookingsActive] = useState(false)
+
+    const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState) => state.user)
 
     const laptopNavRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,10 +58,10 @@ const Home = ()=>{
                 </MobilePopUpCloseButton>
                 <MobilePopUpHeadingContainer>
                     <MobileProfilePic>
-                        VG
+                        {first_name.charAt(0).toUpperCase() + last_name.charAt(0).toUpperCase()}
                     </MobileProfilePic>
                     <MobilePopUpHeading>
-                        Venu Gopal
+                        {first_name + ' ' + last_name}
                     </MobilePopUpHeading>
                 </MobilePopUpHeadingContainer>
                 <MobilePopUpButtonsContainer>
@@ -78,15 +76,15 @@ const Home = ()=>{
                                 <MobilePopUpProfileContainer>
                                 <MobilePopUpProfileDetails>
                                     <p>Name: </p>
-                                    <p>Venu Gopal</p>
+                                    <p>{first_name + ' ' + last_name}</p>
                                 </MobilePopUpProfileDetails>
                                 <MobilePopUpProfileDetails>
                                     <p>Team: </p>
-                                    <p>NIAT</p>
+                                    <p>{team_name}</p>
                                 </MobilePopUpProfileDetails>
                                 <MobilePopUpProfileDetails>
                                     <p>Contact no: </p>
-                                    <p>+91 95425 86175</p>
+                                    <p>+91 {contact_number}</p>
                                 </MobilePopUpProfileDetails>
                                 <MobilePopUpProfileDetails>
                                     <p>Password: </p>

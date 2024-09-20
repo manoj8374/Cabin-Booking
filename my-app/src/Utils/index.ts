@@ -49,6 +49,6 @@ export const getUserDetails = async()=>{
     }
 }
 
-export const url = 'https://c304-2401-4900-1cb0-ec72-c97c-7bc9-2148-53c9.ngrok-free.app'
+export const url = 'http://10.18.106.44:8000'
 
 export const accessToken = Cookies.get('access_token')

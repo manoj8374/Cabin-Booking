@@ -11,11 +11,12 @@ interface NavBarMainInterface{
 
 export const NavBarContainer = styled.div<NavBarInterface>`
     width: ${({isNavBarVisible}) => isNavBarVisible ? '350px' : '0' };
-    height: 100vh;
     background-color: #F1F4FF;
     transition: width 0.4s ease-in-out;
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow: auto;
 `
 
 export const NavBarSubContainer = styled.div`
@@ -41,7 +42,6 @@ export const NavBarBodyContents = styled.div`
     flex-direction: column;
     gap: 48px;
     align-items: center;
-    height: 100%;
 `
 
 export const NavBarMainContainer = styled.div<NavBarMainInterface>`
@@ -50,12 +50,11 @@ export const NavBarMainContainer = styled.div<NavBarMainInterface>`
     flex-direction: row;
     position: relative;
     background-color: transparent;
-    height: 100%;
     position: fixed;
     left: ${({isNavBarVisible}) => isNavBarVisible ? '0' : '-5000px'};
     transition: left 0.4s ease-in-out;
     backdrop-filter: blur(2px);
-
+    height: 5000px;
 `
 
 export const CircleContainer = styled.div`
@@ -103,15 +102,20 @@ export const MyProfileContainer = styled.div`
     gap: 24px;
 `
 
-export const HeadingContainer = styled.div`
+interface HeadingContainerProps {
+    myprofile?: boolean;
+    mybookings?: boolean; 
+}
+
+export const HeadingContainer = styled.div<HeadingContainerProps>`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-    padding-bottom: 16px;
+    padding-bottom: ${({myprofile, mybookings}) => myprofile ? '16px' : mybookings ? '16px' : '0'};
     width: 100%;
-    border-bottom: 2px solid #E0E0E0;
+    border-bottom: ${({myprofile, mybookings}) => myprofile ? '2px solid #1F41BB' : mybookings ? '2px solid #1F41BB' : 'none'};
 `
 
 export const ArrowDownMyProfile = styled(IoIosArrowDown)`
