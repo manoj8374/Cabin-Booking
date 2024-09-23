@@ -89,22 +89,7 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                             </HeadingContainer>
                             {myBookings &&
                             <DetailsProfileContents>
-                                <DetailsProfileContentsItem>
-                                    <ProfileParaElement>Name: </ProfileParaElement>
-                                    <ProfileParaElement>{first_name + ' ' + last_name}</ProfileParaElement>
-                                </DetailsProfileContentsItem>
-                                <DetailsProfileContentsItem>
-                                    <ProfileParaElement>Team: </ProfileParaElement>
-                                    <ProfileParaElement>{team_name}</ProfileParaElement>
-                                </DetailsProfileContentsItem>
-                                <DetailsProfileContentsItem>
-                                    <ProfileParaElement>Contact no: </ProfileParaElement>
-                                    <ProfileParaElement>+91 {contact_number}</ProfileParaElement>
-                                </DetailsProfileContentsItem>
-                                <DetailsProfileContentsItem>
-                                    <ProfileParaElement>Password: </ProfileParaElement>
-                                    <ProfileParaElement>*********</ProfileParaElement>
-                                </DetailsProfileContentsItem>
+                                
                             </DetailsProfileContents>
                             }
                         </MyProfileContainer>

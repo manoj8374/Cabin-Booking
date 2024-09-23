@@ -65,7 +65,7 @@ export const UserBookingsSlice = createSlice({
             })
 
             .addCase(getUserBookings.fulfilled, (state, action) => {
-                state.bookings = action.payload;
+                state.bookings = action.payload
                 state.error = false;
                 state.isLoading = false
             })

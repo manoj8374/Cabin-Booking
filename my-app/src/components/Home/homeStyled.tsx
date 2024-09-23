@@ -254,3 +254,17 @@ export const SpinnerContainerPopUp = styled.div`
     height: 100vh;
     width: 100%;
 `
+
+export const ViewMore = styled.p`
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #D93F3F;
+    margin-top: 16px;
+    align-self: center;
+    padding-bottom: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+`

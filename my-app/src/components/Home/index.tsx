@@ -25,17 +25,8 @@ const Home = ()=>{
     const dispatch = useDispatch<AppDispatch>()
 
     useEffect(() => {
-        if (isPopupVisible) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = 'auto';
-        }
-
-        // Cleanup when the component is unmounted
-        return () => {
-            document.body.style.overflow = 'auto';
-        };
-    }, [isPopupVisible]);
+        dispatch(fetchUserProfile());
+    }, []);
 
     const navigateToUpdateProfile = ()=>{
         navigate('/update-profile')

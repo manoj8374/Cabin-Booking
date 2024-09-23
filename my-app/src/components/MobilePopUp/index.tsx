@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import {HomeContainer, HomeContainerHeader, SpinnerContainerPopUp, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer} from '../Home/homeStyled'
+import {HomeContainer, HomeContainerHeader, SpinnerContainerPopUp, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer, ViewMore} from '../Home/homeStyled'
 import {useDispatch,useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../Redux/store";
 import {RxCross2 } from "react-icons/rx";
 import { FaArrowRight } from "react-icons/fa";
 import { fetchUserProfile } from '../../Redux/userSlice';
-import { ClipLoader } from 'react-spinners';
-import { SpinnerContainer } from '../Floor/cabinStyled';
 import LoadingComponent from '../LoadingView';
+import { MdNavigateNext } from "react-icons/md";
 
 interface MobilePopUpProps {
     closePopUp: () => void
@@ -98,27 +97,9 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
                     {myBookingsIsActive && 
                         <>
                             <HorizontalLine/>
-                            <MobilePopUpProfileContainer>
-                            <MobilePopUpProfileDetails>
-                                <p>Name: </p>
-                                <p>Venu Gopal</p>
-                            </MobilePopUpProfileDetails>
-                            <MobilePopUpProfileDetails>
-                                <p>Team: </p>
-                                <p>NIAT</p>
-                            </MobilePopUpProfileDetails>
-                            <MobilePopUpProfileDetails>
-                                <p>Contact no: </p>
-                                <p>+91 95425 86175</p>
-                            </MobilePopUpProfileDetails>
-                            <MobilePopUpProfileDetails>
-                                <p>Password: </p>
-                                <p>********</p>
-                            </MobilePopUpProfileDetails>
-                            <UpdateProfileButton>
-                                Update profile <SideArrow rotate={90}/>
-                            </UpdateProfileButton>
-                        </MobilePopUpProfileContainer>
+                            <ViewMore onClick={()=>navigate('/my-bookings')}>
+                                View More <MdNavigateNext size={28}/>
+                            </ViewMore> 
                         </>
                     }
                 </MobilePopUpButtonSubContainer>      

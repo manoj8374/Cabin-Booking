@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { IoHomeOutline } from "react-icons/io5";
+import { RxHamburgerMenu } from "react-icons/rx";
 
 export const MyBookingsContainer = styled.div`
     display: flex;
@@ -11,10 +13,19 @@ export const MyBookingsHeadingContainer = styled.div`
     margin: auto;
     justify-content: space-between;
     margin-top: 24px;
+
+    @media screen and (min-width: 768px) {
+        width: 95%;
 `
 
 export const MyBookingsHeading = styled.h1`
     font-size: 28px;
+    @media screen and (min-width: 768px) {
+        order: 2;
+        flex-grow: 1;
+        text-align: center;
+        font-size: 40px;
+    }
 `
 
 export const IconsContainer = styled.div`
@@ -22,6 +33,10 @@ export const IconsContainer = styled.div`
     gap: 24px;
     align-items: center;
     align-self: center;
+
+    @media screen and (min-width: 768px) {
+        align-items: center;
+    }
 `
 
 export const MyBookingsSubContainer = styled.div`
@@ -56,5 +71,61 @@ export const FilterButton = styled.button<{isactive: boolean}>`
 
     @media screen and (min-width: 768px) {
         cursor: pointer;
+        font-size: 18px;
+    }
+
+    @media screen and (min-width: 1024px) {
+        cursor: pointer;
+        font-size: 20px;
+    }
+`
+
+export const UpcomingBookingsContainer = styled.ul`
+    width: 85%;
+    margin: auto;
+    display: flex;
+    padding: 0px;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    @media screen and (min-width: 768px) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 90%;
+        margin: auto;
+        justify-content: center;
+    }
+`
+
+export const HomeIconContainer = styled(IoHomeOutline)`
+    font-size: 32px;
+    color: '1F41BB';
+    @media screen and (min-width: 768px) {
+        order: 2;
+        font-size: 32px;
+        color: black;
+        cursor: pointer;
+    }
+`
+
+export const HamburgerContainer = styled(RxHamburgerMenu)`
+    font-size: 32px;
+
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
+`
+
+export const NavBarContainer = styled(RxHamburgerMenu)`
+    font-size: 32px;
+    cursor: pointer;
+`
+
+export const NavBarContainerMain = styled.div`
+    display: none;
+    @media screen and (min-width: 768px) {
+        display: block;
     }
 `
