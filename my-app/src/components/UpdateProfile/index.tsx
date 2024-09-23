@@ -64,7 +64,7 @@ const UpdateProfile = () => {
                 setContactNumber("")
                 setErrorMsg("Profile Updated Successfully")
                 setTimeout(() => {
-                    navigate('/')
+                    navigate("/")
                 }, 1000)
             }
 
@@ -76,13 +76,13 @@ const UpdateProfile = () => {
     return (
         <UpdateProfileContainer>
             <ArrowContainerLargeDevices>
-                <StyledLink to = "/login">
+                <StyledLink onClick={() => navigate(-1)}>
                     <IoIosArrowBack size={24}/>
                 </StyledLink>
             </ArrowContainerLargeDevices>
             <UpdateProfileSubContainer>
                 <UpdateProfileArrowContainer>
-                    <StyledLink to = "/login">
+                    <StyledLink onClick={() => navigate(-1)}>
                         <FaArrowLeft strokeWidth={0} size={20}/>
                     </StyledLink>
                 </UpdateProfileArrowContainer>

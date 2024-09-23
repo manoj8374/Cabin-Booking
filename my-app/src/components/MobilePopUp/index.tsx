@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import {HomeContainer, HomeContainerHeader, SpinnerContainerPopUp, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer, ViewMore} from '../Home/homeStyled'
+import {HomeContainer, HomeContainerHeader, SpinnerContainerPopUp, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer, ViewMore, Logout, LogoutSubContainer} from '../Home/homeStyled'
 import {useDispatch,useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../Redux/store";
 import {RxCross2 } from "react-icons/rx";
@@ -8,6 +8,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { fetchUserProfile } from '../../Redux/userSlice';
 import LoadingComponent from '../LoadingView';
 import { MdNavigateNext } from "react-icons/md";
+import Cookies from 'js-cookie';
 
 interface MobilePopUpProps {
     closePopUp: () => void
@@ -33,6 +34,12 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
     useEffect(() => {
         dispatch(fetchUserProfile())
     }, [])
+
+    const logout = ()=>{
+        Cookies.remove("access_token")
+        Cookies.remove("refresh_token")
+        navigate("/login")
+    }
 
     const renderContent = ()=>{
         if(isLoading){
@@ -105,8 +112,10 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
                 </MobilePopUpButtonSubContainer>      
             </MobilePopUpButtonsContainer>
             <LogoutContainer>
-                <FaArrowRight/>
-                <p>Logout</p>
+                <LogoutSubContainer onClick = {logout}>
+                    <FaArrowRight size = {20}/>
+                    <Logout>Logout</Logout>
+                </LogoutSubContainer> 
             </LogoutContainer>
         </MobilePopUpSubContainer>
         }

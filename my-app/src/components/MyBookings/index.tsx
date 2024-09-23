@@ -89,7 +89,7 @@ const MyBookings = ()=>{
             <MyBookingsHeadingContainer>
                 <MyBookingsHeading>My Bookings</MyBookingsHeading>
                 <IconsContainer>
-                    <HomeIconContainer size = {24} color = "1F41BB" onClick = {()=> navigate("/")}  />
+                    <HomeIconContainer onClick = {()=> navigate("/")}  />
                     <HamburgerContainer onClick = {()=> setOpen(!open)} size = {24} color = '1F41BB'/>
                     <NavBarContainerMain ref = {laptopNavRef}>
                         <NavBarContainer onClick = {()=> toggleNavBar(!isNavBarVisible)}/>

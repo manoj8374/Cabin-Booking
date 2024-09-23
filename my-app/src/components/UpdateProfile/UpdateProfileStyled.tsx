@@ -128,7 +128,7 @@ export const UpdateProfileArrowContainer = styled.div`
     }
 ` 
 
-export const StyledLink = styled(Link)`
+export const StyledLink = styled.div`
     text-decoration: none;
     color: black;
 `

@@ -237,13 +237,14 @@ export const UpdateProfileButton = styled.button`
     align-self: center;
 `
 export const LogoutContainer = styled.div`
-    display: none;
+    display: flex;
     align-items: flex-end;
     gap: 8px;
     flex-grow: 0.9;
     align-self: flex-end;
-    width: 95%;
+    width: 80%;
     margin: 0 auto;
+    justify-content: flex-end;
 `
 
 export const SpinnerContainerPopUp = styled.div`
@@ -267,4 +268,17 @@ export const ViewMore = styled.p`
     justify-content: center;
     align-items: center;
     gap: 8px;
+`
+
+export const Logout = styled.p`
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+`
+
+export const LogoutSubContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
 `

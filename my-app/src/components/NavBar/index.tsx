@@ -1,8 +1,11 @@
 import { useEffect, useState,useRef } from "react";
-import {NavBarContainer, ArrowDownMyProfile,HeadingElementInside, OptionsContainer, MyProfileContainer, HeadingContainer, ProfileName, NavBarSubContainer, ProfilePicContainer, CircleContainer, NavBarHeader, NavBarBodyContents, NavBarMainContainer, DetailsProfileContents, DetailsProfileContentsItem, ProfileParaElement} from "./navbarStyled";
+import {NavBarContainer, ArrowDownMyProfile,HeadingElementInside, OptionsContainer, MyProfileContainer, HeadingContainer, ProfileName, NavBarSubContainer, ProfilePicContainer, CircleContainer, NavBarHeader, NavBarBodyContents, NavBarMainContainer, DetailsProfileContents, DetailsProfileContentsItem, ProfileParaElement, LogOutContainer, LogOutSubContainer, LogoutElement} from "./navbarStyled";
 import {RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
+import { FaArrowRight } from "react-icons/fa";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 interface NavBarInterface {
     toogleNavbar: (value: boolean) => void;
@@ -16,6 +19,14 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
     const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState)=>state.user)
     const [myProfile, setMyProfile] = useState(false)
     const [myBookings, setMyBookings] = useState(false)
+
+    const navigate = useNavigate()
+
+    const logout = ()=>{
+        Cookies.remove("access_token")
+        Cookies.remove("refresh_token")
+        navigate("/login")
+    }
 
     useEffect(()=>{
         setMyBookings(false)
@@ -95,6 +106,12 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                         </MyProfileContainer>
                     </OptionsContainer>
                 </NavBarBodyContents>
+                <LogOutContainer>
+                    <LogOutSubContainer onClick = {logout}>
+                        <FaArrowRight size = {24}/>
+                        <LogoutElement>Logout</LogoutElement>
+                    </LogOutSubContainer>
+                </LogOutContainer>
             </NavBarSubContainer>
         </NavBarContainer>
         </NavBarMainContainer>

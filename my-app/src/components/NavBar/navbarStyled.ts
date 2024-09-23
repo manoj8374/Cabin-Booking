@@ -149,3 +149,25 @@ export const ProfileParaElement = styled.p`
     font-weight: 500;
     color: black;
 `
+
+export const LogOutContainer = styled.div`
+    flex-grow: 0.8;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 95%;
+    gap: 16px;
+`
+
+export const LogOutSubContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    cursor: pointer;
+`
+
+export const LogoutElement = styled.p`
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+`

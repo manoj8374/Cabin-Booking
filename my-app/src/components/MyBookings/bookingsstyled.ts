@@ -100,8 +100,8 @@ export const UpcomingBookingsContainer = styled.ul`
 `
 
 export const HomeIconContainer = styled(IoHomeOutline)`
-    font-size: 32px;
-    color: '1F41BB';
+    font-size: 24px;
+    color: #1F41BB;
     @media screen and (min-width: 768px) {
         order: 2;
         font-size: 32px;
