@@ -71,7 +71,7 @@ export const MobileNavBarIcon = styled(RxHamburgerMenu)`
     }
 `
 
-export const MobilePopUp = styled.div<{ispopupvisible: boolean}>`
+export const MobilePopUp = styled.div`
     position: fixed;
     top: 0;
     left: 0;
@@ -84,7 +84,7 @@ export const MobilePopUp = styled.div<{ispopupvisible: boolean}>`
     min-height: 100vh;
     transition: opacity 0.3s ease-in-out;
     padding-top: 24px;
-    opacity: ${({ispopupvisible}) => ispopupvisible ? 1 : 0};
+    opacity: 1;
 `
 
 export const MobilePopUpCloseButton = styled.button`
@@ -238,5 +238,19 @@ export const UpdateProfileButton = styled.button`
 `
 export const LogoutContainer = styled.div`
     display: none;
+    align-items: flex-end;
+    gap: 8px;
+    flex-grow: 0.9;
+    align-self: flex-end;
+    width: 95%;
+    margin: 0 auto;
 `
 
+export const SpinnerContainerPopUp = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+`

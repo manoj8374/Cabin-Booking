@@ -5,6 +5,7 @@ import CreateAccount from './components/CreateAccount'
 import ForgotPasswordComponent from './components/ForgotPassword'
 import UpdateProfile from './components/UpdateProfile';
 import Home from './components/Home';
+import MyBookings from './components/MyBookings';
 import './App.css';
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
       <Route path = "/" element = {<ProtectedRoute>
         <Home/>
       </ProtectedRoute>}/>
+      <Route path = "/my-bookings" element = {<ProtectedRoute>
+        <MyBookings/>
+      </ProtectedRoute>} />
     </Routes> 
   );
 }

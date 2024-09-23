@@ -2,7 +2,6 @@ import {WhoBookedTheSlotContainer,HeadingElement, WhoBookedTheSlotSubContainer, 
 import {SelectedTimeSlotsContainer, ButtonsContainer, ConfirmTimeSlotsContainer, SlotItem, BookButton, CancelButton, PurposeContainer} from './confirmslotsstyled'
 import { useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
-import {ConfirmSlotPopUp, setError} from '../../Redux/confirmslotsslice'
 import { useEffect, useState } from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { url, useCabinData } from '../../Utils';
@@ -44,7 +43,6 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
     }
 
     const confirm = async(e: any)=>{
-        dispatch(setError({error: false}))
         const timeSlotsWithTime = selectedSlots.map((timeSlot)=>{
             return convertTimeSlots(timeSlot)
         })

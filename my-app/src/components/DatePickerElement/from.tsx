@@ -114,12 +114,11 @@ const DatePickerElementFrom = () => {
     if (date !== null) {
       const endDateObj = formatCustomDate(new Date(endDate))
       const currentDateObj = formatCustomDate(new Date())
- 
-      if((formatCustomDate(date) <= endDateObj) && (formatCustomDate(date) >= currentDateObj)){
-        setStartDate(date)
-        updateStartDate(format(date, 'yyyy-MM-dd'))
-      }
+      setStartDate(date)
+    updateStartDate(format(date, 'yyyy-MM-dd'))
+
     }
+    
   }
 
   return (

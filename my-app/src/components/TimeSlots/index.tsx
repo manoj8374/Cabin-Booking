@@ -1,8 +1,6 @@
 //get start and end date from global state. get cabin id from props and get time slots from api
 import {useEffect, useState} from 'react'
 import {useSelector, useDispatch} from 'react-redux'
-import { setWhoBooked } from '../../Redux/whobookedslice'
-import {ConfirmSlotPopUp} from '../../Redux/confirmslotsslice'
 import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 import WhoBookedTheSlot from '../WhoBookedTheSlot'

@@ -4,7 +4,6 @@ import { FaCheck } from "react-icons/fa6";
 import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../Redux/store';
-import {setError} from '../../Redux/confirmslotsslice'
 import React from 'react';
 
 interface ResultScreenProps{

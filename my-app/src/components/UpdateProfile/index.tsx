@@ -1,20 +1,18 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import {UpdateProfileContainer, UpdateProfileSubContainer, UpdateProfileImageContainer, UpdateProfileHeading, UpdateProfileForm, UpdateProfileInput, UpdateProfileButton, UpdateProfileArrowContainer, StyledLink, ArrowContainerLargeDevices} from './UpdateProfileStyled'
 import { FaArrowLeft } from "react-icons/fa";
 import { IoIosArrowBack} from "react-icons/io";
-import { useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../Redux/store';
 import { url } from '../../Utils';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import {fetchUserProfile} from '../../Redux/userSlice'
-import { set } from 'react-datepicker/dist/date_utils';
-import { setError } from '../../Redux/confirmslotsslice';
+import { set } from 'date-fns';
 
 const UpdateProfile = () => {
-    const {first_name, last_name} = useSelector((state: RootState) => state.user)
-    const [username, setUsername] = useState<string>("")
+    const {first_name, last_name, team_name, contact_number, username} = useSelector((state: RootState) => state.user)
+    const [setusername, setUsername] = useState<string>("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [teamName, setTeamName] = useState("")
@@ -26,8 +24,15 @@ const UpdateProfile = () => {
 
     const dispatch = useDispatch<AppDispatch>()
 
+    
+
     useEffect(()=>{
         dispatch(fetchUserProfile())
+        setFirstName(first_name)
+        setLastName(last_name)
+        setTeamName(team_name)
+        setContactNumber(contact_number)
+        setUsername(username)
     }, [])
 
     const submitForm = async(e: any) => {
@@ -40,7 +45,7 @@ const UpdateProfile = () => {
                     'Authorization': `Bearer ${Cookies.get('access_token')}`
                 },
                 body: JSON.stringify({
-                    username: username,
+                    username: setusername,
                     firstname: firstName,
                     lastname: lastName,
                     team_name: teamName,
@@ -88,7 +93,7 @@ const UpdateProfile = () => {
                     {first_name} {last_name}
                 </UpdateProfileHeading>
                 <UpdateProfileForm>
-                    <UpdateProfileInput type = "text" placeholder = "Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                    <UpdateProfileInput type = "text" placeholder = "Username" onChange={(e) => setUsername(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "First Name" value={firstName} onChange = {(e) => setFirstName(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "Team Name" value = {teamName} onChange={(e) => setTeamName(e.target.value)}/>

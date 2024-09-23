@@ -1,7 +1,6 @@
 import {WhoBookedTheSlotContainer,HeadingElement, WhoBookedTheSlotSubContainer, RxCross2Element,DateParaElement, WhoBookedTheSlotFormMainContainer, WhoBookedTheSlotHeadingContainer, WhoBookedTheSlotFormContainer, WhoBookedTheSlotInputFieldContainer, WhoBookedTheSlotInputField, LabelElement, BookedContainer, BookedContainerHeading, CloseButton} from './whoBookedStyled'
 import { useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
-import {setPopUpClosed} from '../../Redux/whobookedslice'
 import { useEffect, useState} from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { url, useCabinData} from '../../Utils'
@@ -47,7 +46,6 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
                     const month = String(new Date(endDate).getMonth() + 1) .length == 1 ? "0" + String(new Date(endDate).getMonth() + 1) : String(new Date(endDate).getMonth() + 1)
                     endDate = new Date(endDate).getFullYear() + "-" + month  + "-" + initialDate
                 }
-                console.log(startdate, timeSlot)
                 console.log(endDate, endTimeSlot)
                 const response = await fetch(`${url}/user/booked_slots/v1`,{
                     method: "POST",
@@ -56,7 +54,7 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
                         'Authorization': `Bearer ${Cookies.get('access_token')}`
                     },
                     body: JSON.stringify({
-                        cabin_id: "b6d04ab7-8c7e-4b29-8a56-71d53779e257",
+                        cabin_id: cabinId,
                         start_date_time: `${startdate} ${timeSlot}`,
                         end_date_time: `${endDate} ${endTimeSlot}`
                     })
