@@ -43,6 +43,7 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
                 end_date_time: `${endDate} ${endTimeSlot}`
             }
 
+
             dispatch(getUserDetails(body))
     }, [])
 
