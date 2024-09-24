@@ -13,7 +13,15 @@ import Cookies from 'js-cookie'
 
 interface TimeSlotsProps{
     cabinId: string,
-    floor: string
+    floor: string,
+    cabinDetails: CabinInterface
+}
+
+interface CabinInterface {
+  cabin_id: string,
+  cabin_name: string,
+  cabin_type: string,
+  description: string
 }
 
 interface TimeSlotsArr{
@@ -298,7 +306,7 @@ interface TimeSlotsObj{
 //       }
 //   ]
 
-const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
+const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
     const [timeSlots, setTimeSlots] = useState<TimeSlotsObj[]>()
     const [showAllSlots, setShowAllSlots] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
@@ -313,6 +321,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
 
     const dispatch = useDispatch<AppDispatch>()
 
+    console.log(cabinDetails)
     const convertTo12HourFormat = (timeString: string)=>{
         let hours: string = timeString.split(':')[0]
         const period = parseInt(hours) >= 12 ? 'PM' : 'AM'
@@ -450,9 +459,9 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor})=>{
         {!isMobile && selectedSlots.length >= 0 && <LaptopDeviceSubmitContainer>
           <LaptopDeviceSubmitButton onClick={confirmSlots}>Confirm</LaptopDeviceSubmitButton>
         </LaptopDeviceSubmitContainer>}
-        {confirmSlotPopUp && <ConfirmSlotPopUpComponent floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
+        {confirmSlotPopUp && <ConfirmSlotPopUpComponent name = {cabinDetails.cabin_name} floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
         {ResultPopUp === null ? null : <ResultScreen changeErrorToUndefined = {()=> setResultPopUp(null)} result = {ResultPopUp}/>}
-        {whoBookedTheSlot && <WhoBookedTheSlot cabinId = {cabinId} timeSlot = {bookedTimeString} closePopUp = {()=> setWhoBookedTheSlot(false)}/>}
+        {whoBookedTheSlot && <WhoBookedTheSlot floor = {floor} name = {cabinDetails.cabin_name} cabinId = {cabinId} timeSlot = {bookedTimeString} closePopUp = {()=> setWhoBookedTheSlot(false)}/>}
         </>
     )
 }

@@ -4,10 +4,9 @@ interface FloorContainerProps {
     isloading: boolean
 }
 
-export const FloorContainer = styled.ul<FloorContainerProps>`
+export const FloorContainer = styled.ul`
     display: flex;
     flex-direction: column;
-    // height: ${(props)=> props.isloading ? "500px" : "auto"};
     gap: 40px;
     padding: 0px;
     

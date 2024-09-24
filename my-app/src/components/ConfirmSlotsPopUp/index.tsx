@@ -14,10 +14,11 @@ interface ConfirmSlotPopUpProps{
     toogleConfirmSlotPopUp: ()=> void,
     slotsBookedFunction: ()=> void,
     resultPopUp: (result: boolean)=> void,
-    floor: string
+    floor: string,
+    name: string
 }
 
-const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, selectedSlotsUpdate, toogleConfirmSlotPopUp, slotsBookedFunction, resultPopUp, selectedSlots, cabinId})=>{
+const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, selectedSlotsUpdate, toogleConfirmSlotPopUp, slotsBookedFunction, resultPopUp, selectedSlots, cabinId, name})=>{
     const dispatch = useDispatch<AppDispatch>()
     const {startdate, endDate} = useCabinData();
     const [purpose, setPurpose] = useState('')
@@ -82,13 +83,14 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
     useEffect(()=>{
         console.log(selectedSlots, cabinId)
     }, [])
+
     return(
         <>
             <WhoBookedTheSlotContainer onClick = {closePopUp}>
                 <WhoBookedTheSlotSubContainer onClick = {(e)=>{e.stopPropagation()}}>
                     <WhoBookedTheSlotFormMainContainer>
                         <WhoBookedTheSlotHeadingContainer>
-                            <HeadingElement>{floor}</HeadingElement>
+                            <HeadingElement>{floor} {name}</HeadingElement>
                             <RxCross2Element onClick = {closePopUp} />
                         </WhoBookedTheSlotHeadingContainer>
                         <WhoBookedTheSlotFormContainer>

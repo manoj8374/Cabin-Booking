@@ -21,6 +21,7 @@ const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
     const [cabinDescription, setCabinDescription] = useState<string>(cabins[0].description)
     const [activeIndex, setActiveIndex] = useState<number>(0)
     const [selectedCabinId, setSelectedCabinId] = useState<string>(cabins[0].cabin_id)
+    const [selectedCabin, setSelectedCabin] = useState<CabinInterface>(cabins[0])
 
     const changeDescriptionAndIndex = (value: string, index: number, cabinId: string)=>{
         setCabinDescription(value)
@@ -35,14 +36,14 @@ const FloorItem: React.FC<FloorProps> = ({floor, cabins})=>{
                 <FloorButtonsContainer>
                     {cabins?.map((eachCabin, index)=>{
                         return(
-                            <ButtonItem key = {eachCabin.cabin_id} cabinDetails = {eachCabin} changeDescriptionAndIndex = {changeDescriptionAndIndex} activeIndex = {activeIndex} currentIndex = {index}/>
+                            <ButtonItem key = {eachCabin.cabin_id} changeCabin = {()=> setSelectedCabin(eachCabin)} cabinDetails = {eachCabin} changeDescriptionAndIndex = {changeDescriptionAndIndex} activeIndex = {activeIndex} currentIndex = {index}/>
                         )
                     })}
                 </FloorButtonsContainer>
                 <CabinDescription>
                     {cabinDescription}
                 </CabinDescription>
-                <TimeSlots cabinId = {selectedCabinId} floor = {floor}/>
+                <TimeSlots cabinId = {selectedCabinId} floor = {floor} cabinDetails = {selectedCabin}/>
             </FloorItemSubContainer>
         </FloorItemContainer>
     )

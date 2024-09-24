@@ -175,3 +175,29 @@ export const RxCross2Element = styled(RxCross2)`
       font-size: 22px;
    }
 `
+
+export const LoadingAndErrorContainer = styled.div`
+   height: 350px;
+   background-color: #F1F4FF;
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   justify-content: center;
+   gap: 24px;
+   width: 80%;
+   margin: auto;
+`
+
+export const RetryButton = styled.button`
+   background-color: #1F41BB;
+   border: none;
+   font-size: 14px;
+   font-family: 'Poppins', sans-serif;
+   font-weight: 500;
+   color: white;
+   width: 90px;
+   border-radius: 4px;
+   padding: 4px;
+   align-self: center;
+   cursor: pointer;
+`
