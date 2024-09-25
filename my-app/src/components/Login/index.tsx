@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { url } from '../../Utils'
+import fetchApi from '../../Utils/fetchDetails'
 import {ErrorMessage,LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./loginStyled"
 
 const Login = () => {
@@ -12,41 +13,36 @@ const Login = () => {
 
     const navigate = useNavigate()
 
+    const onSubmitSuccess = (accessToken: string, refreshToken: string)=>{
+        Cookies.set('access_token', accessToken)
+        Cookies.set("refresh_token", accessToken)
+        navigate('/')
+        setLoggedIn(true)
+    }
+
     const submitLogin = async(e: any)=>{
         e.preventDefault()
         if(email === "" || password === ""){
             setError("Please enter email and password")
         }else{
-            try{
-                const data = {
-                    email: email,
-                    password: password
-                }
+            const data = {email: email, password: password}
 
-                console.log(data)
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }
 
-                const response = await fetch(`${url}/user_account/login/v1/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                })
+            const response = await fetchApi(`${url}/user_account/login/v1`, options);
 
-                const responseJson = await response.json()
-                if(response.status === 200){
-                    Cookies.set('access_token', responseJson.access_token)
-                    Cookies.set('refresh', responseJson.refresh_token)
-                    navigate('/')
-                }else{
-                    console.log(responseJson)
-                    setError(responseJson.error_message)
-                }
-            }catch(e){
-                console.log(e)
+            if(response.success){
+                onSubmitSuccess(response.data.access_token, response.data.refresh_token)
+            }else{
+                setError(response.error.error_message)
             }
         }
-        // 
     }
 
     useEffect(()=>{
@@ -74,8 +70,8 @@ const Login = () => {
                     <LoginInputContainer>
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
                         <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=>setPassword(e.target.value)}/>
-                        <ForgotPassword href = "/forgot-password">Forgot Password?</ForgotPassword>
-                        {error && <ErrorMessage>{error}</ErrorMessage>}
+                        <ForgotPassword data-testid = "forgot-password" href = "/forgot-password">Forgot Password?</ForgotPassword>
+                        {error && <ErrorMessage data-testid = "login-error">{error}</ErrorMessage>}
                         <LoginButton data-testid = "login-button" type = "submit" onClick = {submitLogin}>Login</LoginButton>
                         <CreateNewAccount href = "/create-account">Create new account</CreateNewAccount>
                     </LoginInputContainer>
