@@ -5,5 +5,5 @@ import { MemoryRouter } from 'react-router-dom';
 
 test('renders learn react link', () => {
 
-  expect(true).toBe(true);
+  expect(3).toBe(3)
 });
