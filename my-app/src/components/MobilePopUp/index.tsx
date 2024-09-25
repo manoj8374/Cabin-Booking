@@ -122,7 +122,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
     }
 
     return (
-        <MobilePopUp>
+        <MobilePopUp data-testid="mobile-pop-up">
             {renderContent()}
         </MobilePopUp>
     )

@@ -22,7 +22,7 @@ interface NavBarInterface {
 const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, laptopNavRef})=>{
     const divRef = useRef<HTMLDivElement | null>(null);
 
-    const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState)=>state.user)
+    const {first_name = "", last_name = "", team_name = "", contact_number = ""} = useSelector((state: RootState)=>state.user || {})
     const [myProfile, setMyProfile] = useState(false)
     const [myBookings, setMyBookings] = useState(false)
 

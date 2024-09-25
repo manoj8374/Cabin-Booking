@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import Cookies from "js-cookie";
-import {url} from "../Utils";
-
+import getUserDetails from '../apiCalls/userdetails'
 
 interface IntialState{
     email: string
@@ -25,22 +23,7 @@ const initialState: IntialState =  {
     error: false
 }
 
-const getUserDetails = async()=>{
-    try{
-        const response = await fetch(`${url}/user/profile/v1`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Cookies.get('access_token')}`
-            }
-        })
 
-        const data = await response.json()
-        return data
-    }catch(e){
-        throw new Error("Error Has Occured")
-    }
-}
 
 export const fetchUserProfile = createAsyncThunk(
     'user/fetchProfile',
@@ -78,9 +61,7 @@ export const UserSlice = createSlice({
                 state.isLoading = false;
                 state.error = true
             })
-
-            
     }
 })
 
-export default UserSlice.reducer
+export default UserSlice

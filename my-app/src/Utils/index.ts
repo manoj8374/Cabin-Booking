@@ -2,6 +2,9 @@ import {setStartDate, setEndDate, setCabinIds} from "../Redux/CabinSlice";
 import {useDispatch, useSelector} from "react-redux";
 import Cookies from "js-cookie";
 import { RootState } from "../Redux/store";
+import store from "../Redux/store";
+import { Provider } from "react-redux";
+import { MemoryRouter } from "react-router-dom";
 
 
 export const useCabinData = ()=>{
@@ -42,12 +45,12 @@ export const getUserDetails = async()=>{
         })
 
         const data = await response.json()
-        console.log(data)
         return data
     }catch(e){
         console.log(e)
     }
 }
+
 
 export const url = 'http://10.18.106.34:8000'
 

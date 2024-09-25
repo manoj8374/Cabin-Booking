@@ -8,11 +8,12 @@ import cabinDetailsSlice from './getcabindetailsslice'
 const store = configureStore({
     reducer: {
         Cabin: CabinSlice,
-        user: userSlice,
+        user: userSlice.reducer,
         userBookings: UserBookingsSlice,
         whobookedtheslot: whobookedtheslotslice,
         cabindetails: cabinDetailsSlice,
     },
+    
 });
 
 export default store
