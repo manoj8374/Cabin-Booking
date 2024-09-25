@@ -69,14 +69,14 @@ const Login = () => {
                 <LoginContentsContainer>
                     <LoginHeadingContents>
                         <LoginHeading data-testid = "login-heading">Login</LoginHeading>
-                        <LoginDescription>Please provide company’s email</LoginDescription>
+                        <LoginDescription data-testid = "login-description">Please provide company’s email</LoginDescription>
                     </LoginHeadingContents>
                     <LoginInputContainer>
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
                         <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=>setPassword(e.target.value)}/>
                         <ForgotPassword href = "/forgot-password">Forgot Password?</ForgotPassword>
                         {error && <ErrorMessage>{error}</ErrorMessage>}
-                        <LoginButton type = "submit" onClick = {submitLogin}>Login</LoginButton>
+                        <LoginButton data-testid = "login-button" type = "submit" onClick = {submitLogin}>Login</LoginButton>
                         <CreateNewAccount href = "/create-account">Create new account</CreateNewAccount>
                     </LoginInputContainer>
                 </LoginContentsContainer>
