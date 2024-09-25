@@ -1,11 +1,17 @@
 import { useEffect, useState,useRef } from "react";
-import {NavBarContainer, ArrowDownMyProfile,HeadingElementInside, OptionsContainer, MyProfileContainer, HeadingContainer, ProfileName, NavBarSubContainer, ProfilePicContainer, CircleContainer, NavBarHeader, NavBarBodyContents, NavBarMainContainer, DetailsProfileContents, DetailsProfileContentsItem, ProfileParaElement, LogOutContainer, LogOutSubContainer, LogoutElement} from "./navbarStyled";
+import {NavBarContainer, ArrowDownMyProfile,HeadingElementInside, 
+    OptionsContainer, MyProfileContainer, HeadingContainer, ProfileName, NavBarSubContainer, 
+    ProfilePicContainer, CircleContainer, NavBarHeader, NavBarBodyContents, NavBarMainContainer, 
+    DetailsProfileContents, DetailsProfileContentsItem, ProfileParaElement, LogOutContainer, 
+    LogOutSubContainer, LogoutElement, ViewMoreNavBar, UpdateButton, UpdateButtonContainer} from "./navbarStyled";
 import {RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import { RootState } from "../../Redux/store";
 import { FaArrowRight } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { ViewMore } from "../Home/homeStyled";
+import { MdNavigateNext } from "react-icons/md";
 
 interface NavBarInterface {
     toogleNavbar: (value: boolean) => void;
@@ -90,8 +96,12 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                                     <ProfileParaElement>Password: </ProfileParaElement>
                                     <ProfileParaElement>*********</ProfileParaElement>
                                 </DetailsProfileContentsItem>
+                                <UpdateButtonContainer>
+                                    <UpdateButton onClick={()=> navigate("/update-profile")}>Update</UpdateButton>
+                                </UpdateButtonContainer>
                             </DetailsProfileContents>
                             }
+                            
                         </MyProfileContainer>
                         <MyProfileContainer>
                             <HeadingContainer mybookings = {myBookings} onClick = {()=>{setMyBookings(!myBookings); setMyProfile(false)}}>
@@ -100,7 +110,9 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                             </HeadingContainer>
                             {myBookings &&
                             <DetailsProfileContents>
-                                
+                                <ViewMoreNavBar onClick={()=>navigate('/my-bookings')}>
+                                View More <MdNavigateNext size={28}/>
+                                </ViewMoreNavBar> 
                             </DetailsProfileContents>
                             }
                         </MyProfileContainer>

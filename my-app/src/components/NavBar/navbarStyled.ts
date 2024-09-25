@@ -15,8 +15,8 @@ export const NavBarContainer = styled.div<NavBarInterface>`
     transition: width 0.4s ease-in-out;
     display: flex;
     flex-direction: column;
-    height: 100vh;
     overflow: auto;
+    min-height: 100vh;
 `
 
 export const NavBarSubContainer = styled.div`
@@ -54,7 +54,7 @@ export const NavBarMainContainer = styled.div<NavBarMainInterface>`
     left: ${({isNavBarVisible}) => isNavBarVisible ? '0' : '-5000px'};
     transition: left 0.4s ease-in-out;
     backdrop-filter: blur(2px);
-    height: 5000px;
+    height: fit-content;
 `
 
 export const CircleContainer = styled.div`
@@ -115,7 +115,7 @@ export const HeadingContainer = styled.div<HeadingContainerProps>`
     cursor: pointer;
     padding-bottom: ${({myprofile, mybookings}) => myprofile ? '16px' : mybookings ? '16px' : '0'};
     width: 100%;
-    border-bottom: ${({myprofile, mybookings}) => myprofile ? '2px solid #1F41BB' : mybookings ? '2px solid #1F41BB' : 'none'};
+    border-bottom: ${({myprofile, mybookings}) => myprofile ? '2px solid #444242' : mybookings ? '2px solid #444242' : 'none'};
 `
 
 export const ArrowDownMyProfile = styled(IoIosArrowDown)`
@@ -171,3 +171,34 @@ export const LogoutElement = styled.p`
     font-size: 22px;
     font-family: 'Poppins', sans-serif;
 `
+
+export const ViewMoreNavBar = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #D93F3F;
+`
+
+export const UpdateButton = styled.button`
+    background-color: #1F41BB;
+    border: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: white;
+    padding: 8px 16px;
+    width: 120px;
+    border-radius: 8px;
+    align-self: flex-end;
+    cursor: pointer;
+    `
+
+    export const UpdateButtonContainer = styled(DetailsProfileContentsItem)`
+        justify-content: center;
+        align-self: flex-end;
+        width: 100%;
+    `

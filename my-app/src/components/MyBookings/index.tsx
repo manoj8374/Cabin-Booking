@@ -1,4 +1,7 @@
-import {MyBookingsContainer, MyBookingsHeadingContainer, MyBookingsHeading, IconsContainer, MyBookingsSubContainer, FiltersContainer, FilterButton, UpcomingBookingsContainer, HomeIconContainer, HamburgerContainer, NavBarContainer, NavBarContainerMain} from './bookingsstyled'
+import {MyBookingsContainer, MyBookingsHeadingContainer, MyBookingsHeading, 
+IconsContainer, MyBookingsSubContainer, FiltersContainer, FilterButton,
+UpcomingBookingsContainer, HomeIconContainer, HamburgerContainer, NavBarContainer, 
+NavBarContainerMain, NoBookingsContainer, NoBookingsHeading, BookNowButton} from './bookingsstyled'
 import { IoHomeOutline } from "react-icons/io5";
 import { useEffect, useState, useRef} from 'react';
 import MobilePopUpComponent from '../MobilePopUp';
@@ -35,6 +38,7 @@ const MyBookings = ()=>{
     const navigate = useNavigate()
 
     const [upcomingBookings, setUpcomingBookings] = useState<BookingsObj[]>([])
+    const [previousBookings, setPreviousBookings] = useState<BookingsObj[]>([])
 
     const dispatch = useDispatch<AppDispatch>()
 
@@ -50,10 +54,17 @@ const MyBookings = ()=>{
     useEffect(() => {
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
-        const upcomingBookingsArr = bookings.filter((booking) => {
-            return new Date(booking.startDate) >= currentDate;
+        let upcomingBookingArr: BookingsObj[] = []
+        let previousBookingsArr: BookingsObj[] = []
+        bookings.forEach((booking) => {
+            if (new Date(booking.startDate) >= currentDate){
+                upcomingBookingArr.push(booking)
+            }else{
+                previousBookingsArr.push(booking)
+            }
         });
-        setUpcomingBookings(upcomingBookingsArr);
+        setUpcomingBookings(upcomingBookingArr);
+        setPreviousBookings(previousBookingsArr);
     }, [bookings]);
 
     const renderBookings = ()=>{
@@ -69,9 +80,33 @@ const MyBookings = ()=>{
             return <h1>Error</h1>
         }
 
-        if(bookings.length === 0){
-            return <h1>No Bookings Found</h1>
-        }   
+        if(upComing && upcomingBookings.length === 0){
+            return (
+                <NoBookingsContainer>
+                    <NoBookingsHeading>No Bookings Found</NoBookingsHeading>
+                    <BookNowButton onClick={()=> navigate("/")}>Book Now</BookNowButton>
+                </NoBookingsContainer>
+            )
+        }  
+        
+        if(previous && previousBookings.length === 0){
+            return (
+                <NoBookingsContainer>
+                    <NoBookingsHeading>No Previous Bookings Found</NoBookingsHeading>
+                    <BookNowButton onClick={()=> navigate("/")}>Book Now</BookNowButton>
+                </NoBookingsContainer>
+            )
+        }
+
+        if(previous){
+            return (
+                <UpcomingBookingsContainer>
+                    {previousBookings.map((eachItem)=>{
+                        return <MyBookingItem key = {eachItem.bookingId} details = {eachItem}/>
+                    })}
+                </UpcomingBookingsContainer>
+            )
+        }
 
         return (
             <UpcomingBookingsContainer>
@@ -82,6 +117,8 @@ const MyBookings = ()=>{
                 ): null}
             </UpcomingBookingsContainer>
         )
+
+
     }
     
     return (

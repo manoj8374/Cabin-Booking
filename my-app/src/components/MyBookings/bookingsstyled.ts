@@ -15,6 +15,7 @@ export const MyBookingsHeadingContainer = styled.div`
     margin-top: 24px;
 
     @media screen and (min-width: 768px) {
+        justify-content: space-between;
         width: 95%;
 `
 
@@ -22,9 +23,10 @@ export const MyBookingsHeading = styled.h1`
     font-size: 28px;
     @media screen and (min-width: 768px) {
         order: 2;
-        flex-grow: 1;
         text-align: center;
         font-size: 40px;
+        flex-grow: 1;
+        margin-right: 76px;
     }
 `
 
@@ -127,5 +129,42 @@ export const NavBarContainerMain = styled.div`
     display: none;
     @media screen and (min-width: 768px) {
         display: block;
+    }
+`
+
+export const NoBookingsContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    margin-top: 32px;
+    height: 50vh;
+    justify-content: center;
+    @media screen and (min-width: 768px) {
+        gap: 28px;
+    }
+    `
+
+export const NoBookingsHeading = styled.h1`
+    font-size: 24px;
+    @media screen and (min-width: 768px) {
+        font-size: 40px;
+    }
+`
+
+export const BookNowButton = styled.button`
+    background-color: #1F41BB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    width: 150px;
+
+    @media screen and (min-width: 768px) {
+        font-size: 18px;
+        cursor: pointer;
     }
 `

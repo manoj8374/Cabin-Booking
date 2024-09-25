@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 export const UpdateProfileContainer = styled.div`
     background-color: #F9F9F9;
-    min-height: 100vh;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,6 +12,7 @@ export const UpdateProfileContainer = styled.div`
         background-color: #CFD6D9;
         justify-content: center;
         position: relative;
+        padding-top: 48px;
     }
 `
 

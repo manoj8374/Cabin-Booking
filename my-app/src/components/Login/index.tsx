@@ -68,7 +68,7 @@ const Login = () => {
             <LoginSubContainer>
                 <LoginContentsContainer>
                     <LoginHeadingContents>
-                        <LoginHeading>Login</LoginHeading>
+                        <LoginHeading data-testid = "login-heading">Login</LoginHeading>
                         <LoginDescription>Please provide company’s email</LoginDescription>
                     </LoginHeadingContents>
                     <LoginInputContainer>

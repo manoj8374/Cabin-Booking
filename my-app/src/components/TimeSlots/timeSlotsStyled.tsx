@@ -22,7 +22,6 @@ export const ButtonTimeSlot = styled.button<ButtonTimeSlotContext>`
     border-color: ${({isavailable, selected})=> selected ? "#4ABD5D" : isavailable ? "#999999" : "#999999"};
     border-radius: 4px;
     padding: 8px;
-    cursor: pointer;
     color: ${({isavailable, selected})=> selected ? "#FFFFFF" : isavailable ? "#4ABD5D" : "#E72323"};
     font-size: 14px;
     background-color: ${({selected})=> selected ? "#4ABD5D" : "transparent"};
@@ -34,6 +33,7 @@ export const ButtonTimeSlot = styled.button<ButtonTimeSlotContext>`
     @media (min-width: 768px) {
         font-size: 20px;
         padding: 10px;
+        cursor: pointer;
     }
 `
 

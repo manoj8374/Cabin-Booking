@@ -21,6 +21,7 @@ interface ConfirmSlotPopUpProps{
 const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, selectedSlotsUpdate, toogleConfirmSlotPopUp, slotsBookedFunction, resultPopUp, selectedSlots, cabinId, name})=>{
     const dispatch = useDispatch<AppDispatch>()
     const {startdate, endDate} = useCabinData();
+    const [errormsg, setErrorMsg] = useState("")
     const [purpose, setPurpose] = useState('')
     const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState) => state.user)
 
@@ -44,6 +45,11 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
     }
 
     const confirm = async(e: any)=>{
+        e.preventDefault()
+        if(purpose === ""){
+            setErrorMsg("Please enter purpose")
+            return
+        }
         const timeSlotsWithTime = selectedSlots.map((timeSlot)=>{
             return convertTimeSlots(timeSlot)
         })
@@ -126,6 +132,7 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
                                     })}
                                 </ConfirmTimeSlotsContainer>
                             </SelectedTimeSlotsContainer>
+                            {errormsg && <p style = {{color: 'red'}}>{errormsg}</p>}
                             <ButtonsContainer>
                                 <CancelButton onClick = {closePopUp} >
                                     Cancel
