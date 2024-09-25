@@ -3,6 +3,7 @@ import {ErrorMsg, LoginContainer, LoginSubContainer, LoginContentsContainer, Log
 import Cookies from 'js-cookie'
 import {url} from '../../Utils'
 import { useNavigate } from 'react-router-dom'
+import fetchApi from '../../Utils/fetchDetails'
 
 const CreateAccount = () => {
     const [email, setEmail] = useState<string>('')
@@ -14,13 +15,19 @@ const CreateAccount = () => {
     const [error, setError] = useState<string>('')
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
 
+    const onSubmitSuccess = (accessToken: string, refreshToken: string)=> {
+        Cookies.set('access_token', accessToken)
+        Cookies.set("refresh_token", accessToken)
+        navigate('/')
+        setError('')
+    }
+
     const navigate = useNavigate()
     const submitSignUp = async (e: any)=>{
         e.preventDefault()
         if(email === '' || password === '' || fullName === '' || teamName === '' || contactNumber === ''){
             setError("Please fill all the fields")
         }else{
-            //make an api call here
             const data = {
                 email: email,
                 password: password,
@@ -37,19 +44,12 @@ const CreateAccount = () => {
                 },
                 body: JSON.stringify(data)
             }
-            try{
-                const response: Response = await fetch(`${url}/user_account/signup/v1`, options)
-                const data = await response.json()
-                if (response.status === 200) {
-                setError('')
-                Cookies.set('access_token', data.access_token)
-                Cookies.set('refresh_token', data.refresh_token)
-                navigate('/')
+
+            const response = await fetchApi(`${url}/user_account/signup/v1`, options);
+            if (response.success) {
+                onSubmitSuccess(response.data.access_token, response.data.refresh_token)
             }else{
-                setError(data.error_message)
-            }
-            }catch(error){
-                console.log(error)
+                setError(response.data.error_message)
             }
         }
     }
@@ -71,8 +71,8 @@ const CreateAccount = () => {
             <LoginSubContainer>
                 <LoginContentsContainer>
                     <LoginHeadingContents>
-                        <LoginHeading>Create Account</LoginHeading>
-                        <LoginDescription>Please provide your company email and name as per company</LoginDescription>
+                        <LoginHeading data-testid = "create-account-heading">Create Account</LoginHeading>
+                        <LoginDescription data-testid = "create-account-description">Please provide your company email and name as per company</LoginDescription>
                     </LoginHeadingContents>
                     <LoginInputContainer>
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
@@ -81,8 +81,8 @@ const CreateAccount = () => {
                         <LoginInput placeholder="Full Name" type = "text" required = {true} value = {fullName} onChange = {(e)=>setFullName(e.target.value)}/>
                         <LoginInput placeholder="Team Name" type = "text" required = {true} value = {teamName} onChange = {(e)=>setTeamName(e.target.value)}/>
                         <LoginInput placeholder="Contact Number" type = "text" required = {true} value = {contactNumber} onChange = {(e)=>setContactNumber(e.target.value)}/>
-                        {error.length > 0 && <ErrorMsg>{error}</ErrorMsg>}
-                        <LoginButton type = "submit" onClick = {submitSignUp}>Sign Up</LoginButton>
+                        {error.length > 0 && <ErrorMsg data-testid = "create-account-error">{error}</ErrorMsg>}
+                        <LoginButton type = "submit" onClick = {submitSignUp} data-testid = "create-account-button">Sign Up</LoginButton>
                         <CreateNewAccount href = "/login">Already Have an account</CreateNewAccount>
                     </LoginInputContainer>
                 </LoginContentsContainer>

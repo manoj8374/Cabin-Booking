@@ -74,13 +74,13 @@ describe("Login Component Testing", ()=>{
             expect(Cookies.set).toHaveBeenCalledWith("access_token", "test")
             expect(Cookies.set).toHaveBeenCalledWith("refresh_token", "test")
 
-            expect(fetchApi).toHaveBeenCalledWith(`${url}/user_account/login/v1`, expect.any(Object))
+            expect(fetchApi).toHaveBeenCalledWith(`${url}/user_account/login/v1/`, expect.any(Object))
             expect(mockNavigate).toHaveBeenCalledWith('/')
         })
     })
 
     test("Check if login button is working for incorrect credentials", async()=>{
-        (fetchApi as jest.Mock).mockResolvedValue({success: false, error: {error_message: "test"}})
+        (fetchApi as jest.Mock).mockResolvedValue({success: false, data: {error_message: "test"}})
 
         renderComponent()
         const email = screen.getByPlaceholderText("Email") as HTMLInputElement
@@ -93,7 +93,7 @@ describe("Login Component Testing", ()=>{
         fireEvent.click(button)
         
         await waitFor(() => {
-            expect(fetchApi).toHaveBeenCalledWith(`${url}/user_account/login/v1`, expect.any(Object))
+            expect(fetchApi).toHaveBeenCalledWith(`${url}/user_account/login/v1/`, expect.any(Object))
             expect(screen.getByTestId("login-error")).toBeInTheDocument()
             expect(mockNavigate).not.toHaveBeenCalled()
         })
@@ -123,6 +123,7 @@ describe("Login Component Testing", ()=>{
         const button = screen.getByTestId("login-button")
         fireEvent.click(button)
         const errorMessage = screen.getByText("Please enter email and password")
+        expect(3).toBe(3)
         expect(errorMessage).toBeInTheDocument()
     })
 })

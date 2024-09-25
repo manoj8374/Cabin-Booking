@@ -35,12 +35,12 @@ const Login = () => {
                 body: JSON.stringify(data)
             }
 
-            const response = await fetchApi(`${url}/user_account/login/v1`, options);
+            const response = await fetchApi(`${url}/user_account/login/v1/`, options);
 
             if(response.success){
                 onSubmitSuccess(response.data.access_token, response.data.refresh_token)
-            }else{
-                setError(response.error.error_message)
+            }else{  
+                setError(response.data.error_message)
             }
         }
     }
