@@ -11,8 +11,6 @@ import { useSelector } from 'react-redux'
 import {getCabinDetails} from '../../Redux/getcabindetailsslice'
 
 const Cabin = ()=>{
-    const {updateSelectedSlots} = useCabinData()
-
     const dispatch = useDispatch<AppDispatch>()
 
     const {details, isLoading, error} = useSelector((state: RootState) => state.cabindetails)
@@ -30,10 +28,9 @@ const Cabin = ()=>{
     },[])
 
     const renderInfo = ()=>{
-      console.log(isLoading, error)
       if(isLoading){
         return (
-          <SpinnerContainer>
+          <SpinnerContainer data-testid = "spinner container">
             <ClipLoader color={"#1F41BB"} loading={true} size={50} />
           </SpinnerContainer>
         )
@@ -46,8 +43,7 @@ const Cabin = ()=>{
       }
 
       
-      
-      return (<FloorContainer>
+      return (<FloorContainer data-test-id = "home-container">
       {details.map((floor)=>{
             return (
                 <FloorItem key = {floor.floor_name} floor = {floor.floor_name} cabins = {floor.cabins}/>

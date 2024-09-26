@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import getUserDetails from '../apiCalls/userdetails'
+import {getUserDetails} from '../apiCalls/userdetails'
 
 interface IntialState{
     email: string

@@ -35,7 +35,7 @@ const Home = ()=>{
             <HomeContainerHeader>
                 <SelectDateHeading>Select Date</SelectDateHeading>   
                 <div ref = {laptopNavRef}>
-                    <LaptopNavBar size = {32} onClick={()=> toggleNavBar(true)}/>
+                    <LaptopNavBar data-testid = "laptop-navbar-button" size = {32} onClick={()=> toggleNavBar(true)}/>
                 </div>
                 <MobileNavBarIcon data-testid = "mobile-navbar-button" size = {24} onClick={togglePopup}/>
             </HomeContainerHeader>

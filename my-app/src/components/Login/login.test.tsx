@@ -123,7 +123,6 @@ describe("Login Component Testing", ()=>{
         const button = screen.getByTestId("login-button")
         fireEvent.click(button)
         const errorMessage = screen.getByText("Please enter email and password")
-        expect(3).toBe(3)
         expect(errorMessage).toBeInTheDocument()
     })
 })

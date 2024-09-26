@@ -1,7 +1,7 @@
 import Cookies from "js-cookie"
 import { url } from "../Utils"
 
-const getUserDetails = async()=>{
+export const getUserDetails = async()=>{
     try{
         const response = await fetch(`${url}/user/profile/v1`, {
             method: 'GET',
@@ -17,5 +17,3 @@ const getUserDetails = async()=>{
         throw new Error("Error Has Occured")
     }
 }
-
-export default getUserDetails

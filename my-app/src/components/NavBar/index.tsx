@@ -59,11 +59,11 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
     }, [isNavBarVisible])
 
     return(
-        <NavBarMainContainer isNavBarVisible = {isNavBarVisible}>
+        <NavBarMainContainer data-testid = "laptop-navbar-container" isNavBarVisible = {isNavBarVisible}>
                 <NavBarContainer isNavBarVisible = {isNavBarVisible} ref={divRef}>
             <NavBarSubContainer>
                 <NavBarHeader>
-                    <RxCross2 size={30} onClick = {()=>toogleNavbar(false)}/>
+                    <RxCross2 data-testid = "cancelButton" size={30} onClick = {()=>toogleNavbar(false)}/>
                 </NavBarHeader>
                 <NavBarBodyContents>
                     <ProfilePicContainer>
@@ -74,7 +74,7 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                     </ProfilePicContainer>
                     <OptionsContainer>
                         <MyProfileContainer>
-                            <HeadingContainer myprofile = {myProfile} onClick = {()=>{setMyProfile(!myProfile); setMyBookings(false)}}>
+                            <HeadingContainer data-testid = "myProfileButton" myprofile = {myProfile} onClick = {()=>{setMyProfile(!myProfile); setMyBookings(false)}}>
                                 <HeadingElementInside>My Profile</HeadingElementInside>
                                 <ArrowDownMyProfile/>
                             </HeadingContainer>
@@ -97,7 +97,7 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                                     <ProfileParaElement>*********</ProfileParaElement>
                                 </DetailsProfileContentsItem>
                                 <UpdateButtonContainer>
-                                    <UpdateButton onClick={()=> navigate("/update-profile")}>Update</UpdateButton>
+                                    <UpdateButton role="button" onClick={()=> navigate("/update-profile")}>Update</UpdateButton>
                                 </UpdateButtonContainer>
                             </DetailsProfileContents>
                             }

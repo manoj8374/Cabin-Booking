@@ -1,16 +1,10 @@
-import {screen, render, fireEvent} from "../../../test.utils"
+import {screen, render, fireEvent, act} from "../../../test.utils"
 import { configureStore } from "@reduxjs/toolkit"
 import Home from "./index"
-import UserSlice from "../../Redux/userSlice"
-import getUserDetails from "../../apiCalls/userdetails"
-
-jest.mock('../../apiCalls/userdetails', ()=>({
-    getUserDetails: jest.fn()
-}))
-
+import * as getUserDetails from "../../apiCalls/userdetails"
 
 describe("Home Component Testing", ()=>{
-
+    // const getUserDetailsSpyFn = jest.spyOn(getUserDetails, 'getUserDetails')
     const renderComponent = ()=>{
         return render(
             <Home />
@@ -32,21 +26,15 @@ describe("Home Component Testing", ()=>{
         expect(screen.getByTestId("mobile-pop-up")).toBeInTheDocument()
     })
 
-    test("if laptop nav is rendered properly when the button is clicked", ()=>{
-
-    })
-
-    test("if data is fetched properly on mount", ()=>{
+    test("if laptop navbar is working properly", ()=>{
         renderComponent()
-        const mockUserData = {
-            username: 'testuser',
-            email: 'testuser@example.com',
-            first_name: 'Test',
-            last_name: 'User',
-            team_name: 'Development',
-            contact_number: '1234567890',
-        };
-        
-        expect(getUserDetails).toHaveBeenCalled()
+        const laptop = screen.getByTestId("laptop-navbar-button")
+        expect(screen.queryByTestId("laptop-navbar-container")).not.toBeNull()
+
+        fireEvent.click(laptop)
+        expect(screen.getByTestId("laptop-navbar-container")).toBeInTheDocument()
     })
+
+    
+    
 })
