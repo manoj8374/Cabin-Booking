@@ -42,8 +42,6 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                 if(divRef.current && !divRef.current.contains(event.target as Node) && !laptopNavRef.current?.contains(event.target as Node)){
                     toogleNavbar(false)
                     document.body.style.overflow = 'auto';
-                }else{
-                    console.log("Clicked Inside")
                 }
             }else{
                 document.body.style.overflow = 'auto';
@@ -78,7 +76,7 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                                 <ArrowDownMyProfile/>
                             </HeadingContainer>
                             {myProfile &&
-                            <DetailsProfileContents>
+                            <DetailsProfileContents data-testid = "myProfileContents">
                                 <DetailsProfileContentsItem>
                                     <ProfileParaElement>Name: </ProfileParaElement>
                                     <ProfileParaElement>{first_name + ' ' + last_name}</ProfileParaElement>
@@ -100,16 +98,15 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                                 </UpdateButtonContainer>
                             </DetailsProfileContents>
                             }
-                            
                         </MyProfileContainer>
                         <MyProfileContainer>
-                            <HeadingContainer mybookings = {myBookings} onClick = {()=>{setMyBookings(!myBookings); setMyProfile(false)}}>
+                            <HeadingContainer data-testid = "myBookingsButton" mybookings = {myBookings} onClick = {()=>{setMyBookings(!myBookings); setMyProfile(false)}}>
                                 <HeadingElementInside>My Bookings</HeadingElementInside>
                                 <ArrowDownMyProfile/>
                             </HeadingContainer>
                             {myBookings &&
-                            <DetailsProfileContents>
-                                <ViewMoreNavBar onClick={()=>navigate('/my-bookings')}>
+                            <DetailsProfileContents data-testid = "myBookingsContainer">
+                                <ViewMoreNavBar data-testid = "viewMoreButton" onClick={()=>navigate('/my-bookings')}>
                                 View More <MdNavigateNext size={28}/>
                                 </ViewMoreNavBar> 
                             </DetailsProfileContents>
@@ -118,7 +115,7 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                     </OptionsContainer>
                 </NavBarBodyContents>
                 <LogOutContainer>
-                    <LogOutSubContainer onClick = {logout}>
+                    <LogOutSubContainer data-testid = "logoutcontainer" onClick = {logout}>
                         <FaArrowRight size = {24}/>
                         <LogoutElement>Logout</LogoutElement>
                     </LogOutSubContainer>

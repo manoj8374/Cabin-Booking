@@ -4,7 +4,8 @@ import Navbar from "./index"
 import { fetchUserProfile } from "../../Redux/userSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const mockReducer = (state = {
     user: {
@@ -30,8 +31,20 @@ const mockReducer = (state = {
     }
 }
 
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom') as any,
+    useNavigate: jest.fn(),
+}))
+
+jest.mock("js-cookie", () => ({
+    set: jest.fn(),
+    get: jest.fn(),
+    remove: jest.fn()
+}))
+
 
 describe("Laptop NavBar Testing", ()=>{
+    const mockNavigate = jest.fn()  
     const mockToogleNavBar = jest.fn()
     const renderComponent = ()=>{
         const store = configureStore({
@@ -61,9 +74,51 @@ describe("Laptop NavBar Testing", ()=>{
     })
 
     test("if update profile button is working", ()=>{
+        (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
         renderComponent()
         fireEvent.click(screen.getByTestId("myProfileButton"))
         const updateProfile = screen.getByRole("button", {name: "Update"})
         fireEvent.click(updateProfile)
+        expect(mockNavigate).toHaveBeenCalledWith("/update-profile")
     })
+
+    test("if logout button is working", ()=>{
+        (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+        renderComponent()
+        const logoutButton = screen.getByTestId("logoutcontainer")
+        fireEvent.click(logoutButton)
+        expect(mockNavigate).toHaveBeenCalledWith("/login")
+        expect(Cookies.remove).toHaveBeenCalledWith("access_token")
+        expect(Cookies.remove).toHaveBeenCalledWith("refresh_token")
+    })
+
+    test("if view more navigation is working", ()=>{
+        (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
+        renderComponent()
+        const myBookingsButton = screen.getByTestId("myBookingsButton")
+        fireEvent.click(myBookingsButton)
+
+        const viewMore = screen.getByTestId("viewMoreButton")
+        fireEvent.click(viewMore)
+        expect(mockNavigate).toHaveBeenCalledWith("/my-bookings")
+    })
+
+    test("if myBookings and myProfile buttons are working properly", ()=>{
+        renderComponent()
+
+        const myBookingsButton = screen.getByTestId("myBookingsButton")
+        fireEvent.click(myBookingsButton)
+
+        expect(screen.getByTestId("myBookingsContainer")).toBeInTheDocument()
+        expect(screen.queryByTestId("myProfileContents")).toBeNull()
+
+        const myProfileButton = screen.getByTestId("myProfileButton")
+        fireEvent.click(myProfileButton)
+
+        expect(screen.getByTestId("myProfileContents")).toBeInTheDocument()
+        expect(screen.queryByTestId("myBookingsContainer")).toBeNull()
+
+    })
+
+    
 })
