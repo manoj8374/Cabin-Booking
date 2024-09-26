@@ -10,7 +10,6 @@ import { RootState } from "../../Redux/store";
 import { FaArrowRight } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import { ViewMore } from "../Home/homeStyled";
 import { MdNavigateNext } from "react-icons/md";
 
 interface NavBarInterface {
