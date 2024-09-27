@@ -53,7 +53,6 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
 
     const dispatch = useDispatch<AppDispatch>()
 
-    console.log(cabinDetails)
     const convertTo12HourFormat = (timeString: string)=>{
         let hours: string = timeString.split(':')[0]
         const period = parseInt(hours) >= 12 ? 'PM' : 'AM'
@@ -65,7 +64,6 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
     function convertTo24HourFormat(time: string) {
         const [timePart, modifier] = time.split(' ');
         let [hours, minutes] = timePart.split(':');
-        console.log(hours, minutes)
         let a = parseInt(hours, 10);
         let b = parseInt(minutes, 10);
 

@@ -43,14 +43,14 @@ const ForgotPasswordComponent = () => {
     return (
         <ForgotPasswordContainer>
             <ArrowContainerLargeDevices>
-                <StyledLink to = "/update-profile">
+                <StyledLink to = "#" onClick = {()=> navigate(-1)}>
                     <IoIosArrowBack size={28}/>
                 </StyledLink>
             </ArrowContainerLargeDevices>
             <ForgotPasswordSubContainer>
                 <ForgotPasswordInsideContainer>
                 <ArrowContainer>
-                    <StyledLink to = "/update-profile">
+                    <StyledLink to = "#" onClick = {()=> navigate(-1)}>
                         <IoIosArrowBack size={24}/>
                     </StyledLink>
                 </ArrowContainer>
@@ -70,16 +70,16 @@ const ForgotPasswordComponent = () => {
                         <ForgotPasswordInputDiv>
                             <ForgotPasswordLabel htmlFor='password'>Password</ForgotPasswordLabel>
                             <PasswordWrapper>
-                                <ForgotPasswordInput id = "password" onChange = {(e)=> {setPassword(e.target.value)}} placeholder="Enter your new password" required = {true} />
+                                <ForgotPasswordInput id = "password" type = "password" onChange = {(e)=> {setPassword(e.target.value)}} placeholder="Enter your old password" required = {true} />
                                 <EyeIconContainer>
                                     <FaEyeSlash color='#E1E1E1'/>
                                 </EyeIconContainer>
                             </PasswordWrapper>
                         </ForgotPasswordInputDiv>
                         <ForgotPasswordInputDiv>
-                            <ForgotPasswordLabel htmlFor='confirmPassword'>Confirm Password</ForgotPasswordLabel>
+                            <ForgotPasswordLabel htmlFor='confirmPassword'>New Password</ForgotPasswordLabel>
                             <PasswordWrapper>
-                                <ForgotPasswordInput id = "confirmPassword" onChange = {(e)=> {setConfirmPassword(e.target.value)}} placeholder="Confirm password" required = {true} />
+                                <ForgotPasswordInput id = "confirmPassword" type = "password" onChange = {(e)=> {setConfirmPassword(e.target.value)}} placeholder="Confirm password" required = {true} />
                                 <EyeIconContainer>
                                     <FaEyeSlash color='#E1E1E1'/>
                                 </EyeIconContainer>

@@ -32,9 +32,11 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
             let endTimeSlot = `${String(parseInt(timeSlot.split(":")[0]) + 1).padStart(2, '0')}:00`
             if(endTimeSlot == "24:00"){
                 endTimeSlot = "00:00"
-                const initialDate = new Date(endDate).getDate() + 1
+                let initialDate = new Date(endDate).getDate()
+                initialDate = initialDate + 1
                 const month = String(new Date(endDate).getMonth() + 1) .length == 1 ? "0" + String(new Date(endDate).getMonth() + 1) : String(new Date(endDate).getMonth() + 1)
                 endDate = new Date(endDate).getFullYear() + "-" + month  + "-" + initialDate
+                console.log(endDate)
             }
 
             const body = {
@@ -42,7 +44,6 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
                 start_date_time: `${startdate} ${timeSlot}`,
                 end_date_time: `${endDate} ${endTimeSlot}`
             }
-
 
             dispatch(getUserDetails(body))
     }, [])

@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {ErrorMsg, LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount} from "./createAccountStyled"
+import {ErrorMsg, LoginContainer, LoginSubContainer, LoginContentsContainer, LoginHeadingContents, LoginHeading, LoginDescription, LoginInputContainer, LoginInput, ForgotPassword, LoginButton, CreateNewAccount, NumberInput} from "./createAccountStyled"
 import Cookies from 'js-cookie'
 import {url} from '../../Utils'
 import { useNavigate } from 'react-router-dom'
@@ -12,6 +12,8 @@ const CreateAccount = () => {
     const [teamName, setTeamName] = useState<string>('')
     const [contactNumber, setContactNumber] = useState<string>('')
     const [username, setUserName] = useState<string>('')
+    const [firstname, setFirstName] = useState<string>('')
+    const [lastname, setLastName] = useState<string>('')
     const [error, setError] = useState<string>('')
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
 
@@ -25,15 +27,18 @@ const CreateAccount = () => {
     const navigate = useNavigate()
     const submitSignUp = async (e: any)=>{
         e.preventDefault()
-        if(email === '' || password === '' || fullName === '' || teamName === '' || contactNumber === ''){
+        if(email === '' || password === '' || firstname === '' || lastname === '' || teamName === '' || contactNumber === ''){
             setError("Please fill all the fields")
+        }  
+        else if(contactNumber.length !== 10){
+            setError("Number must be of 10 digits")
         }else{
             const data = {
                 email: email,
                 password: password,
                 username: username,
-                first_name: fullName.split(' ')[0],
-                last_name: fullName.split(' ')[1],
+                first_name: firstname,
+                last_name: lastname,
                 team_name: teamName,
                 contact_number: contactNumber
             }
@@ -77,10 +82,11 @@ const CreateAccount = () => {
                     <LoginInputContainer>
                         <LoginInput placeholder="Email" required = {true} value = {email} onChange = {(e)=>setEmail(e.target.value)}/>
                         <LoginInput placeholder="Username" type = "text" required = {true} value = {username} onChange = {(e)=>setUserName(e.target.value)}/>
-                        <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=>setPassword(e.target.value)}/>
-                        <LoginInput placeholder="Full Name" type = "text" required = {true} value = {fullName} onChange = {(e)=>setFullName(e.target.value)}/>
+                        <LoginInput placeholder="First Name" type = "text" required = {true} value = {firstname} onChange = {(e)=>setFirstName(e.target.value)}/>
+                        <LoginInput placeholder="Last Name" type = "text" required = {true} value = {lastname} onChange = {(e)=>setLastName(e.target.value)}/>
                         <LoginInput placeholder="Team Name" type = "text" required = {true} value = {teamName} onChange = {(e)=>setTeamName(e.target.value)}/>
-                        <LoginInput placeholder="Contact Number" type = "text" required = {true} value = {contactNumber} onChange = {(e)=>setContactNumber(e.target.value)}/>
+                        <NumberInput placeholder="Contact Number" type = "number" required = {true} value = {contactNumber} onChange = {(e: any)=> e.target.value.length <= 10 ? setContactNumber(e.target.value) : null}/>
+                        <LoginInput placeholder="Password" type = "password" required = {true} value = {password} onChange = {(e)=> setPassword(e.target.value)}/>
                         {error.length > 0 && <ErrorMsg data-testid = "create-account-error">{error}</ErrorMsg>}
                         <LoginButton type = "submit" onClick = {submitSignUp} data-testid = "create-account-button">Sign Up</LoginButton>
                         <CreateNewAccount href = "/login">Already Have an account</CreateNewAccount>

@@ -43,9 +43,7 @@ const Navbar: React.FC<NavBarInterface> = ({toogleNavbar, isNavBarVisible, lapto
                     toogleNavbar(false)
                     document.body.style.overflow = 'auto';
                 }
-            }else{
-                document.body.style.overflow = 'auto';
-            }  
+            }
         }
 
         if(isNavBarVisible){

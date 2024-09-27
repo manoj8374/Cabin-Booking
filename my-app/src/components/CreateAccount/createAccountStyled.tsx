@@ -13,6 +13,10 @@ export const LoginContainer = styled.div`
         background-color: #CFD6D9;
         min-height: 100vh;
     }
+
+    @media(max-width: 576px){
+        padding-top: 32px;
+    }
 `
 
 export const LoginSubContainer = styled.div`
@@ -155,3 +159,15 @@ export const ErrorMsg = styled.p`
     text-align: right;
     width: 80%;
 `
+
+export const NumberInput = styled(LoginInput).attrs({ type: 'number' })`
+  /* For Chrome, Safari, Edge, and Opera */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* For Firefox */
+  -moz-appearance: textfield;
+`;

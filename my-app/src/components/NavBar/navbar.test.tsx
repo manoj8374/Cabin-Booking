@@ -120,5 +120,11 @@ describe("Laptop NavBar Testing", ()=>{
 
     })
 
-    
+    test("if navbar closes on click outside the navbar", ()=>{
+        renderComponent()
+        fireEvent.click(document)
+        expect(mockToogleNavBar).toHaveBeenCalledWith(false)
+    })
+
+
 })
