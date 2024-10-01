@@ -20,7 +20,7 @@ const Cabin = ()=>{
           try{
             await dispatch(getCabinDetails())
           }catch(e){
-            console.log(e)
+            console.log("Invalid Date")
           }
         }
 

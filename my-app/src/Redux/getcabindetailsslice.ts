@@ -31,6 +31,7 @@ export const getCabinDetails = createAsyncThunk(
     "getcabindetailsslice/getCabinDetails",
     async (_, {rejectWithValue}) => {
         try{
+            console.log(`${url}/get/cabin_details/v1`)
             const response = await fetch(`${url}/get/cabin_details/v1`, {
                 method: 'GET',
                 headers: {

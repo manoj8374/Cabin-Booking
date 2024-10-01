@@ -8,7 +8,6 @@ import fetchApi from '../../Utils/fetchDetails'
 const CreateAccount = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
-    const [fullName, setFullName] = useState<string>('')
     const [teamName, setTeamName] = useState<string>('')
     const [contactNumber, setContactNumber] = useState<string>('')
     const [username, setUserName] = useState<string>('')
@@ -27,7 +26,7 @@ const CreateAccount = () => {
     const navigate = useNavigate()
     const submitSignUp = async (e: any)=>{
         e.preventDefault()
-        if(email === '' || password === '' || firstname === '' || lastname === '' || teamName === '' || contactNumber === ''){
+        if(email === '' || firstname === '' || lastname === '' || teamName === '' || contactNumber === ''){
             setError("Please fill all the fields")
         }  
         else if(contactNumber.length !== 10){

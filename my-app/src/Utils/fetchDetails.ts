@@ -14,7 +14,7 @@ const fetchApi =  async (url: string, options: RequestInit): Promise<APIResponse
         return {success: false, data: data}
     }catch(e){
         return {success: false, error: e}
-    }
+    }//Password Updated Successfully
     
 }
 

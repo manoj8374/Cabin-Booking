@@ -40,7 +40,7 @@ describe("Create Account Component Testing", ()=>{
         expect(screen.getByPlaceholderText("Email")).toBeInTheDocument()
         expect(screen.getByPlaceholderText("Username")).toBeInTheDocument()
         expect(screen.getByPlaceholderText("Password")).toBeInTheDocument()
-        expect(screen.getByPlaceholderText("Full Name")).toBeInTheDocument()
+        expect(screen.getByPlaceholderText("First Name")).toBeInTheDocument()
         expect(screen.getByPlaceholderText("Team Name")).toBeInTheDocument()
         expect(screen.getByPlaceholderText("Contact Number")).toBeInTheDocument()
     })
@@ -50,7 +50,7 @@ describe("Create Account Component Testing", ()=>{
         const email = screen.getByPlaceholderText("Email") as HTMLInputElement
         const username = screen.getByPlaceholderText("Username") as HTMLInputElement
         const password = screen.getByPlaceholderText("Password") as HTMLInputElement
-        const fullName = screen.getByPlaceholderText("Full Name") as HTMLInputElement
+        const fullName = screen.getByPlaceholderText("First Name") as HTMLInputElement
         const teamName = screen.getByPlaceholderText("Team Name") as HTMLInputElement
         const contactNumber = screen.getByPlaceholderText("Contact Number") as HTMLInputElement
         fireEvent.change(email, {target: {value: "test@gmail.com"}})
@@ -75,15 +75,17 @@ describe("Create Account Component Testing", ()=>{
         const email = screen.getByPlaceholderText("Email") as HTMLInputElement
         const username = screen.getByPlaceholderText("Username") as HTMLInputElement
         const password = screen.getByPlaceholderText("Password") as HTMLInputElement
-        const fullName = screen.getByPlaceholderText("Full Name") as HTMLInputElement
+        const firstName = screen.getByPlaceholderText("First Name") as HTMLInputElement
+        const lastName = screen.getByPlaceholderText("Last Name") as HTMLInputElement
         const teamName = screen.getByPlaceholderText("Team Name") as HTMLInputElement
         const contactNumber = screen.getByPlaceholderText("Contact Number") as HTMLInputElement
         fireEvent.change(email, {target: {value: "test@gmail.com"}})
         fireEvent.change(username, {target: {value: "test"}})
         fireEvent.change(password, {target: {value: "test"}})
-        fireEvent.change(fullName, {target: {value: "test test"}})
+        fireEvent.change(firstName, {target: {value: "test"}})
+        fireEvent.change(lastName, {target: {value: "test"}})
         fireEvent.change(teamName, {target: {value: "test"}})
-        fireEvent.change(contactNumber, {target: {value: "9876543210"}})
+        fireEvent.change(contactNumber, {target: {value: 9876543210}})
 
         const button = screen.getByTestId("create-account-button") as HTMLButtonElement
         fireEvent.click(button)
@@ -103,15 +105,17 @@ describe("Create Account Component Testing", ()=>{
         const email = screen.getByPlaceholderText("Email") as HTMLInputElement
         const username = screen.getByPlaceholderText("Username") as HTMLInputElement
         const password = screen.getByPlaceholderText("Password") as HTMLInputElement
-        const fullName = screen.getByPlaceholderText("Full Name") as HTMLInputElement
+        const firstName = screen.getByPlaceholderText("First Name") as HTMLInputElement
+        const lastName = screen.getByPlaceholderText("Last Name") as HTMLInputElement
         const teamName = screen.getByPlaceholderText("Team Name") as HTMLInputElement
         const contactNumber = screen.getByPlaceholderText("Contact Number") as HTMLInputElement
         fireEvent.change(email, {target: {value: "test@gmail.com"}})
         fireEvent.change(username, {target: {value: "test"}})
         fireEvent.change(password, {target: {value: "test"}})
-        fireEvent.change(fullName, {target: {value: "test test"}})
+        fireEvent.change(firstName, {target: {value: "test"}})
+        fireEvent.change(lastName, {target: {value: "test"}})
         fireEvent.change(teamName, {target: {value: "test"}})
-        fireEvent.change(contactNumber, {target: {value: "9876543210"}})
+        fireEvent.change(contactNumber, {target: {value: 9876543210}})
 
         const button = screen.getByTestId("create-account-button") as HTMLButtonElement
         fireEvent.click(button)

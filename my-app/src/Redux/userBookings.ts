@@ -14,7 +14,8 @@ interface BookingsObj {
 interface Bookings {
     bookings: BookingsObj[],
     error: boolean,
-    isLoading: boolean
+    isLoading: boolean,
+    errorMessage?: string
 }
 
 const initialState: Bookings = {
@@ -47,6 +48,10 @@ export const getUserBookings = createAsyncThunk('userBookings/getUserBookings',
                     }
                 })
                 return newArr
+            }else{
+                if(data.status === 400){
+                    return rejectWithValue("No Bookings Found")
+                }
             }
         }catch(e){
             return rejectWithValue(e)
@@ -67,11 +72,12 @@ export const UserBookingsSlice = createSlice({
             .addCase(getUserBookings.fulfilled, (state, action) => {
                 state.bookings = action.payload
                 state.error = false;
-                state.isLoading = false
-            })
-            .addCase(getUserBookings.rejected, (state) => {
                 state.isLoading = false;
-                state.error = true
+            })
+            .addCase(getUserBookings.rejected, (state, action) => {
+                state.isLoading = false;
+                state.error = true;
+                state.errorMessage = action.payload as string;
             })
     }
 })

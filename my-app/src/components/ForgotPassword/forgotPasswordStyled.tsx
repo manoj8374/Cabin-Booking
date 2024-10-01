@@ -40,7 +40,7 @@ export const ForgotPasswordSubContainer = styled.div`
     }
 
     @media (min-width: 1440px) {
-        width: 35%;
+        width: 40%;
         padding: 50px;
         border-radius: 40px;
         padding-top: 64px;
@@ -60,6 +60,11 @@ export const ForgotPasswordInsideContainer = styled.div`
 
     @media (min-width: 1024px) {
         width: 80%;
+        gap: 40px;
+    }
+
+    @media (min-width: 1440px) {
+        width: 75%;
         gap: 40px;
     }
 
@@ -141,9 +146,12 @@ export const EyeIconContainer = styled.div`
     right: 20px;
     top: 50%;
     transform: translateY(-40%);
-    cursor: pointer;
     color: #666;
     font-size: 16px;
+
+    @media (min-width: 768px) {
+        cursor: pointer;
+    }
 `
 
 export const ForgotPasswordLabel = styled.label`

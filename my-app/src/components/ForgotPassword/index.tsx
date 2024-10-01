@@ -6,6 +6,7 @@ import { useState } from "react";
 import { url } from "../../Utils";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import fetchApi from "../../Utils/fetchDetails";
 
 const ForgotPasswordComponent = () => {
     const [password, setPassword] = useState("")
@@ -18,32 +19,43 @@ const ForgotPasswordComponent = () => {
 
     const changePassword = async (e: any)=>{
         e.preventDefault()
-        const response = await fetch(`${url}/user_accounts/update_password/v1`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${Cookies.get('access_token')}`
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-                new_password: confirmPassword
-            })
-        })
-        const data = await response.json()
-        if(response.status == 200){
-            setErrorMessage("Password Updated Successfully")
-            setTimeout(()=>{navigate('/login')}, 2000)
-            setError(false)
-        }else{
-            setErrorMessage(data.error_message)
+        if(password === "" || confirmPassword === "" || email === ""){
+            setErrorMessage("Please fill all the fields")
             setError(true)
+            return
+        }else if(password === confirmPassword){
+            setErrorMessage("Same Password")
+            setError(true)
+            return
+        }else{
+            const options = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${Cookies.get('access_token')}`
+                },
+                body: JSON.stringify({
+                    email: email,
+                    old_password: password,
+                    new_password: confirmPassword
+                })}
+
+            const response = await fetchApi(`${url}/user_accounts/update_password/v1`, options)
+
+            if(response.success){
+                setErrorMessage("Password Updated Successfully")
+                setTimeout(()=>{navigate('/login')}, 2000)
+                setError(false)
+            }else{
+                setErrorMessage(response.data.error_message)
+                setError(true)
+            }
         }
     }
     return (
         <ForgotPasswordContainer>
             <ArrowContainerLargeDevices>
-                <StyledLink to = "#" onClick = {()=> navigate(-1)}>
+                <StyledLink data-testid="back-arrow" to = "#" onClick = {()=> navigate(-1)}>
                     <IoIosArrowBack size={28}/>
                 </StyledLink>
             </ArrowContainerLargeDevices>
@@ -79,14 +91,14 @@ const ForgotPasswordComponent = () => {
                         <ForgotPasswordInputDiv>
                             <ForgotPasswordLabel htmlFor='confirmPassword'>New Password</ForgotPasswordLabel>
                             <PasswordWrapper>
-                                <ForgotPasswordInput id = "confirmPassword" type = "password" onChange = {(e)=> {setConfirmPassword(e.target.value)}} placeholder="Confirm password" required = {true} />
+                                <ForgotPasswordInput id = "confirmPassword" type = "password" onChange = {(e)=> {setConfirmPassword(e.target.value)}} placeholder="New password" required = {true} />
                                 <EyeIconContainer>
                                     <FaEyeSlash color='#E1E1E1'/>
                                 </EyeIconContainer>
                             </PasswordWrapper>
                         </ForgotPasswordInputDiv>
                         {errorMessage && <ErrorMessage error = {error}>{errorMessage}</ErrorMessage>}
-                        <ForgotPasswordButton onClick={changePassword}>
+                        <ForgotPasswordButton onClick={changePassword} data-testid = "forgot-password-button">
                             Reset Password
                         </ForgotPasswordButton>
                 </ForgotPasswordInputContainer>

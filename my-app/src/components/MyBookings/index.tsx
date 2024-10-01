@@ -26,7 +26,7 @@ interface BookingsObj {
 
 const MyBookings = ()=>{
     const [open, setOpen] = useState(false)
-    const {bookings, isLoading, error} = useSelector((state: RootState)=>state.userBookings)
+    const {bookings, isLoading, error, errorMessage} = useSelector((state: RootState)=>state.userBookings)
 
     const [upComing, setUpComing] = useState(true)
     const [previous, setPrevious] = useState(false)
@@ -77,17 +77,14 @@ const MyBookings = ()=>{
         }
 
         if(error){
-            return <h1>Error</h1>
-        }
-
-        if(upComing && upcomingBookings.length === 0){
             return (
                 <NoBookingsContainer>
                     <NoBookingsHeading>No Bookings Found</NoBookingsHeading>
                     <BookNowButton onClick={()=> navigate("/")}>Book Now</BookNowButton>
                 </NoBookingsContainer>
             )
-        }  
+        }
+ 
         
         if(previous && previousBookings.length === 0){
             return (
