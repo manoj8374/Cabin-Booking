@@ -6,6 +6,26 @@ import {useCabinData} from '../../Utils'
 import {getUserDetails} from '../../Redux/whobookedtheslotslice'
 import LoadingComponent from '../LoadingView';
 
+const dropIn = {
+    hidden: {
+        y: "-100vh",
+        opacity: 0
+    },
+    visible: {
+        y: "0vh",
+        opacity: 1,
+        transition: {
+            duration: 0.1,
+            type: "spring",
+            damping: 35,
+            stiffness: 300
+        }
+    }, 
+    exit: {
+        y: "100vh",
+        opacity: 0
+    }
+}
 
 interface WhoBookedTheSlots {
     closePopUp: ()=> void,
@@ -89,7 +109,7 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
                                 <LabelElement>Contact Number</LabelElement>
                                 <WhoBookedTheSlotInputField disabled value = {`${contact_number}`}/>
                             </WhoBookedTheSlotInputFieldContainer>
-                            <CloseButton onClick = {closePopUpWindow} >
+                            <CloseButton onClick = {(e)=> {e.preventDefault(); closePopUpWindow()}} >
                                 Close
                             </CloseButton>
                         </WhoBookedTheSlotFormContainer>
@@ -99,8 +119,8 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
     
     return(
         <>
-            <WhoBookedTheSlotContainer>
-                <WhoBookedTheSlotSubContainer>
+            <WhoBookedTheSlotContainer onClick = {closePopUpWindow} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+                <WhoBookedTheSlotSubContainer onClick={(e)=> e.stopPropagation()} variants={dropIn} initial="hidden" animate="visible" exit="exit">
                     {renderInfo()}
                 </WhoBookedTheSlotSubContainer>
             </WhoBookedTheSlotContainer>

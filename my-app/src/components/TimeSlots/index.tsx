@@ -9,6 +9,7 @@ import ResultScreen from '../SuccessAndFailure'
 import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp'
 import { url, accessToken, useCabinData} from '../../Utils'
 import Cookies from 'js-cookie'
+import { AnimatePresence } from 'framer-motion'
 
 interface TimeSlotsProps{
     cabinId: string,
@@ -189,7 +190,9 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
         </LaptopDeviceSubmitContainer>}
         {confirmSlotPopUp && <ConfirmSlotPopUpComponent name = {cabinDetails.cabin_name} floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
         {ResultPopUp === null ? null : <ResultScreen changeErrorToUndefined = {()=> setResultPopUp(null)} result = {ResultPopUp}/>}
-        {whoBookedTheSlot && <WhoBookedTheSlot floor = {floor} name = {cabinDetails.cabin_name} cabinId = {cabinId} timeSlot = {bookedTimeString} closePopUp = {()=> setWhoBookedTheSlot(false)}/>}
+        <AnimatePresence mode = "wait" initial = {false} onExitComplete={()=> null}>
+          {whoBookedTheSlot && <WhoBookedTheSlot floor = {floor} name = {cabinDetails.cabin_name} cabinId = {cabinId} timeSlot = {bookedTimeString} closePopUp = {()=> setWhoBookedTheSlot(false)}/>}
+        </AnimatePresence>
         </>
     )
 }

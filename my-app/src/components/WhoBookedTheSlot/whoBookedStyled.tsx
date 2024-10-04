@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 import {RxCross2} from "react-icons/rx";
+import { motion } from 'framer-motion';
 
-export const WhoBookedTheSlotContainer = styled.div`
+export const WhoBookedTheSlotContainer = styled(motion.div)`
    position: fixed;
    top: 0;
    left: 0;
@@ -16,7 +17,7 @@ export const WhoBookedTheSlotContainer = styled.div`
    justify-content: center;
 
 `
-export const WhoBookedTheSlotSubContainer = styled.div`
+export const WhoBookedTheSlotSubContainer = styled(motion.div)`
    background-color: #F1F4FF;
    width: 90%;
    margin: auto;
