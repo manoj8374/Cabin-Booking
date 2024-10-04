@@ -1,10 +1,7 @@
-import {useState, useEffect } from 'react'
+import {useEffect } from 'react'
 import {FloorContainer, SpinnerContainer} from './cabinStyled'
 import FloorItem from '../FloorItem'
-import {url} from '../../Utils'
-import Cookies from 'js-cookie'
 import ClipLoader from "react-spinners/ClipLoader";
-import {useCabinData} from '../../Utils'
 import { useDispatch } from 'react-redux'
 import { AppDispatch, RootState } from '../../Redux/store'
 import { useSelector } from 'react-redux'

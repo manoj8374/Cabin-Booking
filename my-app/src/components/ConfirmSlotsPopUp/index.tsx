@@ -120,7 +120,7 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
                                 <BookedContainerHeading>
                                     Selected Date
                                 </BookedContainerHeading>
-                                <DateParaElement>Date - {startdate}   to  {endDate}</DateParaElement>
+                                <DateParaElement>Date : {startdate}   to  {endDate}</DateParaElement>
                             </BookedContainer>
                             <SelectedTimeSlotsContainer>
                                 <BookedContainerHeading>

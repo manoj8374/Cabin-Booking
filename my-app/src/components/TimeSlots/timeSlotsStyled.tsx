@@ -88,7 +88,12 @@ export const LaptopDeviceSubmitContainer = styled.div`
     align-self: flex-end;
 `
 
-export const LaptopDeviceSubmitButton = styled.button`
+interface button{
+    showbutton: boolean
+}
+
+export const LaptopDeviceSubmitButton = styled.button<button>`
+    display: ${({showbutton})=> showbutton ? "block" : "none"};
     background-color: #1F41BB;
     color: #FFFFFF;
     border-radius: 4px;

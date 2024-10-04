@@ -18,6 +18,7 @@ export const HomeContainerHeader = styled.div`
     align-self: center;
     padding-top: 24px;
     align-items: center;
+    position: relative;
 
     @media (min-width: 768px){
         width: 95%;
@@ -60,6 +61,9 @@ export const LaptopNavBar = styled(RxHamburgerMenu)`
     @media (min-width: 768px){
         display: flex;
         cursor: pointer;
+        position: absolute;
+        left: 0;
+        bottom: 10px;
     }
 `
 

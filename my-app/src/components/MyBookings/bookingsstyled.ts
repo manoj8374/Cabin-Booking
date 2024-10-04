@@ -8,25 +8,27 @@ export const MyBookingsContainer = styled.div`
 `
 export const MyBookingsHeadingContainer = styled.div`
     display: flex;
-    width: 90%;
     align-items: center;
     margin: auto;
     justify-content: space-between;
     margin-top: 24px;
 
-    @media screen and (min-width: 768px) {
-        justify-content: space-between;
+    position: relative;
+    width: 100%;
+
+    @media screen and (max-width: 572px) {
         width: 95%;
+    }
 `
 
 export const MyBookingsHeading = styled.h1`
     font-size: 28px;
+    width: 100%;
+    text-align: left;
     @media screen and (min-width: 768px) {
         order: 2;
         text-align: center;
         font-size: 40px;
-        flex-grow: 1;
-        margin-right: 76px;
     }
 `
 
@@ -35,9 +37,14 @@ export const IconsContainer = styled.div`
     gap: 24px;
     align-items: center;
     align-self: center;
+    right: 0;
+    position: absolute;
+
+    
 
     @media screen and (min-width: 768px) {
         align-items: center;
+        left: 50px;
     }
 `
 
@@ -50,7 +57,7 @@ export const MyBookingsSubContainer = styled.div`
 
 export const FiltersContainer = styled.div`
     display: flex;
-    width: 80%;
+    width: 100%;
     align-items: center;
     margin: auto;
     justify-content: center;
