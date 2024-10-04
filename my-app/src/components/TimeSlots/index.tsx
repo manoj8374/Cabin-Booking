@@ -188,8 +188,12 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
         {!isMobile && selectedSlots.length >= 0 && <LaptopDeviceSubmitContainer>
           <LaptopDeviceSubmitButton disabled = {selectedSlots.length === 0} showbutton = {selectedSlots.length > 0} onClick={confirmSlots}>Confirm</LaptopDeviceSubmitButton>
         </LaptopDeviceSubmitContainer>}
-        {confirmSlotPopUp && <ConfirmSlotPopUpComponent name = {cabinDetails.cabin_name} floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
-        {ResultPopUp === null ? null : <ResultScreen changeErrorToUndefined = {()=> setResultPopUp(null)} result = {ResultPopUp}/>}
+        <AnimatePresence mode = "wait" initial = {false} onExitComplete={()=> null}>
+            {confirmSlotPopUp && <ConfirmSlotPopUpComponent name = {cabinDetails.cabin_name} floor = {floor} resultPopUp = {(value: boolean)=> setResultPopUp(value)} slotsBookedFunction = {()=> setSlotBooked(!slotBooked)} toogleConfirmSlotPopUp = {toogleConfirmSlotPopUp} selectedSlotsUpdate = {selectedSlotsUpdate} selectedSlots = {selectedSlots} cabinId = {cabinId}/>}
+        </AnimatePresence>
+        <AnimatePresence mode = "wait" initial = {false} onExitComplete={()=> null}>
+            {ResultPopUp === null ? null : <ResultScreen changeErrorToUndefined = {()=> setResultPopUp(null)} result = {ResultPopUp} />}
+        </AnimatePresence>
         <AnimatePresence mode = "wait" initial = {false} onExitComplete={()=> null}>
           {whoBookedTheSlot && <WhoBookedTheSlot floor = {floor} name = {cabinDetails.cabin_name} cabinId = {cabinId} timeSlot = {bookedTimeString} closePopUp = {()=> setWhoBookedTheSlot(false)}/>}
         </AnimatePresence>

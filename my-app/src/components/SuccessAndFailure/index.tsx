@@ -1,10 +1,34 @@
-import styled from 'styled-components'
-import {MainContainer, ResultSubContainer, CrossBar, ResultContentsContainer, ResultCenterImage, ResultHeading, CloseButton} from './successfailurestyled'
-import { FaCheck } from "react-icons/fa6";
+import {MainContainer, ResultSubContainer, CrossBar, ResultContentsContainer, ResultCenterImage, ResultHeading, CloseButton, SuccessElement, FailureElement} from './successfailurestyled'
+import { useDispatch} from 'react-redux';
+import { AppDispatch } from '../../Redux/store';
 import { RxCross2 } from "react-icons/rx";
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../Redux/store';
 import React from 'react';
+
+
+const dropIn = {
+    hidden: {
+        opacity: 0,
+        scale: 0.5
+    },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        transition: {
+            duration: 0.1,
+            type: "spring",
+            damping: 35,
+            stiffness: 500,
+        }
+    },
+    exit: {
+        opacity: 0,
+        scale: 0.5,
+        tranisition: {
+            duration: 0.2
+        }
+    }
+}
+
 
 interface ResultScreenProps{
     changeErrorToUndefined: () => void,
@@ -16,18 +40,19 @@ const ResultScreen: React.FC<ResultScreenProps> = ({result, changeErrorToUndefin
     const closePopUp = ()=>{
         changeErrorToUndefined()
     }
+
     return(
-        <MainContainer>
-            <ResultSubContainer>
+        <MainContainer initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+            <ResultSubContainer variants = {dropIn} initial = 'hidden' animate = 'visible' exit = 'exit'>
                 <CrossBar onClick = {closePopUp}>
                     <RxCross2 size={50} color={'black'} strokeWidth={0}/>
                 </CrossBar>
                 <ResultContentsContainer>
                     <ResultCenterImage result = {result} >
-                        {result ? <FaCheck size={130} color={'white'} strokeWidth={0}/> : <RxCross2 size={150} color={'white'} strokeWidth={0}/>}
+                        {result ? <SuccessElement color={'white'} /> : <FailureElement color={'white'}/>}
                     </ResultCenterImage>
                     <ResultHeading>
-                        {result ? 'Success' : 'Failure (Try Again)'}
+                        {result ? 'Success' : 'Failure'}
                     </ResultHeading>
                     <CloseButton onClick = {closePopUp}>
                         CLOSE

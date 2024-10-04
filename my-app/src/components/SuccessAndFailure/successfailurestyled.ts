@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { RxCross2 } from "react-icons/rx";
+import {motion} from "framer-motion";
+import { FaCheck } from "react-icons/fa6";
 
-export const MainContainer = styled.div`
+
+export const MainContainer = styled(motion.div)`
     position: fixed;
     top: 0;
     left: 0;
@@ -21,20 +24,22 @@ export const MainContainer = styled.div`
     }
 `
 
-export const ResultSubContainer = styled.div`
+export const ResultSubContainer = styled(motion.div)`
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 100vh;
+    width: 90%;
+    height: 50vh;
     background: white;
     position: relative;
+    padding: 32px;
+    border-radius: 16px;
 
     @media (min-width: 768px) {
         width: 80%;
         height: 500px;
-        border-radius: 16px;
+        
     }
 
     @media (min-width: 1024px) {
@@ -51,7 +56,7 @@ export const ResultSubContainer = styled.div`
 `
 
 export const ResultContentsContainer = styled.div`
-    width: 100%;
+    width: 50%;
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -65,8 +70,8 @@ interface ResultCenterImageProps {
 }
 
 export const ResultCenterImage = styled.div<ResultCenterImageProps>`
-    width: 170px;
-    height: 170px;
+    width: 120px;
+    height: 120px;
     padding: 10px;
     border-radius: 100%;
     background-color: ${props => props.result ? '#13C39C' : '#F14A4A'};
@@ -110,4 +115,20 @@ export const CrossBar = styled(RxCross2)`
     font-size: 32px;
     color: #667085;
     cursor: pointer;
+`
+
+export const SuccessElement = styled(FaCheck)`
+    font-size: 100px;
+
+    @media (max-width: 576px) {
+        font-size: 72px;
+    }
+`
+
+export const FailureElement = styled(RxCross2)`
+    font-size: 100px;
+
+    @media (max-width: 576px) {
+        font-size: 72px;
+    }
 `

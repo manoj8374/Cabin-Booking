@@ -10,6 +10,21 @@ import LoadingComponent from '../LoadingView';
 import { MdNavigateNext } from "react-icons/md";
 import Cookies from 'js-cookie';
 
+const popUpVariants = {
+    hidden: { opacity: 0, x: 50 },
+    visible: { opacity: 1, x: 0, transition: {
+        type: "spring",
+        stiffness: 500,
+        damping: 35,
+    } },
+    exit: { opacity: 0, x: 50 }
+};
+
+const buttonVariants = {
+    collapsed: { height: 0, opacity: 0, transition: { duration: 0.3 } },
+    expanded: { height: "auto", opacity: 1, transition: { duration: 3 } }
+};
+
 interface MobilePopUpProps {
     closePopUp: () => void
 }
@@ -72,7 +87,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
                     {myProfileIsActive && 
                         <>
                             <HorizontalLine/>
-                            <MobilePopUpProfileContainer>
+                            <MobilePopUpProfileContainer variants={buttonVariants} initial = {false} animate = {myProfileIsActive ? 'expanded' : 'collapsed'}>
                             <MobilePopUpProfileDetails>
                                 <p>Name: </p>
                                 <p>{first_name + ' ' + last_name}</p>
@@ -122,7 +137,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
     }
 
     return (
-        <MobilePopUp data-testid="mobile-pop-up">
+        <MobilePopUp variants={popUpVariants} initial="hidden" animate="visible" exit="exit" data-testid="mobile-pop-up">
             {renderContent()}
         </MobilePopUp>
     )

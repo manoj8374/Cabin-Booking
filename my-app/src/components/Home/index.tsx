@@ -8,6 +8,7 @@ import NavBar from '../NavBar';
 import DatePickerComponent from '../DatePicker';
 import { fetchUserProfile } from '../../Redux/userSlice';
 import MobilePopUpComponent from '../MobilePopUp';
+import { AnimatePresence } from 'framer-motion';
 
 
 const Home = ()=>{
@@ -43,7 +44,9 @@ const Home = ()=>{
                 <DatePickerComponent/>
                 <Cabin/>
             </HomeSubContainer>
-            {popUpButtonClicked && <MobilePopUpComponent closePopUp = {()=> setPopUpClicked(false)}/>}
+            <AnimatePresence initial = {false} mode = "wait" onExitComplete={() => null}>
+                {popUpButtonClicked && <MobilePopUpComponent closePopUp = {()=> setPopUpClicked(false)}/>}
+            </AnimatePresence>
             <NavBar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar} laptopNavRef = {laptopNavRef}/> 
         </HomeContainer>
     )

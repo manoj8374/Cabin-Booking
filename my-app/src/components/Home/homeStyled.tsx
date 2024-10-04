@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRight } from "react-icons/fa";
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
+import {motion} from "framer-motion"
 
 export const HomeContainer = styled.div`
     min-height: 100vh;
@@ -75,7 +76,7 @@ export const MobileNavBarIcon = styled(RxHamburgerMenu)`
     }
 `
 
-export const MobilePopUp = styled.div`
+export const MobilePopUp = styled(motion.div)`
     position: fixed;
     top: 0;
     left: 0;
@@ -195,7 +196,7 @@ export const MobilePopUpOption = styled.p`
     font-weight: 500;
 `
 
-export const MobilePopUpProfileContainer = styled.div`
+export const MobilePopUpProfileContainer = styled(motion.div)`
     width: 90%;
     align-self: center;
     display: flex;
