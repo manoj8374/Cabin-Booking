@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {RxCross2} from "react-icons/rx";
+import {motion} from "framer-motion"
 
 export const SelectedTimeSlotsContainer = styled.div`
     display: flex;
@@ -25,15 +26,15 @@ export const SlotItem = styled.p`
         font-size: 18px;
     }
 `
-export const WhoBookedTheSlotContainer = styled.div`
+export const WhoBookedTheSlotContainer = styled(motion.div)`
    position: fixed;
    top: 0;
    left: 0;
    width: 100%;
-   background: rgba(0, 0, 0, 0.1);
+   background: rgba(0, 0, 0, 0.3);
    z-index: 10000;
    min-height: 100vh;
-   backdrop-filter: blur(1px);
+   backdrop-filter: blur(5px);
    display: flex;
    justify-content: center;
    padding-top: 24px;
@@ -59,14 +60,22 @@ export const PurposeContainer = styled.textarea`
 `
 
 
-export const WhoBookedTheSlotSubContainer = styled.div`
+export const WhoBookedTheSlotSubContainer = styled(motion.div)`
    background-color: #F1F4FF;
    width: 90%;
    margin-bottom: auto;
    padding-bottom: 24px;
    padding-top: 8px;
    border-radius: 8px;
-   overflow-y: auto;
+   overflow-y: scroll;
+
+   scrollbar-width: none; 
+  -ms-overflow-style: none;
+
+   &::-webkit-scrollbar {
+      display: none;
+   }
+
    height: 650px;
 
    @media screen and (min-width: 768px) {

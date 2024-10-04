@@ -7,6 +7,27 @@ import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { url, useCabinData } from '../../Utils';
 import Cookies from 'js-cookie'
 
+const dropIn = {
+    hidden: {
+        y: "-100vh",
+        opacity: 0
+    },
+    visible: {
+        y: "0vh",
+        opacity: 1,
+        transition: {
+            duration: 0.1,
+            type: "spring",
+            damping: 35,
+            stiffness: 300
+        }
+    }, 
+    exit: {
+        y: "100vh",
+        opacity: 0
+    }
+}
+
 interface ConfirmSlotPopUpProps{
     selectedSlotsUpdate: ()=> void,
     cabinId: string,
@@ -92,8 +113,8 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
 
     return(
         <>
-            <WhoBookedTheSlotContainer onClick = {closePopUp}>
-                <WhoBookedTheSlotSubContainer onClick = {(e)=>{e.stopPropagation()}}>
+            <WhoBookedTheSlotContainer initial={{opacity: 0}} animate = {{opacity: 1}} exit={{opacity: 0}} onClick = {closePopUp}>
+                <WhoBookedTheSlotSubContainer variants={dropIn} onClick = {(e)=>{e.stopPropagation()}} initial="hidden" animate="visible" exit="exit">
                     <WhoBookedTheSlotFormMainContainer>
                         <WhoBookedTheSlotHeadingContainer>
                             <HeadingElement>{floor} {name}</HeadingElement>

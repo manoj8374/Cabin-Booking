@@ -66,6 +66,18 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
             }
 
             dispatch(getUserDetails(body))
+
+            const handleEscape = (e: KeyboardEvent) => {
+                if (e.key === "Escape") {
+                    closePopUp()
+                }
+            }
+
+            document.addEventListener("keydown", handleEscape)
+
+            return ()=>{
+                document.removeEventListener("keydown", handleEscape)
+            }
     }, [])
 
     const renderInfo = ()=>{
