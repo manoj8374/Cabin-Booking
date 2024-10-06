@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { url, useCabinData } from '../../Utils';
 import Cookies from 'js-cookie'
+import fetchApi from '../../Utils/fetchDetails'
 
 const dropIn = {
     hidden: {
@@ -75,36 +76,35 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
             return convertTimeSlots(timeSlot)
         })
 
-        try{
-            const bodyData = {
-                purpose: purpose,
-                cabin_id: cabinId,
-                start_date: startdate,
-                end_date: endDate,
-                time_slots: timeSlotsWithTime
-            }
-    
-            const response = await fetch(`${url}/confirm_slots/v1`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${Cookies.get('access_token')}`
-                },
-                body: JSON.stringify(bodyData)
-            })
-            const data = await response.json()
-            if(response.status === 200){
-                slotsBookedFunction()
-                resultPopUp(true)
-            }else{
-                slotsBookedFunction()
-                resultPopUp(false)
-            }
-            selectedSlotsUpdate()
-            toogleConfirmSlotPopUp()
-        }catch(e){
-            console.log(e)
+        const bodyData = {
+            purpose: purpose,
+            cabin_id: cabinId,
+            start_date: startdate,
+            end_date: endDate,
+            time_slots: timeSlotsWithTime
         }
+
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('access_token')}`
+            },
+            body: JSON.stringify(bodyData)
+        }
+
+        const response = await fetchApi(`${url}/confirm_slots/v1`, options)
+
+        if(response.success){
+            slotsBookedFunction()
+            resultPopUp(true)
+        }else{
+            slotsBookedFunction()
+            resultPopUp(false)
+        }
+        selectedSlotsUpdate()
+        toogleConfirmSlotPopUp()
+        
     }
 
     useEffect(()=>{

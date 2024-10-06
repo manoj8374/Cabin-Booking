@@ -1,6 +1,4 @@
 import {MainContainer, ResultSubContainer, CrossBar, ResultContentsContainer, ResultCenterImage, ResultHeading, CloseButton, SuccessElement, FailureElement} from './successfailurestyled'
-import { useDispatch} from 'react-redux';
-import { AppDispatch } from '../../Redux/store';
 import { RxCross2 } from "react-icons/rx";
 import React from 'react';
 
@@ -36,13 +34,12 @@ interface ResultScreenProps{
 }
 
 const ResultScreen: React.FC<ResultScreenProps> = ({result, changeErrorToUndefined})=>{
-    const dispatch = useDispatch<AppDispatch>()
     const closePopUp = ()=>{
         changeErrorToUndefined()
     }
 
     return(
-        <MainContainer initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
+        <MainContainer data-testid = "result-screen" initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
             <ResultSubContainer variants = {dropIn} initial = 'hidden' animate = 'visible' exit = 'exit'>
                 <CrossBar onClick = {closePopUp}>
                     <RxCross2 size={50} color={'black'} strokeWidth={0}/>
@@ -54,7 +51,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({result, changeErrorToUndefin
                     <ResultHeading>
                         {result ? 'Success' : 'Failure'}
                     </ResultHeading>
-                    <CloseButton onClick = {closePopUp}>
+                    <CloseButton data-testid = "close-button" onClick = {closePopUp}>
                         CLOSE
                     </CloseButton>
                 </ResultContentsContainer>

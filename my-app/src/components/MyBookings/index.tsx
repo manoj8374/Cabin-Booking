@@ -114,8 +114,6 @@ const MyBookings = ()=>{
                 ): null}
             </UpcomingBookingsContainer>
         )
-
-
     }
     
     return (

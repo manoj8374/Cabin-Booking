@@ -30,7 +30,7 @@ interface MobilePopUpProps {
 }
 
 const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
-    const {first_name, last_name, team_name, contact_number, isLoading, error} = useSelector((state: RootState) => state.user)
+    const {first_name = "", last_name = "", team_name = "", contact_number = "", error, isLoading} = useSelector((state: RootState)=>state.user || {})
     
     const [myProfileIsActive, setMyProfileIsActive] = useState(false)
     const [myBookingsIsActive, setMyBookingsActive] = useState(false)
@@ -58,7 +58,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
 
     const renderContent = ()=>{
         if(isLoading){
-            return <SpinnerContainerPopUp><LoadingComponent/></SpinnerContainerPopUp>
+            return <SpinnerContainerPopUp data-testid = "loading container"><LoadingComponent/></SpinnerContainerPopUp>
         }
 
         if(error){
@@ -67,7 +67,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
 
         if(!isLoading && !error){
             return <MobilePopUpSubContainer>
-            <MobilePopUpCloseButton onClick={togglePopup}>
+            <MobilePopUpCloseButton data-testid = "cancelButton" onClick={togglePopup}>
                 <RxCross2 size={28}/>
             </MobilePopUpCloseButton>
             <MobilePopUpHeadingContainer>
@@ -80,14 +80,14 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
             </MobilePopUpHeadingContainer>
             <MobilePopUpButtonsContainer>
                 <MobilePopUpButtonSubContainer>
-                    <MobilePopUpButton onClick={()=>{setMyProfileIsActive(!myProfileIsActive); setMyBookingsActive(false)}}>
+                    <MobilePopUpButton data-testid = "myProfileButton" onClick={()=>{setMyProfileIsActive(!myProfileIsActive); setMyBookingsActive(false)}}>
                         <MobilePopUpOption>My Profile</MobilePopUpOption>
                         <ArrowDownMyProfile isprofileactive = {myProfileIsActive} size={24} onClick={()=>{setMyProfileIsActive(!myProfileIsActive); setMyBookingsActive(false)}}/>
                     </MobilePopUpButton> 
                     {myProfileIsActive && 
                         <>
                             <HorizontalLine/>
-                            <MobilePopUpProfileContainer variants={buttonVariants} initial = {false} animate = {myProfileIsActive ? 'expanded' : 'collapsed'}>
+                            <MobilePopUpProfileContainer data-testid = "myProfileContents" variants={buttonVariants} initial = {false} animate = {myProfileIsActive ? 'expanded' : 'collapsed'}>
                             <MobilePopUpProfileDetails>
                                 <p>Name: </p>
                                 <p>{first_name + ' ' + last_name}</p>
@@ -112,14 +112,14 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
                     }
                 </MobilePopUpButtonSubContainer>      
                 <MobilePopUpButtonSubContainer>
-                    <MobilePopUpButton onClick={()=>{setMyBookingsActive(!myBookingsIsActive); setMyProfileIsActive(false)}}>
+                    <MobilePopUpButton data-testid = "myBookingsButton" onClick={()=>{setMyBookingsActive(!myBookingsIsActive); setMyProfileIsActive(false)}}>
                         <MobilePopUpOption>My Bookings</MobilePopUpOption>
                         <ArrowDownMyBookings isbookingsactive = {myBookingsIsActive} size={24} onClick={()=> {setMyBookingsActive(!myBookingsIsActive); setMyProfileIsActive(false)}}/>
                     </MobilePopUpButton> 
                     {myBookingsIsActive && 
                         <>
                             <HorizontalLine/>
-                            <ViewMore onClick={()=>navigate('/my-bookings')}>
+                            <ViewMore data-testid = "viewMoreButton" onClick={()=>navigate('/my-bookings')}>
                                 View More <MdNavigateNext size={28}/>
                             </ViewMore> 
                         </>
@@ -127,7 +127,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
                 </MobilePopUpButtonSubContainer>      
             </MobilePopUpButtonsContainer>
             <LogoutContainer>
-                <LogoutSubContainer onClick = {logout}>
+                <LogoutSubContainer data-testid = "logoutcontainer" onClick = {logout}>
                     <FaArrowRight size = {20}/>
                     <Logout>Logout</Logout>
                 </LogoutSubContainer> 

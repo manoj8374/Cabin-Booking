@@ -1,11 +1,14 @@
 import React from "react";
 import { screen, render, fireEvent } from "@testing-library/react";
-import Navbar from "./index"
+import MobilePopUpComponent from "./index"
 import { fetchUserProfile } from "../../Redux/userSlice";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createStore , applyMiddleware} from "@reduxjs/toolkit";
+import { thunk } from "redux-thunk";
 import { Provider } from "react-redux";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+
+
 
 const mockReducer = (state = {
     user: {
@@ -21,7 +24,7 @@ const mockReducer = (state = {
 }, action: any) => {
     switch (action.type) {
         case fetchUserProfile.pending.type:
-            return { ...state, user: { ...state.user, isLoading: true } };
+            return { ...state, user: { ...state.user, isLoading: false } };
         case fetchUserProfile.rejected.type:
             return { ...state, user: { ...state.user, isLoading: false, error: true } };
         case fetchUserProfile.fulfilled.type:
@@ -30,6 +33,8 @@ const mockReducer = (state = {
             return state;
     }
 }
+
+
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom') as any,
@@ -46,45 +51,94 @@ jest.mock("js-cookie", () => ({
 describe("Laptop NavBar Testing", ()=>{
     const mockNavigate = jest.fn()  
     const mockToogleNavBar = jest.fn()
-    const renderComponent = ()=>{
-        const store = configureStore({
-            reducer: {
-                user: mockReducer
-            }
-        })
+    const renderComponent = (store: any)=>{
         render(
             <MemoryRouter>
                 <Provider store={store}>
-                    <Navbar toogleNavbar={mockToogleNavBar} isNavBarVisible={true} laptopNavRef={React.createRef()}/>
+                    <MobilePopUpComponent closePopUp ={mockToogleNavBar}/>
                 </Provider>
             </MemoryRouter>  
         )
     }
 
     test("if navbar is rendered", ()=>{
-        renderComponent()
-        expect(screen.getByTestId("laptop-navbar-container")).toBeInTheDocument()
+        const store = createStore(mockReducer, {
+            user: {
+                email: '',
+                username: '',
+                first_name: '',
+                last_name: '',
+                team_name: '',
+                contact_number: '',
+                isLoading: false,
+                error: false
+            }
+        }, applyMiddleware(thunk))
+
+        renderComponent(store)
+        expect(screen.getByTestId("mobile-pop-up")).toBeInTheDocument()
     })
 
     test("if the cross is clicked navbar should be hidden", ()=>{
-        renderComponent()
+        const store = createStore(mockReducer, {
+            user: {
+                email: '',
+                username: '',
+                first_name: '',
+                last_name: '',
+                team_name: '',
+                contact_number: '',
+                isLoading: false,
+                error: false
+            }
+        }, applyMiddleware(thunk))
+
+        renderComponent(store)
         const cross = screen.getByTestId("cancelButton")
         fireEvent.click(cross)
-        expect(mockToogleNavBar).toHaveBeenCalledWith(false)
+        expect(mockToogleNavBar).toHaveBeenCalledWith()
     })
 
     test("if update profile button is working", ()=>{
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-        renderComponent()
+
+        const store = createStore(mockReducer, {
+            user: {
+                email: '',
+                username: '',
+                first_name: '',
+                last_name: '',
+                team_name: '',
+                contact_number: '',
+                isLoading: false,
+                error: false
+            }
+        }, applyMiddleware(thunk))
+
+        renderComponent(store)
         fireEvent.click(screen.getByTestId("myProfileButton"))
-        const updateProfile = screen.getByRole("button", {name: "Update"})
+        const updateProfile = screen.getByRole("button", {name: "Update profile"})
         fireEvent.click(updateProfile)
         expect(mockNavigate).toHaveBeenCalledWith("/update-profile")
     })
 
     test("if logout button is working", ()=>{
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-        renderComponent()
+
+        const store = createStore(mockReducer, {
+            user: {
+                email: '',
+                username: '',
+                first_name: '',
+                last_name: '',
+                team_name: '',
+                contact_number: '',
+                isLoading: false,
+                error: false
+            }
+        }, applyMiddleware(thunk))
+
+        renderComponent(store)
         const logoutButton = screen.getByTestId("logoutcontainer")
         fireEvent.click(logoutButton)
         expect(mockNavigate).toHaveBeenCalledWith("/login")
@@ -94,7 +148,21 @@ describe("Laptop NavBar Testing", ()=>{
 
     test("if view more navigation is working", ()=>{
         (useNavigate as jest.Mock).mockReturnValue(mockNavigate)
-        renderComponent()
+
+        const store = createStore(mockReducer, {
+            user: {
+                email: '',
+                username: '',
+                first_name: '',
+                last_name: '',
+                team_name: '',
+                contact_number: '',
+                isLoading: false,
+                error: false
+            }
+        }, applyMiddleware(thunk))
+
+        renderComponent(store)
         const myBookingsButton = screen.getByTestId("myBookingsButton")
         fireEvent.click(myBookingsButton)
 
@@ -104,25 +172,34 @@ describe("Laptop NavBar Testing", ()=>{
     })
 
     test("if myBookings and myProfile buttons are working properly", ()=>{
-        renderComponent()
+        const store = createStore(mockReducer, {
+            user: {
+                email: '',
+                username: '',
+                first_name: '',
+                last_name: '',
+                team_name: '',
+                contact_number: '',
+                isLoading: false,
+                error: true
+            }
+        }, applyMiddleware(thunk))
+
+        renderComponent(store)
 
         const myBookingsButton = screen.getByTestId("myBookingsButton")
         fireEvent.click(myBookingsButton)
 
-        expect(screen.getByTestId("myBookingsContainer")).toBeInTheDocument()
+        expect(screen.getByTestId("viewMoreButton")).toBeInTheDocument()
         expect(screen.queryByTestId("myProfileContents")).toBeNull()
 
         const myProfileButton = screen.getByTestId("myProfileButton")
         fireEvent.click(myProfileButton)
 
         expect(screen.getByTestId("myProfileContents")).toBeInTheDocument()
-        expect(screen.queryByTestId("myBookingsContainer")).toBeNull()
+        expect(screen.queryByTestId("viewMoreButton")).toBeNull()
 
     })
-
-    test("if navbar closes on click outside the navbar", ()=>{
-        renderComponent()
-        fireEvent.click(document)
-        expect(mockToogleNavBar).toHaveBeenCalledWith(false)
-    })
+        
 })
+

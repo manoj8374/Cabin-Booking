@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { format } from "path";
-//this slice will include start date, end date, all the cabin ids
 
 interface CabinState {
     start_date: string;

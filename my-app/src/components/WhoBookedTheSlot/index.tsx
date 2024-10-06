@@ -56,7 +56,6 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
                 initialDate = initialDate + 1
                 const month = String(new Date(endDate).getMonth() + 1) .length == 1 ? "0" + String(new Date(endDate).getMonth() + 1) : String(new Date(endDate).getMonth() + 1)
                 endDate = new Date(endDate).getFullYear() + "-" + month  + "-" + initialDate
-                console.log(endDate)
             }
 
             const body = {
@@ -83,7 +82,7 @@ const WhoBookedTheSlot: React.FC<WhoBookedTheSlots> = ({closePopUp, timeSlot, ca
     const renderInfo = ()=>{
         if(isLoading){
             return (
-            <LoadingAndErrorContainer>
+            <LoadingAndErrorContainer data-testid = "spinner container">
                 <LoadingComponent/>
             </LoadingAndErrorContainer>
         )

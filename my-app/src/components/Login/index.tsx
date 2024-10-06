@@ -45,8 +45,12 @@ const Login = () => {
 
             if(response.success){
                 onSubmitSuccess(response.data.access_token, response.data.refresh_token)
-            }else{  
-                setError(response.data.error_message)
+            }else{
+                if(response.data.error_message){
+                    setError(response.data.error_message)
+                }else{
+                    setError("Something went wrong")
+                }
             }
         }
     }
