@@ -7,7 +7,7 @@ import WhoBookedTheSlot from '../WhoBookedTheSlot'
 import {AppDispatch} from '../../Redux/store'
 import ResultScreen from '../SuccessAndFailure'
 import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp'
-import { url, accessToken, useCabinData} from '../../Utils'
+import { url, useCabinData} from '../../Utils'
 import Cookies from 'js-cookie'
 import { AnimatePresence } from 'framer-motion'
 

@@ -1,6 +1,5 @@
 import { render, screen, fireEvent } from "../../../test.utils";
 import FloorItem from "./index"
-import { Provider } from "react-redux";
 
 const cabins = [{
     "cabin_id": "1",
