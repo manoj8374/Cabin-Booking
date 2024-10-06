@@ -1,4 +1,3 @@
-//get start and end date from global state. get cabin id from props and get time slots from api
 import {useEffect, useState} from 'react'
 import {useDispatch} from 'react-redux'
 import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
@@ -10,6 +9,9 @@ import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp'
 import { url, useCabinData} from '../../Utils'
 import Cookies from 'js-cookie'
 import { AnimatePresence } from 'framer-motion'
+import fetchApi from '../../Utils/fetchDetails'
+import { SpinnerContainer } from '../Floor/cabinStyled'
+import LoadingComponent from '../LoadingView'
 
 interface TimeSlotsProps{
     cabinId: string,
@@ -51,6 +53,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
     const [whoBookedTheSlot, setWhoBookedTheSlot] = useState(false)
     const [ResultPopUp, setResultPopUp] = useState<boolean | null>(null)
     const [bookedTimeString, setBookedTimeString] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const dispatch = useDispatch<AppDispatch>()
 
@@ -82,7 +85,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
 
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
-            try{
+              setLoading(true)
               const bodyData = {
                 "cabin_ids": [cabinId],
                 "start_date": startdate,
@@ -97,30 +100,24 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
                 },
                 body: JSON.stringify(bodyData)
               }
-              const response = await fetch(`${url}/get/cabin_slots/v1`, options)
-              const data = await response.json()
+              const response = await fetchApi(`${url}/get/cabin_slots/v1`, options)
 
-              
-              setSelectedSlots([])
-
-              if(response.status === 200){
-                const filteredData = data.filter((data: TimeSlotsInterface)=> data.cabin_id === cabinId)
-                if(filteredData.length === 0){
-                  setTimeSlots([])
-                }else{
-                  const updatedData = filteredData[0].time_slots.map((data: TimeSlotsArr)=>{
-                      const timeString = convertTo12HourFormat(data.slot)
-                      return {availability: data.availability, time_string: timeString}
-                  })
-                  setTimeSlots(updatedData)
-                }
-                
+              if(response.success){
+                console.log(response.data)
+                  const filteredData = response.data.filter((data: TimeSlotsInterface)=> data.cabin_id === cabinId)
+                  if(filteredData.length === 0){
+                    setTimeSlots([])
+                  }else{
+                    const updatedData = filteredData[0].time_slots.map((data: TimeSlotsArr)=>{
+                        const timeString = convertTo12HourFormat(data.slot)
+                        return {availability: data.availability, time_string: timeString}
+                    })
+                    setTimeSlots(updatedData)
+                  }
               }else{
-                console.log("Error")
+                  console.log("Something went wrong")
               }
-            }catch(e){
-              console.log(e)
-            }
+              setSelectedSlots([]) 
         }
 
         fetchCabinDetails()
@@ -152,7 +149,6 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
           }else{
             setWhoBookedTheSlot(!whoBookedTheSlot)
             const a = convertTo24HourFormat(timeString)
-            console.log(a)
             setBookedTimeString(a)
           }
       }
