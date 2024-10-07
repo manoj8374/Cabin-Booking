@@ -35,9 +35,7 @@ export const HomeSubContainer = styled.div`
     align-self: center;
     padding-top: 24px;
     padding-bottom: 24px;
-    gap: 24px;
-
-    
+    gap: 24px;    
 
     @media (min-width: 768px){
         width: 80%;
@@ -70,7 +68,6 @@ export const LaptopNavBar = styled(RxHamburgerMenu)`
 
 export const MobileNavBarIcon = styled(RxHamburgerMenu)`
     display: flex;
-    cursor: pointer;
     @media (min-width: 768px){
         display: none;
     }
@@ -90,6 +87,7 @@ export const MobilePopUp = styled(motion.div)`
     transition: opacity 0.3s ease-in-out;
     padding-top: 24px;
     opacity: 1;
+    overflow-y: scroll;
 `
 
 export const MobilePopUpCloseButton = styled.button`
@@ -98,7 +96,6 @@ export const MobilePopUpCloseButton = styled.button`
     right: 20px;
     border: none;
     background-color: transparent;
-    cursor: pointer;
 `
 
 export const MobilePopUpSubContainer = styled.div`
@@ -108,8 +105,10 @@ export const MobilePopUpSubContainer = styled.div`
     gap: 8px;
     width: 90%;
     min-height: 85vh;
+    overflow-y: scroll;
     background-color: #F1F4FF; 
     padding-top: 40px;
+    padding-bottom: 8px;
     position: relative;
     border-radius: 16px;
 `
@@ -286,4 +285,20 @@ export const LogoutSubContainer = styled.div`
     gap: 10px;
     align-items: center;
     justify-content: center;
+`
+
+export const ChangePassword = styled.button`
+    background-color: transparent;
+    border: none;
+    font-size: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    color: #1F41BB;
+    padding: 8px;
+    margin-left: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid #1F41BB;
+
+
 `

@@ -23,8 +23,9 @@ export const MyBookingItemContainer = styled.li`
 
 export const MyBookingItemSubContainer = styled.div`
     width: 95%;
-    margin: auto;
     gap: 12px;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
 

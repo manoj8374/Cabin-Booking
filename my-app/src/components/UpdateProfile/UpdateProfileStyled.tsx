@@ -8,6 +8,7 @@ export const UpdateProfileContainer = styled.div`
     flex-direction: column;
     align-items: center;
     padding-bottom: 48px;
+    height: 100vh;
     @media (min-width: 768px) {
         background-color: #CFD6D9;
         justify-content: center;
@@ -94,6 +95,7 @@ export const UpdateProfileInput = styled.input`
     @media (min-width: 768px) {
         width: 80%;
         background-color: #F1F4FF;  
+        font-size: 18px;
         &:focus {
             border: 1.8px solid #1F41BB;
         }
@@ -108,7 +110,6 @@ export const UpdateProfileButton = styled.button`
     background-color: #1F41BB;
     color: white;
     font-size: 16px;
-    margin-top: 24px;
 
     @media (min-width: 768px) {
         width: 80%;

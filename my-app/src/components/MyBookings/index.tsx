@@ -9,7 +9,6 @@ import {getUserBookings} from '../../Redux/userBookings'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../Redux/store';
 import LoadingComponent from '../LoadingView';
-import { render } from '@testing-library/react';
 import MyBookingItem from '../MyBookingsItem';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../NavBar';

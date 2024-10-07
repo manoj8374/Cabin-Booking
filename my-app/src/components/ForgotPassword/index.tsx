@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { IoIosArrowBack} from "react-icons/io";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import {ForgotPasswordContainer, ErrorMessage, ForgotPasswordSubContainer, ArrowContainer, ForgotPasswordHeadingContents, ForgotPasswordHeading, ForgotPasswordDescription, ForgotPasswordInputContainer, ForgotPasswordInput, ForgotPasswordLabel, PasswordWrapper, EyeIconContainer, ForgotPasswordButton, ForgotPasswordInsideContainer, ForgotPasswordInputDiv, ArrowContainerLargeDevices, StyledLink} from './forgotPasswordStyled'
 import { useState } from "react";
 import { url } from "../../Utils";
@@ -14,6 +14,8 @@ const ForgotPasswordComponent = () => {
     const [email, setEmail] = useState("")
     const [errorMessage, setErrorMessage] = useState("")
     const [error, setError] = useState(false)
+    const [isPasswordShown, setIsPasswordShown] = useState(false)
+    const [isNewPasswordShown, setIsNewPasswordShown] = useState(false)
 
     const navigate = useNavigate()
 
@@ -68,7 +70,7 @@ const ForgotPasswordComponent = () => {
                 </ArrowContainer>
                 <ForgotPasswordHeadingContents>
                     <ForgotPasswordHeading>
-                        Forgot Password
+                        Change Password
                     </ForgotPasswordHeading>
                     <ForgotPasswordDescription>
                         Please enter your email to reset the password
@@ -82,18 +84,18 @@ const ForgotPasswordComponent = () => {
                         <ForgotPasswordInputDiv>
                             <ForgotPasswordLabel htmlFor='password'>Password</ForgotPasswordLabel>
                             <PasswordWrapper>
-                                <ForgotPasswordInput id = "password" type = "password" onChange = {(e)=> {setPassword(e.target.value)}} placeholder="Enter your old password" required = {true} />
-                                <EyeIconContainer>
-                                    <FaEyeSlash color='#E1E1E1'/>
+                                <ForgotPasswordInput id = "password" type = {isPasswordShown ? "text" : "password"} onChange = {(e)=> {setPassword(e.target.value)}} placeholder="Enter your old password" required = {true} />
+                                <EyeIconContainer onClick={() => setIsPasswordShown(!isPasswordShown)}>
+                                    {isPasswordShown ? <FaEye size={20} color='#E1E1E1'/> : <FaEyeSlash size={20} color='#E1E1E1'/>}
                                 </EyeIconContainer>
                             </PasswordWrapper>
                         </ForgotPasswordInputDiv>
                         <ForgotPasswordInputDiv>
                             <ForgotPasswordLabel htmlFor='confirmPassword'>New Password</ForgotPasswordLabel>
                             <PasswordWrapper>
-                                <ForgotPasswordInput id = "confirmPassword" type = "password" onChange = {(e)=> {setConfirmPassword(e.target.value)}} placeholder="New password" required = {true} />
-                                <EyeIconContainer>
-                                    <FaEyeSlash color='#E1E1E1'/>
+                                <ForgotPasswordInput id = "confirmPassword" type = {isNewPasswordShown ? "text" : "password"} onChange = {(e)=> {setConfirmPassword(e.target.value)}} placeholder="New password" required = {true} />
+                                <EyeIconContainer onClick={() => setIsNewPasswordShown(!isNewPasswordShown)}>
+                                    {isNewPasswordShown ? <FaEye size={20} color='#E1E1E1'/> : <FaEyeSlash size={20} color='#E1E1E1'/>}
                                 </EyeIconContainer>
                             </PasswordWrapper>
                         </ForgotPasswordInputDiv>

@@ -40,7 +40,7 @@ export const NavBarBodyContents = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 48px;
+    gap: 32px;
     align-items: center;
 `
 
@@ -89,7 +89,7 @@ export const OptionsContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 24px;
 `
 
 export const MyProfileContainer = styled.div`

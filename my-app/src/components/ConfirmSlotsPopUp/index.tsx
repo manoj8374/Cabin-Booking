@@ -3,10 +3,10 @@ import {SelectedTimeSlotsContainer, ButtonsContainer, ConfirmTimeSlotsContainer,
 import { useSelector, useDispatch} from 'react-redux'
 import {RootState, AppDispatch} from '../../Redux/store'
 import { useEffect, useState } from 'react'
-import { RxHamburgerMenu,RxCross2 } from "react-icons/rx";
 import { url, useCabinData } from '../../Utils';
 import Cookies from 'js-cookie'
 import fetchApi from '../../Utils/fetchDetails'
+import { useRef } from 'react'
 
 const dropIn = {
     hidden: {
@@ -45,9 +45,16 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
     const {startdate, endDate} = useCabinData();
     const [errormsg, setErrorMsg] = useState("")
     const [purpose, setPurpose] = useState('')
+
     const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState) => state.user)
 
-    const closePopUp = ()=>{
+    const purposeInputRef = useRef<HTMLTextAreaElement>(null);
+
+    const closePopUp = (e: any)=>{
+        e.preventDefault()
+        if(purposeInputRef.current){
+            purposeInputRef.current.blur();
+        }
         toogleConfirmSlotPopUp()
     }
 
@@ -107,10 +114,6 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
         
     }
 
-    useEffect(()=>{
-        console.log(selectedSlots, cabinId)
-    }, [])
-
     return(
         <>
             <WhoBookedTheSlotContainer initial={{opacity: 0}} animate = {{opacity: 1}} exit={{opacity: 0}} onClick = {closePopUp}>
@@ -135,7 +138,7 @@ const ConfirmSlotPopUpComponent: React.FC<ConfirmSlotPopUpProps> = ({floor, sele
                             </WhoBookedTheSlotInputFieldContainer>
                             <WhoBookedTheSlotInputFieldContainer>
                                 <LabelElement>Purpose</LabelElement>
-                                <PurposeContainer required rows={5} cols={10} placeholder='Enter Purpose' onChange={(e)=> setPurpose(e.target.value)}/>
+                                <PurposeContainer ref={purposeInputRef} style={{ resize: "none" }} required rows={5} cols={10} placeholder='Enter Purpose' onChange={(e)=> setPurpose(e.target.value)}/>
                             </WhoBookedTheSlotInputFieldContainer>
                             <BookedContainer>
                                 <BookedContainerHeading>

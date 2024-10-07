@@ -9,6 +9,7 @@ import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import {fetchUserProfile} from '../../Redux/userSlice'
 import fetchApi from '../../Utils/fetchDetails';
+import { ErrorMessage } from '../ForgotPassword/forgotPasswordStyled';
 
 const UpdateProfile = () => {
     const {first_name, last_name, team_name, contact_number} = useSelector((state: RootState) => state.user)
@@ -17,6 +18,7 @@ const UpdateProfile = () => {
     const [teamName, setTeamName] = useState("")
     const [contactNumber, setContactNumber] = useState("")
 
+    const [isError, setIsError] = useState(false)
     const [errorMsg, setErrorMsg] = useState<string>("")
 
     const navigate = useNavigate()
@@ -53,6 +55,7 @@ const UpdateProfile = () => {
         }
 
         if(!firstName || !lastName || !teamName || !contactNumber){
+            setIsError(true)
             setErrorMsg("Please fill all the fields")
             return
         }
@@ -60,11 +63,13 @@ const UpdateProfile = () => {
         const response = await fetchApi(`${url}/user/profile_update/v1`, options)
 
         if(response.success){
+            setIsError(false)
             setErrorMsg("Profile Updated Successfully")
             setTimeout(() => {
                 navigate("/")
             }, 5000)
         }else {
+            setIsError(true)
             setErrorMsg("Failed to update profile. Please try again.");
         }
     }
@@ -93,7 +98,7 @@ const UpdateProfile = () => {
                     <UpdateProfileInput type = "text" placeholder = "Last Name" value={lastName} onChange={(e) => setLastName(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "Team Name" value = {teamName} onChange={(e) => setTeamName(e.target.value)}/>
                     <UpdateProfileInput type = "text" placeholder = "Contact number" value = {contactNumber} onChange={(e) => setContactNumber(e.target.value)}/>
-                    {errorMsg && <p>{errorMsg}</p>}
+                    {errorMsg && <ErrorMessage error={isError}>{errorMsg}</ErrorMessage>}
                     <UpdateProfileButton data-testid="update-profile-button" onClick={submitForm}>Update Profile</UpdateProfileButton>
                 </UpdateProfileForm>
             </UpdateProfileSubContainer>

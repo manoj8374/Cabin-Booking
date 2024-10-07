@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import { useNavigate } from 'react-router-dom';
-import {HomeContainer, HomeContainerHeader, SpinnerContainerPopUp, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer, ViewMore, Logout, LogoutSubContainer} from '../Home/homeStyled'
+import {HomeContainer, HomeContainerHeader, SpinnerContainerPopUp, LaptopNavBar, MobileNavBarIcon, HomeSubContainer, SelectDateHeading, MobilePopUp, MobilePopUpCloseButton, MobilePopUpSubContainer, MobilePopUpHeadingContainer, MobileProfilePic, MobilePopUpHeading, MobilePopUpButtonsContainer, MobilePopUpButton, MobilePopUpOption,MobilePopUpButtonSubContainer, MobilePopUpProfileContainer, MobilePopUpProfileDetails, HorizontalLine, UpdateProfileButton, SideArrow, ArrowDownMyProfile, ArrowDownMyBookings, LogoutContainer, ViewMore, Logout, LogoutSubContainer, ChangePassword} from '../Home/homeStyled'
 import {useDispatch,useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../Redux/store";
 import {RxCross2 } from "react-icons/rx";
@@ -103,6 +103,7 @@ const MobilePopUpComponent:React.FC<MobilePopUpProps> = ({closePopUp}) => {
                             <MobilePopUpProfileDetails>
                                 <p>Password: </p>
                                 <p>********</p>
+                                <ChangePassword onClick = {()=> navigate('/forgot-password')}>Change Password</ChangePassword>
                             </MobilePopUpProfileDetails>
                             <UpdateProfileButton onClick = {navigateToUpdateProfile}>
                                 Update profile <SideArrow rotate={90}/>

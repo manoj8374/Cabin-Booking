@@ -17,8 +17,8 @@ const CreateAccount = () => {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true)
 
     const onSubmitSuccess = (accessToken: string, refreshToken: string)=> {
-        Cookies.set('access_token', accessToken)
-        Cookies.set("refresh_token", accessToken)
+        Cookies.set('access_token', accessToken, {expires: 1})
+        Cookies.set("refresh_token", accessToken, {expires: 1})
         navigate('/')
         setError('')
     }

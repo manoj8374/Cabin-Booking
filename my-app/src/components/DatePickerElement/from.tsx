@@ -123,7 +123,7 @@ const DatePickerElementFrom = () => {
 
   return (
     <StyledDatePickerWrapper>
-        <DatePicker ref={datePickerRef} selected={startDate} onChange={updateDate} customInput={<StyledInput onClick={() => datePickerRef.current?.setOpen(true)}>{formatCustomDate(startDate)}</StyledInput>} dateFormat="d MMM EEE, yyyy"  />
+        <DatePicker minDate={new Date()} maxDate={new Date(endDate)} ref={datePickerRef} selected={startDate} onChange={updateDate} customInput={<StyledInput onClick={() => datePickerRef.current?.setOpen(true)}>{formatCustomDate(startDate)}</StyledInput>} dateFormat="d MMM EEE, yyyy"  />
     </StyledDatePickerWrapper>
   )
 };

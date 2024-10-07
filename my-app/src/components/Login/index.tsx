@@ -20,8 +20,8 @@ const Login = () => {
     const navigate = useNavigate()
 
     const onSubmitSuccess = (accessToken: string, refreshToken: string)=>{
-        Cookies.set('access_token', accessToken)
-        Cookies.set("refresh_token", accessToken)
+        Cookies.set('access_token', accessToken, {expires: 1})
+        Cookies.set("refresh_token", accessToken, {expires: 1})
         navigate('/')
         setLoggedIn(true)
     }
@@ -46,10 +46,10 @@ const Login = () => {
             if(response.success){
                 onSubmitSuccess(response.data.access_token, response.data.refresh_token)
             }else{
-                if(response.data.error_message){
-                    setError(response.data.error_message)
-                }else{
+                if(response.error){
                     setError("Something went wrong")
+                }else{
+                    setError(response.data.error_message)
                 }
             }
         }

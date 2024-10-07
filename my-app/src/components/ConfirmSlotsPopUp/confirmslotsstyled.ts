@@ -64,7 +64,6 @@ export const WhoBookedTheSlotSubContainer = styled(motion.div)`
    background-color: #F1F4FF;
    width: 90%;
    margin-bottom: auto;
-   padding-bottom: 24px;
    padding-top: 8px;
    border-radius: 8px;
    overflow-y: scroll;
@@ -76,11 +75,11 @@ export const WhoBookedTheSlotSubContainer = styled(motion.div)`
       display: none;
    }
 
-   height: 650px;
+   padding-bottom: 24px;
+
 
    @media screen and (min-width: 768px) {
       width: 60%;
-      height: 700px;
    }
 
    @media screen and (min-width: 1024px) {

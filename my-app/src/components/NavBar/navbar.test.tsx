@@ -126,3 +126,4 @@ describe("Laptop NavBar Testing", ()=>{
         expect(mockToogleNavBar).toHaveBeenCalledWith(false)
     })
 })
+

@@ -17,11 +17,9 @@ export const MainContainer = styled(motion.div)`
     justify-content: center;
     flex-direction: column;
     align-items: center;
-
-    @media (min-width: 768px) {
-        background: rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(1px);
-    }
+    background: rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(1px);
+    
 `
 
 export const ResultSubContainer = styled(motion.div)`

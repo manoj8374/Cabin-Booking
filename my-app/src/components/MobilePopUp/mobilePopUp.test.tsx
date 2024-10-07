@@ -2,7 +2,7 @@ import React from "react";
 import { screen, render, fireEvent } from "@testing-library/react";
 import MobilePopUpComponent from "./index"
 import { fetchUserProfile } from "../../Redux/userSlice";
-import { configureStore, createStore , applyMiddleware} from "@reduxjs/toolkit";
+import {createStore , applyMiddleware} from "@reduxjs/toolkit";
 import { thunk } from "redux-thunk";
 import { Provider } from "react-redux";
 import { MemoryRouter, useNavigate } from "react-router-dom";
@@ -181,7 +181,7 @@ describe("Laptop NavBar Testing", ()=>{
                 team_name: '',
                 contact_number: '',
                 isLoading: false,
-                error: true
+                error: false
             }
         }, applyMiddleware(thunk))
 
@@ -198,7 +198,6 @@ describe("Laptop NavBar Testing", ()=>{
 
         expect(screen.getByTestId("myProfileContents")).toBeInTheDocument()
         expect(screen.queryByTestId("viewMoreButton")).toBeNull()
-
     })
         
 })

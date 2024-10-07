@@ -106,7 +106,7 @@ const DatePickerElement = () => {
   const [startDate, setStartDate] = useState(new Date());
   const datePickerRef = useRef<DatePicker>(null);
 
-  const {updateEndDate} = useCabinData();
+  const {updateEndDate, endDate, startdate} = useCabinData();
 
   const formatCustomDate = (date: Date | null) => {
     return date ? format(date, 'd MMM EEE, yyyy') : 'Select a date';
@@ -123,7 +123,7 @@ const DatePickerElement = () => {
   
   return (
     <StyledDatePickerWrapper>
-        <DatePicker ref={datePickerRef} selected={startDate} onChange={changeDate} customInput={<StyledInput onClick={() => datePickerRef.current?.setOpen(true)}>{formatCustomDate(startDate)}</StyledInput>} dateFormat="d MMM EEE, yyyy"  />
+        <DatePicker minDate={new Date(startdate)} ref={datePickerRef} selected={startDate} onChange={changeDate} customInput={<StyledInput onClick={() => datePickerRef.current?.setOpen(true)}>{formatCustomDate(startDate)}</StyledInput>} dateFormat="d MMM EEE, yyyy"  />
     </StyledDatePickerWrapper>
   )
 };
