@@ -67,6 +67,7 @@ export const WhoBookedTheSlotSubContainer = styled(motion.div)`
    padding-top: 8px;
    border-radius: 8px;
    overflow-y: scroll;
+   height: 650px;
 
    scrollbar-width: none; 
   -ms-overflow-style: none;

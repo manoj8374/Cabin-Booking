@@ -103,7 +103,6 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
               const response = await fetchApi(`${url}/get/cabin_slots/v1`, options)
 
               if(response.success){
-                console.log(response.data)
                   const filteredData = response.data.filter((data: TimeSlotsInterface)=> data.cabin_id === cabinId)
                   if(filteredData.length === 0){
                     setTimeSlots([])
