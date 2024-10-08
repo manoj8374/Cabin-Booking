@@ -1,5 +1,5 @@
 import React from 'react'
-import {MyBookingItemContainer, MyBookingItemSubContainer, FloorNameHeading, CabinNameContainer, DateContainer, TimeSlotsContainer, TimeSlotsItemsContainer, DateIconContainer, TimeSlotItem, StartEndDate} from './myBookingItemStyled'
+import {MyBookingItemContainer, MyBookingItemSubContainer, FloorNameHeading, CabinNameContainer, DateContainer, TimeSlotsContainer, TimeSlotsItemsContainer, DateIconContainer, TimeSlotItem, StartEndDate, DeleteSlotsBtn} from './myBookingItemStyled'
 import { LuCalendar } from "react-icons/lu";
 
 interface BookingsObj {
@@ -13,9 +13,11 @@ interface BookingsObj {
 
 interface MyBookingItemProps{
     details: BookingsObj
+    upcoming: boolean,
+    confirmPopUp?: (bookingId: string) => void
 }
 
-const MyBookingItem: React.FC<MyBookingItemProps> = ({details})=>{
+const MyBookingItem: React.FC<MyBookingItemProps> = ({details, upcoming, confirmPopUp})=>{
     const {floorName, cabinName, startDate, endDate, timeSlots} = details
 
     const formatDateRange = (start: string, end: string) => {
@@ -49,6 +51,12 @@ const MyBookingItem: React.FC<MyBookingItemProps> = ({details})=>{
             return `${hourString}:${minutes < 10 ? '0' + minutes : minutes} ${period}`;
       };
 
+    const deleteSlot = ()=>{
+        if(confirmPopUp){
+            confirmPopUp(details.bookingId)
+        }
+    }
+
     return(
         <MyBookingItemContainer>
             <MyBookingItemSubContainer>
@@ -69,7 +77,9 @@ const MyBookingItem: React.FC<MyBookingItemProps> = ({details})=>{
                         </TimeSlotsItemsContainer>
                     </TimeSlotsContainer>
                 </DateContainer>
+                
             </MyBookingItemSubContainer>
+            {upcoming && <DeleteSlotsBtn onClick={deleteSlot}>Delete</DeleteSlotsBtn>}
         </MyBookingItemContainer>
     )
 }

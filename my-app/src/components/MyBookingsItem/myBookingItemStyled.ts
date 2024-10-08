@@ -3,13 +3,14 @@ import styled from "styled-components";
 export const MyBookingItemContainer = styled.li`
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border: 0.5px solid rgb(150, 140, 120);
     padding: 16px;
     padding-left: 8px;
     border-radius: 8px;
+    position: relative;
+    min-height: 200px;
 
     @media screen and (min-width: 768px) {
-        flex-direction: row;
         flex-wrap: wrap;
         width: 45%;
         flex-grow: 0.5;
@@ -64,12 +65,14 @@ export const DateContainer = styled.div`
     font-size: 16px;
     // font-family: 'poppins';
     font-weight: 500;
+    position: relative;
 `
 
 export const TimeSlotsContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 16px;
+    position: relative;
 `
 
 export const TimeSlotsItemsContainer = styled.div`
@@ -119,4 +122,33 @@ export const StartEndDate = styled.p`
     @media screen and (min-width: 1024px) {
         font-size: 20px;
     }
+`
+
+export const DeleteSlotsBtn = styled.button`
+    background-color: transparent;
+    width: 150px;
+    height: 40px;
+    border-radius: 8px;
+    color: #E72323;
+    font-size: 16px;
+    border: 1px solid #E72323;
+    right: 16px;
+    bottom: 16px;
+    align-self: flex-end;
+    margin-top: 16px;
+
+    @media screen and (min-width: 1024px) {
+        &:hover {
+            cursor: pointer;
+            background-color: #E72323;
+            color: white;
+            border: none;
+        }
+    } 
+
+    @media screen and (max-width: 768px) {
+        width: 75px;
+        height: 30px;
+    }
+    
 `

@@ -51,6 +51,8 @@ export const getUserBookings = createAsyncThunk('userBookings/getUserBookings',
             }else{
                 if(data.status === 400){
                     return rejectWithValue("No Bookings Found")
+                }else{
+                    return rejectWithValue("Something went wrong")
                 }
             }
         }catch(e){

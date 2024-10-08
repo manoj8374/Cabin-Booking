@@ -2,7 +2,6 @@ import {MyBookingsContainer, MyBookingsHeadingContainer, MyBookingsHeading,
 IconsContainer, MyBookingsSubContainer, FiltersContainer, FilterButton,
 UpcomingBookingsContainer, HomeIconContainer, HamburgerContainer, NavBarContainer, 
 NavBarContainerMain, NoBookingsContainer, NoBookingsHeading, BookNowButton} from './bookingsstyled'
-import { IoHomeOutline } from "react-icons/io5";
 import { useEffect, useState, useRef} from 'react';
 import MobilePopUpComponent from '../MobilePopUp';
 import {getUserBookings} from '../../Redux/userBookings'
@@ -13,6 +12,10 @@ import MyBookingItem from '../MyBookingsItem';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../NavBar';
 import { fetchUserProfile } from '../../Redux/userSlice';
+import { url } from '../../Utils';
+import Cookies from 'js-cookie';
+import DeleteModal from '../DeleteModal';
+import { AnimatePresence } from 'framer-motion';
 
 interface BookingsObj {
     floorName: string
@@ -29,8 +32,10 @@ const MyBookings = ()=>{
 
     const [upComing, setUpComing] = useState(true)
     const [previous, setPrevious] = useState(false)
+    const [deletePopUp, setDeletePopUp] = useState(false)
 
     const [isNavBarVisible, setIsNavBarVisible] = useState(false);
+    const [selectedId, setSelectedId] = useState('')
 
     const laptopNavRef = useRef<HTMLDivElement | null>(null);
 
@@ -66,6 +71,11 @@ const MyBookings = ()=>{
         setPreviousBookings(previousBookingsArr);
     }, [bookings]);
 
+    const showPopUp = async(id: string)=>{
+        setDeletePopUp(true)
+        setSelectedId(id)
+    }
+
     const renderBookings = ()=>{
         if(isLoading){
             return (
@@ -78,13 +88,21 @@ const MyBookings = ()=>{
         if(error){
             return (
                 <NoBookingsContainer>
-                    <NoBookingsHeading>No Bookings Found</NoBookingsHeading>
+                    <NoBookingsHeading>{errorMessage}</NoBookingsHeading>
+                    {errorMessage === "No Bookings Found" && <BookNowButton onClick={()=> navigate("/")}>Book Now</BookNowButton>}
+                </NoBookingsContainer>
+            )
+        }
+
+        if(upComing && upcomingBookings.length === 0){
+            return (
+                <NoBookingsContainer>
+                    <NoBookingsHeading>No Upcoming Bookings Found</NoBookingsHeading>
                     <BookNowButton onClick={()=> navigate("/")}>Book Now</BookNowButton>
                 </NoBookingsContainer>
             )
         }
  
-        
         if(previous && previousBookings.length === 0){
             return (
                 <NoBookingsContainer>
@@ -98,7 +116,7 @@ const MyBookings = ()=>{
             return (
                 <UpcomingBookingsContainer>
                     {previousBookings.map((eachItem)=>{
-                        return <MyBookingItem key = {eachItem.bookingId} details = {eachItem}/>
+                        return <MyBookingItem key = {eachItem.bookingId} upcoming = {false} details = {eachItem}/>
                     })}
                 </UpcomingBookingsContainer>
             )
@@ -108,14 +126,36 @@ const MyBookings = ()=>{
             <UpcomingBookingsContainer>
                 {upComing ? (
                     upcomingBookings.map((eachItem)=>{
-                        return <MyBookingItem key = {eachItem.bookingId} details = {eachItem}/>
+                        return <MyBookingItem confirmPopUp = {showPopUp} upcoming = {true} key = {eachItem.bookingId} details = {eachItem}/>
                     })
                 ): null}
             </UpcomingBookingsContainer>
         )
     }
+
+    const deleteBooking = async()=>{
+        try{
+            const response = await fetch(`${url}/delete/user/bookings/v1`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${Cookies.get('access_token')}`
+                },
+                body: JSON.stringify({
+                    booking_id: selectedId
+                })
+            })
+            setDeletePopUp(false)
+            if(response.status === 200){
+                dispatch(getUserBookings())
+            }
+        }catch(e){
+            console.log(e)
+        }
+    }   
     
     return (
+        <>
         <MyBookingsContainer>
             <MyBookingsHeadingContainer>
                 <MyBookingsHeading>My Bookings</MyBookingsHeading>
@@ -135,6 +175,10 @@ const MyBookings = ()=>{
             {open && <MobilePopUpComponent closePopUp={()=> setOpen(!open)}/>}
             <Navbar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar} laptopNavRef = {laptopNavRef}/>
         </MyBookingsContainer>
+        <AnimatePresence initial = {false} mode = "wait" onExitComplete={() => null}>
+            {deletePopUp && <DeleteModal closePopUp = {()=> setDeletePopUp(false)} deleteBooking = {deleteBooking}/>}
+        </AnimatePresence>
+        </>
     )
 }
 
