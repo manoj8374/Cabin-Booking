@@ -48,6 +48,6 @@ export const getUserDetails = async()=>{
 }
 
 
-export const url = "http://10.18.106.49:8000"
+export const url = "http://192.168.0.107:8000"
 
 export const accessToken = Cookies.get('access_token')
