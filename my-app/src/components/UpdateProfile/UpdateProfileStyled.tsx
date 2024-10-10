@@ -40,11 +40,11 @@ export const UpdateProfileSubContainer = styled.div`
     }
 
     @media (min-width: 1024px) and (max-width: 1440px) {
-        width: 45%;
+        width: 65%;
     }
 
     @media (min-width: 1440px){
-        width: 35%;
+        width: 50%;
     }
 `
 

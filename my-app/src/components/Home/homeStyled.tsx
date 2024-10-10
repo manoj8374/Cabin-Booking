@@ -23,6 +23,7 @@ export const HomeContainerHeader = styled.div`
 
     @media (min-width: 768px){
         width: 95%;
+        justify-content: center;
     }
 `
 
@@ -38,7 +39,7 @@ export const HomeSubContainer = styled.div`
     gap: 24px;    
 
     @media (min-width: 768px){
-        width: 80%;
+        width: 95%;
     }
 `
 
@@ -51,7 +52,6 @@ export const SelectDateHeading = styled.h1`
     @media (min-width: 768px){
         font-size: 32px;
         order: 1;
-        flex-grow: 0.5;
     }
 `
 

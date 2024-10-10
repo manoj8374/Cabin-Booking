@@ -12,10 +12,8 @@ import { AnimatePresence } from 'framer-motion';
 
 
 const Home = ()=>{
-    const [isNavBarVisible, setIsNavBarVisible] = useState(false);
 
     const [popUpButtonClicked, setPopUpClicked] = useState(false)
-    const laptopNavRef = useRef<HTMLDivElement | null>(null);
 
     const dispatch = useDispatch<AppDispatch>()
 
@@ -27,17 +25,10 @@ const Home = ()=>{
         setPopUpClicked(!popUpButtonClicked);
     };
 
-    const toggleNavBar = (value: boolean)=>{
-        setIsNavBarVisible(value)
-    }
-
     return (
         <HomeContainer data-testid = "home-container">
             <HomeContainerHeader>
                 <SelectDateHeading>Select Date</SelectDateHeading>   
-                <div ref = {laptopNavRef}>
-                    <LaptopNavBar data-testid = "laptop-navbar-button" size = {32} onClick={()=> toggleNavBar(true)}/>
-                </div>
                 <MobileNavBarIcon data-testid = "mobile-navbar-button" size = {24} onClick={togglePopup}/>
             </HomeContainerHeader>
             <HomeSubContainer>
@@ -47,7 +38,6 @@ const Home = ()=>{
             <AnimatePresence initial = {false} mode = "wait" onExitComplete={() => null}>
                 {popUpButtonClicked && <MobilePopUpComponent closePopUp = {()=> setPopUpClicked(false)}/>}
             </AnimatePresence>
-            <NavBar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar} laptopNavRef = {laptopNavRef}/> 
         </HomeContainer>
     )
 }

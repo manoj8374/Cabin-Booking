@@ -159,13 +159,6 @@ const MyBookings = ()=>{
         <MyBookingsContainer>
             <MyBookingsHeadingContainer>
                 <MyBookingsHeading>My Bookings</MyBookingsHeading>
-                <IconsContainer>
-                    <HomeIconContainer onClick = {()=> navigate("/")}  />
-                    <HamburgerContainer onClick = {()=> setOpen(!open)} size = {24} color = '1F41BB'/>
-                    <NavBarContainerMain ref = {laptopNavRef}>
-                        <NavBarContainer onClick = {()=> toggleNavBar(!isNavBarVisible)}/>
-                    </NavBarContainerMain>
-                </IconsContainer>
             </MyBookingsHeadingContainer>
             <FiltersContainer>
                 <FilterButton isactive = {upComing} onClick = {()=> {setUpComing(!upComing); setPrevious(!previous)}}>Upcoming Slots</FilterButton>
@@ -173,7 +166,6 @@ const MyBookings = ()=>{
             </FiltersContainer>
             {renderBookings()}
             {open && <MobilePopUpComponent closePopUp={()=> setOpen(!open)}/>}
-            <Navbar isNavBarVisible = {isNavBarVisible} toogleNavbar = {toggleNavBar} laptopNavRef = {laptopNavRef}/>
         </MyBookingsContainer>
         <AnimatePresence initial = {false} mode = "wait" onExitComplete={() => null}>
             {deletePopUp && <DeleteModal closePopUp = {()=> setDeletePopUp(false)} deleteBooking = {deleteBooking}/>}
