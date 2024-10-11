@@ -10,15 +10,8 @@ export const MyBookingItemContainer = styled.li`
     position: relative;
     min-height: 200px;
 
-    @media screen and (min-width: 768px) {
-        flex-wrap: wrap;
-        width: 45%;
-        flex-grow: 0.5;
-    }
-
-    @media screen and (min-width: 1024px) {
-        flex-grow: 0;
-        width: 40%;
+    @media (min-width: 1024px) {
+        width: 48%;
     }
 `
 
@@ -29,10 +22,6 @@ export const MyBookingItemSubContainer = styled.div`
     margin-right: auto;
     display: flex;
     flex-direction: column;
-
-    @media screen and (min-width: 768px) {
-   
-    }
 `
 
 export const FloorNameHeading = styled.p`

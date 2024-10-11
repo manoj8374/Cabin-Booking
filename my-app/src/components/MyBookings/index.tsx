@@ -61,7 +61,7 @@ const MyBookings = ()=>{
         let upcomingBookingArr: BookingsObj[] = []
         let previousBookingsArr: BookingsObj[] = []
         bookings.forEach((booking) => {
-            if (new Date(booking.startDate) >= currentDate){
+            if (new Date(booking.endDate) >= currentDate){
                 upcomingBookingArr.push(booking)
             }else{
                 previousBookingsArr.push(booking)

@@ -77,7 +77,6 @@ const MyBookingItem: React.FC<MyBookingItemProps> = ({details, upcoming, confirm
                         </TimeSlotsItemsContainer>
                     </TimeSlotsContainer>
                 </DateContainer>
-                
             </MyBookingItemSubContainer>
             {upcoming && <DeleteSlotsBtn onClick={deleteSlot}>Delete</DeleteSlotsBtn>}
         </MyBookingItemContainer>

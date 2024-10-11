@@ -27,6 +27,10 @@ const Layout = ({children}: {children: ReactNode})=>{
 const LayoutContainer = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `
 
 const LayoutSub = styled.div`

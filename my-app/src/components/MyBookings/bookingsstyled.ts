@@ -99,12 +99,15 @@ export const UpcomingBookingsContainer = styled.ul`
     padding-top: 32px;
     padding-bottom: 32px;
 
-    @media screen and (min-width: 768px) {
+    @media screen and (min-width: 1024px) {
         flex-direction: row;
         flex-wrap: wrap;
-        width: 90%;
+        width: 95%;
         margin: auto;
-        justify-content: center;
+    }
+
+    @media screen and (min-width: 1440px) {
+        width: 80%;
     }
 `
 
