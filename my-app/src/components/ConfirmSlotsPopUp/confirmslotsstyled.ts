@@ -81,6 +81,7 @@ export const WhoBookedTheSlotSubContainer = styled(motion.div)`
 
    @media screen and (min-width: 768px) {
       width: 60%;
+      height: 720px;
    }
 
    @media screen and (min-width: 1024px) {

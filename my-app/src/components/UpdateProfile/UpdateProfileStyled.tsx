@@ -19,7 +19,6 @@ export const UpdateProfileContainer = styled.div`
 
 export const UpdateProfileSubContainer = styled.div`
     background-color: #F9F9F9;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,15 +35,17 @@ export const UpdateProfileSubContainer = styled.div`
     }
 
     @media (min-width: 768px) and (max-width: 1024px) {
-        width: 60%;
+        width: 90%;
     }
 
     @media (min-width: 1024px) and (max-width: 1440px) {
-        width: 65%;
+        width: 75%;
+        max-width: 650px;
     }
 
     @media (min-width: 1440px){
         width: 50%;
+        max-width: 650px;
     }
 `
 
