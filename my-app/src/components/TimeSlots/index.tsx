@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux'
 import {TimeSlotsContainer, ButtonTimeSlot, TimeSlotsSubContainer, MobileViewMoreContainer, SubmitTimeSlotsButton, LaptopDeviceSubmitContainer, LaptopDeviceSubmitButton} from './timeSlotsStyled'
 import ButtonTimeSlotComponent from '../ButtonTimeSlot'
 import WhoBookedTheSlot from '../WhoBookedTheSlot'
-import {AppDispatch} from '../../Redux/store'
+import {AppDispatch, RootState} from '../../Redux/store'
 import ResultScreen from '../SuccessAndFailure'
 import ConfirmSlotPopUpComponent from '../ConfirmSlotsPopUp'
 import { url, useCabinData} from '../../Utils'
@@ -12,6 +12,7 @@ import { AnimatePresence } from 'framer-motion'
 import fetchApi from '../../Utils/fetchDetails'
 import { SpinnerContainer } from '../Floor/cabinStyled'
 import LoadingComponent from '../LoadingView'
+import { useSelector } from 'react-redux'
 
 interface TimeSlotsProps{
     cabinId: string,
@@ -47,13 +48,14 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
     const [isMobile, setIsMobile] = useState(false)
     const [selectedSlots, setSelectedSlots] = useState<string[]>([])
     const [numberOfSlots, setNumberOfSlots] = useState(4)
-    const {allTheCabinIds, startdate, endDate} = useCabinData()
     const [confirmSlotPopUp, setConfirmSlotPopUp] = useState(false)
     const [slotBooked, setSlotBooked] = useState(false)
     const [whoBookedTheSlot, setWhoBookedTheSlot] = useState(false)
     const [ResultPopUp, setResultPopUp] = useState<boolean | null>(null)
     const [bookedTimeString, setBookedTimeString] = useState('')
     const [loading, setLoading] = useState(false)
+
+    const {start_date, end_date} = useSelector((state: RootState) => state.Cabin)
 
     const dispatch = useDispatch<AppDispatch>()
 
@@ -86,10 +88,12 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
     useEffect(()=>{
         const fetchCabinDetails = async ()=>{
               setLoading(true)
+              const formattedDate = new Date().toISOString().slice(0, 10);
+              console.log(start_date)
               const bodyData = {
                 "cabin_ids": [cabinId],
-                "start_date": startdate,
-                "end_date": endDate
+                "start_date": start_date,
+                "end_date": end_date
               }
 
               const options = {
@@ -137,7 +141,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({cabinId, floor, cabinDetails})=>{
           window.removeEventListener('resize', handleResize);
         };
 
-    },[cabinId, allTheCabinIds, startdate, endDate, slotBooked])
+    },[cabinId, end_date, start_date, slotBooked])
 
     const handleToggleSelect = (timeString: string, availability: boolean)=>{
       if(selectedSlots.includes(timeString) && availability === true){

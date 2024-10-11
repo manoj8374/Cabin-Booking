@@ -1,4 +1,4 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef, useEffect} from "react";
 import { styled } from "styled-components";
 import DatePicker from "react-datepicker";
 import {DateElement} from '../DatePicker/DatePickerStyled'
@@ -6,6 +6,9 @@ import "./custom-datepicker.css";
 import { format } from 'date-fns';
 import "react-datepicker/dist/react-datepicker.css";
 import {useCabinData} from '../../Utils'
+import {useDispatch, useSelector} from "react-redux";
+import { AppDispatch } from "../../Redux/store";
+import {setStartDate, setEndDate, setCabinIds} from "../../Redux/CabinSlice";
 
 const StyledInput = styled.p`
   border: none;
@@ -101,10 +104,11 @@ const StyledDatePickerWrapper = styled.div`
 `;
 
 const DatePickerElementFrom = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [startDate, changeStartDate] = useState(new Date());
   const datePickerRef = useRef<DatePicker>(null);
 
   const {updateStartDate, endDate} = useCabinData()
+  const dispatch = useDispatch<AppDispatch>()
 
   const formatCustomDate = (date: Date | null) => {
     return date ? format(date, 'd MMM EEE, yyyy') : 'Select a date';
@@ -114,12 +118,14 @@ const DatePickerElementFrom = () => {
     if (date !== null) {
       const endDateObj = formatCustomDate(new Date(endDate))
       const currentDateObj = formatCustomDate(new Date())
-      setStartDate(date)
-    updateStartDate(format(date, 'yyyy-MM-dd'))
-
+      changeStartDate(date)
+      dispatch(setStartDate({ startDate: format(date, 'yyyy-MM-dd') }))
     }
-    
   }
+
+  useEffect(() => {
+      dispatch(setStartDate({ startDate: format(new Date(), 'yyyy-MM-dd') }))
+  },[])
 
   return (
     <StyledDatePickerWrapper>

@@ -1,4 +1,4 @@
-import React, { useState, useRef} from "react";
+import React, { useState, useRef, useEffect} from "react";
 import { styled } from "styled-components";
 import DatePicker from "react-datepicker";
 import {DateElement} from '../DatePicker/DatePickerStyled'
@@ -120,6 +120,10 @@ const DatePickerElement = () => {
         updateEndDate(format(date, 'yyyy-MM-dd'))
       }
     }
+
+  useEffect(() => {
+      updateEndDate(format(new Date(), 'yyyy-MM-dd'))
+  },[])
   
   return (
     <StyledDatePickerWrapper>
