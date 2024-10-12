@@ -52,7 +52,6 @@ const MyBookings = ()=>{
 
     useEffect(()=>{
         dispatch(getUserBookings())
-        // dispatch(fetchUserProfile())
     }, [dispatch, previous, upComing])
 
     useEffect(() => {

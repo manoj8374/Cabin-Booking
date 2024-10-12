@@ -7,6 +7,9 @@ import {ErrorMessage,LoginContainer, LoginSubContainer, LoginContentsContainer, 
 import { EyeIconContainer, PasswordWrapper } from '../ForgotPassword/forgotPasswordStyled'
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { fetchUserProfile } from '../../Redux/userSlice'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../Redux/store'
 
 const Login = () => {
     const [email, setEmail] = useState<string>('')
@@ -18,6 +21,7 @@ const Login = () => {
     const passwordInputRef = useRef<HTMLInputElement | null>(null);
 
     const navigate = useNavigate()
+    const dispatch = useDispatch<AppDispatch>()
 
     const onSubmitSuccess = (accessToken: string, refreshToken: string)=>{
         Cookies.set('access_token', accessToken, {expires: 1})

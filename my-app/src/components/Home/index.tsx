@@ -15,12 +15,6 @@ const Home = ()=>{
 
     const [popUpButtonClicked, setPopUpClicked] = useState(false)
 
-    const dispatch = useDispatch<AppDispatch>()
-
-    useEffect(() => {
-        dispatch(fetchUserProfile());
-    }, []);
-
     const togglePopup = () => {
         setPopUpClicked(!popUpButtonClicked);
     };

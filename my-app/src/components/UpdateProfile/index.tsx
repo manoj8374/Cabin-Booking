@@ -23,12 +23,6 @@ const UpdateProfile = () => {
 
     const navigate = useNavigate()
 
-    const dispatch = useDispatch<AppDispatch>()
-
-    useEffect(()=>{
-        dispatch(fetchUserProfile())
-    }, [dispatch])
-
     useEffect(() => {
         setFirstName(first_name);
         setLastName(last_name);

@@ -6,7 +6,7 @@ import {SideBarContainer, ProfileContainer, NavBarContainer, ArrowDownMyProfile,
     LogOutSubContainer, LogoutElement, ViewMoreNavBar, UpdateButton, UpdateButtonContainer, SideBarHeading, HeadingContainerNavBar, LogoutButton, CenterContents} from './navbarStyled'
 import {RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
-import { RootState } from "../../Redux/store";
+import { AppDispatch, RootState } from "../../Redux/store";
 import { FaArrowRight } from "react-icons/fa";
 import Cookies from "js-cookie";
 import { MdNavigateNext } from "react-icons/md";
@@ -16,6 +16,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import {AnimatePresence, motion} from "framer-motion"
 import { MdOutlineLogout } from "react-icons/md";
 import LoadingComponent from "../LoadingView";
+import { useDispatch } from "react-redux";
+import { fetchUserProfile } from "../../Redux/userSlice";
 
 const dropdownVariants = {
     hidden: { opacity: 0, height: 0, scale: 0.8 },
@@ -42,6 +44,12 @@ const Navbar = ()=>{
 
     const isHome = location.pathname === "/"
     const isMyBookings = location.pathname === "/my-bookings"
+
+    const dispatch = useDispatch<AppDispatch>()
+
+    useEffect(() => {
+        dispatch(fetchUserProfile());
+    }, []);
         
     const renderContents = ()=>{
         if(isLoading){
