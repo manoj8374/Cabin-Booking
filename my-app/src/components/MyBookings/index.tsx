@@ -52,7 +52,7 @@ const MyBookings = ()=>{
 
     useEffect(()=>{
         dispatch(getUserBookings())
-        dispatch(fetchUserProfile())
+        // dispatch(fetchUserProfile())
     }, [dispatch, previous, upComing])
 
     useEffect(() => {
@@ -159,6 +159,13 @@ const MyBookings = ()=>{
         <MyBookingsContainer>
             <MyBookingsHeadingContainer>
                 <MyBookingsHeading>My Bookings</MyBookingsHeading>
+                <IconsContainer>
+                    <HomeIconContainer onClick = {()=> navigate("/")}  />
+                    <HamburgerContainer onClick = {()=> setOpen(!open)} size = {24} color = '1F41BB'/>
+                    <NavBarContainerMain ref = {laptopNavRef}>
+                        <NavBarContainer onClick = {()=> toggleNavBar(!isNavBarVisible)}/>
+                    </NavBarContainerMain>
+                </IconsContainer>
             </MyBookingsHeadingContainer>
             <FiltersContainer>
                 <FilterButton isactive = {upComing} onClick = {()=> {setUpComing(!upComing); setPrevious(!previous)}}>Upcoming Slots</FilterButton>

@@ -45,6 +45,7 @@ export const IconsContainer = styled.div`
     @media screen and (min-width: 768px) {
         align-items: center;
         left: 50px;
+        display: none;
     }
 `
 

@@ -10,6 +10,8 @@ export const SideBarContainer = styled.div`
     left: 0;
     z-index: 1000;
     overflow: scroll;
+    display: flex;
+    flex-direction: column;
 
     @media screen and (max-width: 768px) {
         display: none;
@@ -259,3 +261,34 @@ export const HeadingContainerNavBar = styled(MyProfileContainer)<HeadingContaine
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 `
+
+export const LogoutContainer = styled.div`
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 85%;
+    gap: 16px;
+    margin: auto;
+    margin-bottom: 16px;
+    margin-top: 16px;
+`
+
+export const LogoutButton = styled.div`
+    font-size: 24px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+`
+
+export const CenterContents = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-grow: 1;
+    `
